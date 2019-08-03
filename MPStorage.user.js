@@ -10,7 +10,7 @@ var mpStorage = {
     /* All the 'harmony' between platforms is based on that var */
     mpName: "a2bcc09b796b8c6fab77058ff8446c34",
     /* Recipient of the MPStorage since we can't send MP to ourself */
-    mpRecipient: '___________________CHANGE_THIS________________',
+    mpRecipient: 'MultiMP',
     /* Is the MPStorage's context initiated ? */
     /* When it is, username, mpId & mpRedId are set */
     initiated: false,
