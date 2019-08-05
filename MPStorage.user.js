@@ -65,7 +65,7 @@ var mpStorage = {
         var args = 'content_form=' + encodeURIComponent(JSON.stringify(data));
         args += '&post=' + mpStorage.mpId + '&numreponse=' + mpStorage.mpRepId;
         args += '&pseudo=' + encodeURIComponent(mpStorage.username) + '&cat=prive&verifrequet=1100&sujet=' + encodeURIComponent(mpStorage.mpName);
-        args += '&hash_check=' + mpStorage.getElementByXpath(' //input[@name="hash_check"]', document).pop().value;
+        args += '&hash_check=' + mpStorage.getElementByXpath('//input[@name="hash_check"]', document).pop().value;
 
         // Post request
         mpStorage.loadPage(url, 'post', args, function () {
@@ -90,14 +90,10 @@ var mpStorage = {
             // TODO Wiripse : Traiter les pages suivantes pour gérer le cas où une nouvelle page apparaît pendant qu'on pagine...
             if (mpStorage.pageMax <= 1) {
                 // Save the number of MPs page the user have
-                mpStorage.pageMax = resp.getElementsByClassName('fondForum1PagesHaut')[
-                    0
-                ].getElementsByClassName('cHeader').length + 1;
+                mpStorage.pageMax = resp.getElementsByClassName('fondForum1PagesHaut')[0].getElementsByClassName('cHeader').length + 1;
             }
             // Loop on list of MPs
-            [...resp.getElementsByClassName('cCatTopic')
-            ].forEach(function (topicRow) {
-
+            [...resp.getElementsByClassName('cCatTopic')].forEach(function (topicRow) {
                 if (topicRow.title) {
                     if (mpStorage.mpName === topicRow.innerHTML) {
                         // If current MP's name is the one used by MPStorage, baise ouais !
@@ -146,15 +142,7 @@ var mpStorage = {
         mpStorage.loadPage(url, 'get', args, function (resp) {
             // Nice HTML parsing bro !
             // We save the response's ID
-            mpStorage.mpRepId = parseInt(resp.getElementsByClassName('messagetable')[
-                0
-            ].getElementsByClassName('messCase1')[
-                0
-            ].getElementsByTagName('a')[
-                0
-            ].name.split('t')[
-                1
-            ]);
+            mpStorage.mpRepId = parseInt(resp.getElementsByClassName('messagetable')[0].getElementsByClassName('messCase1')[0].getElementsByTagName('a')[0].name.split('t')[1]);
             // And give it to the callback
             callback(mpStorage.mpRepId);
         });
@@ -244,8 +232,7 @@ var mpStorage = {
         // **********
 
         if (doc == null) doc = document;
-        var arr = Array(), xpr = doc.evaluate(path, element,
-        null, XPathResult.UNORDERED_NODE_ITERATOR_TYPE, null);
+        var arr = Array(), xpr = doc.evaluate(path, element, null, XPathResult.UNORDERED_NODE_ITERATOR_TYPE, null);
         for (; item = xpr.iterateNext();) arr.push(item);
         return arr;
     },
