@@ -89,15 +89,13 @@ Le JSON stocké devra respecter la structure décrite ci-dessous.
 
 ```json
 {
-    flags : [
+    list : [
         {
-           POST_ID : {
-               uri : POST_URI,
-               post : POST_ID,
-               page : FLAG_PAGE,
-               href : RESPONSE_ANCHOR,
-               p : FLAG_PAGE
-           } 
+            uri : POST_URI,
+            post : POST_ID,
+            page : FLAG_PAGE,
+            href : RESPONSE_ANCHOR,
+            p : FLAG_PAGE
         }
     ],
     sourceName : TOOLNAME,
@@ -112,14 +110,11 @@ Exemple :
 
 ```json
 {
- "123456" : {
   "uri":"https://forum.hardware.fr/forum2.php?config=hfr.inc&cat=prive&post=123456&page=1&p=1&sondage=0&owntopic=0&trash=0&trash_post=0&print=0&numreponse=0&quote_only=0&new=0&nojs=0#t789987",
   "post":123456,
   "page":1,
-  "href":
-  "t789987",
+  "href":"t789987",
   "p":"1"
- }
 }
 ```
 
@@ -151,15 +146,13 @@ Exemple :
       {
          "version":"0.1",
          "mpFlags":{
-            "flags":[
+            "list":[
                {
-                  "123456":{
-                     "uri":"https://forum.hardware.fr/forum2.php?config=hfr.inc&cat=prive&post=123456&page=1&p=1&sondage=0&owntopic=0&trash=0&trash_post=0&print=0&numreponse=0&quote_only=0&new=0&nojs=0#t789987",
-                     "post":123456,
-                     "page":1,
-                     "href":"t789987",
-                     "p":"1"
-                  }
+                "uri":"https://forum.hardware.fr/forum2.php?config=hfr.inc&cat=prive&post=123456&page=1&p=1&sondage=0&owntopic=0&trash=0&trash_post=0&print=0&numreponse=0&quote_only=0&new=0&nojs=0#t789987",
+                "post":123456,
+                "page":1,
+                "href":"t789987",
+                "p":"1"
                }
             ],
             "sourceName":"HFRGMTools",

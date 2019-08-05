@@ -55,11 +55,15 @@ var mpStorage = {
         });
     },
 
-    setStorageData: function (data) {
+    setStorageData: function (data, toolname) {
         // **********
         // HFRGMTools
         // Method to save the given JSON data in the MPStorage
         // **********
+		
+		// Relevant datas
+		data.sourceName = toolname;
+		data.lastUpdate = Date.now();
 
         var url = 'https://forum.hardware.fr/bdd.php?config=hfr.inc';
         var args = 'content_form=' + encodeURIComponent(JSON.stringify(data));
@@ -161,15 +165,13 @@ var mpStorage = {
                 {
                     version: '0.1',
                     mpFlags: {
-                        flags: [
+                        list: [
                             {
-                                '123456': {
                                     'uri': 'https://forum.hardware.fr/forum2.php?config=hfr.inc&cat=prive&post=123456&page=1&p=1&sondage=0&owntopic=0&trash=0&trash_post=0&print=0&numreponse=0&quote_only=0&new=0&nojs=0#t789987',
                                     'post': 123456,
                                     'page': 1,
                                     'href': 't789987',
                                     'p': '1'
-                                }
                             }
                         ],
                         sourceName: 'HFRGMTools',
