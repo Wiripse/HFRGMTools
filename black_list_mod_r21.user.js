@@ -778,7 +778,7 @@ Promise.all([
             var now = Date.now();
             // Create an entry for the pseudo to add
             var entry = {
-                pseudo : getNormalPseudo(pseudoAAjouter),
+                username : getNormalPseudo(pseudoAAjouter),
                 createDate : now
             };
 
@@ -801,7 +801,7 @@ Promise.all([
 
     // vérifie si un pseudo est dans la black liste
     function isPseudoBlacklisted(pseudoAVerifier) {
-      return LocalMPStorage.blacklist.list.filter(function(d){ return getNormalPseudo(pseudoAVerifier) === getNormalPseudo(d.pseudo);}).length > 0;
+      return LocalMPStorage.blacklist.list.filter(function(d){ return getNormalPseudo(pseudoAVerifier) === getNormalPseudo(d.username);}).length > 0;
     }
 
     // enlève un pseudo de la black liste
@@ -810,7 +810,7 @@ Promise.all([
         // We retrieve the latest version of the MPStorage datas
         LocalMPStorage.getData(function(res){
             // Look for the pseudo to delete in the list
-            let i = LocalMPStorage.blacklist.list.findIndex(function(d){ return getNormalPseudo(pseudoAEnlever) === getNormalPseudo(d.pseudo); });
+            let i = LocalMPStorage.blacklist.list.findIndex(function(d){ return getNormalPseudo(pseudoAEnlever) === getNormalPseudo(d.username); });
 
             if(i >= 0) {
                 // Remove the entry from the list
