@@ -60,10 +60,12 @@ var mpStorage = {
         // HFRGMTools
         // Method to save the given JSON data in the MPStorage
         // **********
-		
+
+        console.warn('setStorageData tool :', toolname);
+
 		// Relevant datas
-		data.sourceName = toolname;
-		data.lastUpdate = Date.now();
+        data.sourceName = toolname;
+        data.lastUpdate = Date.now();
 
         var url = 'https://forum.hardware.fr/bdd.php?config=hfr.inc';
         var args = 'content_form=' + encodeURIComponent(JSON.stringify(data));
