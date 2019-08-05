@@ -45,14 +45,16 @@ var mpStorage = {
         // CALLBACK is called with the JSON retrieved
         // **********
 
-        var url = 'https://forum.hardware.fr/message.php?config=hfr.inc';
-        var args = '&cat=prive&post=' + mpStorage.mpId + '&numreponse=' + mpStorage.mpRepId + '&page=1&p=1&subcat=0&sondage=0&owntopic=0';
+        if (mpStorage.initiated){
+            var url = 'https://forum.hardware.fr/message.php?config=hfr.inc';
+            var args = '&cat=prive&post=' + mpStorage.mpId + '&numreponse=' + mpStorage.mpRepId + '&page=1&p=1&subcat=0&sondage=0&owntopic=0';
 
-        // Get request
-        mpStorage.loadPage(url, 'get', args, function (resp) {
-            mpStorage.storageData = JSON.parse(resp.getElementById('content_form').value);
-            callback(mpStorage.storageData);
-        });
+            // Get request
+            mpStorage.loadPage(url, 'get', args, function (resp) {
+                mpStorage.storageData = JSON.parse(resp.getElementById('content_form').value);
+                callback(mpStorage.storageData);
+            });
+        }
     },
 
     setStorageData: function (data, toolname) {
@@ -61,20 +63,22 @@ var mpStorage = {
         // Method to save the given JSON data in the MPStorage
         // **********
 
-		// Relevant datas
-        data.sourceName = toolname;
-        data.lastUpdate = Date.now();
+        if (mpStorage.initiated){
+            // Relevant datas
+            data.sourceName = toolname;
+            data.lastUpdate = Date.now();
 
-        var url = 'https://forum.hardware.fr/bdd.php?config=hfr.inc';
-        var args = 'content_form=' + encodeURIComponent(JSON.stringify(data));
-        args += '&post=' + mpStorage.mpId + '&numreponse=' + mpStorage.mpRepId;
-        args += '&pseudo=' + encodeURIComponent(mpStorage.username) + '&cat=prive&verifrequet=1100&sujet=' + encodeURIComponent(mpStorage.mpName);
-        args += '&hash_check=' + mpStorage.getElementByXpath('//input[@name="hash_check"]', document).pop().value;
+            var url = 'https://forum.hardware.fr/bdd.php?config=hfr.inc';
+            var args = 'content_form=' + encodeURIComponent(JSON.stringify(data));
+            args += '&post=' + mpStorage.mpId + '&numreponse=' + mpStorage.mpRepId;
+            args += '&pseudo=' + encodeURIComponent(mpStorage.username) + '&cat=prive&verifrequet=1100&sujet=' + encodeURIComponent(mpStorage.mpName);
+            args += '&hash_check=' + mpStorage.getElementByXpath('//input[@name="hash_check"]', document).pop().value;
 
-        // Post request
-        mpStorage.loadPage(url, 'post', args, function () {
-            // console.warn('Data updated');
-        });
+            // Post request
+            mpStorage.loadPage(url, 'post', args, function () {
+                // console.warn('Data updated');
+            });
+        }
     },
 
     findStorageMPOnPage: function (pageId, callback) {
