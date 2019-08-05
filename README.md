@@ -130,9 +130,9 @@ Exemple :
 {
     list : [
         {
-               username : PSEUDO_HFR,
-               userId : ID_HFR,
-               createDate : TIMESTAMP
+            username : PSEUDO_HFR,
+            userId : ID_HFR,
+            createDate : TIMESTAMP
         }
     ],
     sourceName : TOOLNAME,
@@ -166,7 +166,7 @@ Exemple :
             "lastUpdate":1564993571925
          },
          "blacklist":{
-            "blacklist":[
+            "list":[
                {
                   "username":"MultiMP",
                   "userId":99887766,
