@@ -128,7 +128,7 @@ Exemple :
 
 ```json
 {
-    blacklist : [
+    list : [
         {
                username : PSEUDO_HFR,
                userId : ID_HFR,
@@ -142,3 +142,51 @@ Exemple :
 
 * **TOOLNAME** : Nom de l'outil utilisé pour modifier le JSON (Script GM, appli mobile...)
 * **TIMESTAMP** : Timestamp du moment où a été modifié le JSON
+
+#### Exemple complet
+
+```json
+{
+   "data":[
+      {
+         "version":"0.1",
+         "mpFlags":{
+            "flags":[
+               {
+                  "123456":{
+                     "uri":"https://forum.hardware.fr/forum2.php?config=hfr.inc&cat=prive&post=123456&page=1&p=1&sondage=0&owntopic=0&trash=0&trash_post=0&print=0&numreponse=0&quote_only=0&new=0&nojs=0#t789987",
+                     "post":123456,
+                     "page":1,
+                     "href":"t789987",
+                     "p":"1"
+                  }
+               }
+            ],
+            "sourceName":"HFRGMTools",
+            "lastUpdate":1564993571925
+         },
+         "blacklist":{
+            "blacklist":[
+               {
+                  "username":"MultiMP",
+                  "userId":99887766,
+                  "createDate":1564993571925
+               },
+               {
+                  "username":"MultiMP2",
+                  "userId":66778899,
+                  "createDate":1564993571925
+               }
+            ],
+            "sourceName":"HFRGMTools",
+            "lastUpdate":1564993571925
+         },
+         "sourceName":"HFRGMTools",
+         "lastUpdate":1564993571925
+      }
+   ],
+   "sourceName":"HFRGMTools",
+   "lastUpdate":1564993571925
+}
+
+```
