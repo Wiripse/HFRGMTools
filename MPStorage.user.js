@@ -61,8 +61,6 @@ var mpStorage = {
         // Method to save the given JSON data in the MPStorage
         // **********
 
-        console.warn('setStorageData tool :', toolname);
-
 		// Relevant datas
         data.sourceName = toolname;
         data.lastUpdate = Date.now();
