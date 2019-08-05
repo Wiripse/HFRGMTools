@@ -6,7 +6,9 @@
 // @icon          https://reho.st/self/40f387c9f48884a57e8bbe05e108ed4bd59b72ce.png
 // @include       https://forum.hardware.fr/forum2.php*
 // @include       https://forum.hardware.fr/hfr/*/*-sujet_*_*.htm*
-// @author        wiripse
+// @downloadURL   https://github.com/Wiripse/HFRGMTools/raw/master/ListeNoire_LaMer.user.js
+// @updateURL     https://github.com/Wiripse/HFRGMTools/raw/master/ListeNoire_LaMer.user.js
+// @author        Wiripse
 // @authororig    nykal, roger21
 // @modifications Mod de roger21 d'un script de nykal. Ajout du stockage de la liste des pseudos en MPStorage
 // @modtype       Evolutions
