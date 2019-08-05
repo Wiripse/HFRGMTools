@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          [HFR] Black List mod_r21 MPSTORAGE
-// @version       3.5.2
+// @version       3.6.0
 // @namespace     roger21.free.fr
 // @description   Permet de filtrer les posts des utilisateurs.
 // @icon          https://reho.st/self/40f387c9f48884a57e8bbe05e108ed4bd59b72ce.png
