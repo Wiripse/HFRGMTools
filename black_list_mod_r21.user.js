@@ -793,7 +793,7 @@ Promise.all([
             mpStorage.storageData.data.filter(function(d){return LocalMPStorage.version === d.version;})[0].blacklist = LocalMPStorage.blacklist;
 
             // And store the result with MPStorage
-            mpStorage.setStorageData(mpStorage.storageData);
+            mpStorage.setStorageData(mpStorage.storageData, LocalMPStorage.toolName);
 
             callback();
         });
@@ -823,7 +823,7 @@ Promise.all([
                 mpStorage.storageData.data.filter(function(d){return LocalMPStorage.version === d.version;})[0].blacklist = LocalMPStorage.blacklist;
 
                 // And store the result with MPStorage
-                mpStorage.setStorageData(mpStorage.storageData);
+                mpStorage.setStorageData(mpStorage.storageData, LocalMPStorage.toolName);
 
                 callback();
             }
