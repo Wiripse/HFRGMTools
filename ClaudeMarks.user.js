@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          [HFR] ClaudeMarks
-// @version       2019.8.5.0
+// @version       2019.8.6.0
 // @namespace     forum.hardware.fr
 // @description   Gestion de posts favoris avec stockage en MPStorage
 // @icon          https://reho.st/self/40f387c9f48884a57e8bbe05e108ed4bd59b72ce.png
@@ -110,6 +110,50 @@ var LocalMPStorage = {
                 reject(e);
             }
         });
+    },
+
+    getCatOrPost : function(cat){
+        var id2cat = {
+            31: "service-client-shophfr",
+            1: "Hardware",
+            16: "HardwarePeripheriques",
+            15: "OrdinateursPortables",
+            2: "OverclockingCoolingModding",
+            30: "electroniquedomotiquediy",
+            23: "gsmgpspda",
+            25: "apple",
+            3: "VideoSon",
+            14: "Photonumerique",
+            5: "JeuxVideo",
+            4: "WindowsSoftware",
+            22: "reseauxpersosoho",
+            21: "systemereseauxpro",
+            11: "OSAlternatifs",
+            10: "Programmation",
+            12: "Graphisme",
+            6: "AchatsVentes",
+            8: "EmploiEtudes",
+            9: "Setietprojetsdistribues",
+            13: "Discussions"
+        };
+        function indexObj(obj, str) {
+            for(let prop in obj) {
+                if(obj[prop] === str) {
+                    return prop;
+                }
+            }
+            return null;
+        }
+        // récupération de la cat et du topic dans l'url de la page
+        var resultp = /^.*&cat=([0-9]+).*&post=([0-9]+)&.*$/.exec(window.location.href);
+        if(resultp !== null) { // url à paramètres
+            return cat ? resultp[1] : resultp[2];
+        } else {
+            var resultv = /^https:\/\/forum.hardware.fr\/hfr\/([^\/]+)\/.*sujet_([0-9]+)_[0-9]+\.htm.*$/.exec(window.location.href);
+            if(resultv !== null) { // url verbeuse
+                return cat ? indexObj(id2cat, resultv[1]) : resultv[2];
+            }
+        }
     }
 };
 
@@ -147,14 +191,9 @@ LocalMPStorage.initBLMPStorage().then(function() {
   let root = document.querySelector("div#mesdiscussions.mesdiscussions");
   if(root) {
 
-      let postId = 0;
-      let catId = 0;
 
-      if(document.location.href.indexOf('https://forum.hardware.fr/forum2.php') === 0){
-          postId = mpStorage.getJsonFromUrl(document.location.href).post;
-          catId = mpStorage.getJsonFromUrl(document.location.href).cat;
-      }
-
+     let postId = LocalMPStorage.getCatOrPost(false);
+     let catId = LocalMPStorage.getCatOrPost(true);
 
 
     // icônes et boutons
@@ -202,24 +241,28 @@ LocalMPStorage.initBLMPStorage().then(function() {
         divListeNoire.appendChild(aListeNoire);
         mp.appendChild(divListeNoire);
       }
-      // ajoute le bouton à coté des pseudos
-      let pseudos = root.querySelectorAll("table.messagetable > tbody > tr > td.messCase1 > " +
-        "div:not([postalrecall]) > b.s2");
-      for(let pseudo of pseudos) {
-        // construction du bouton
-        let divListeNoirePseudo = document.createElement("div");
-        divListeNoirePseudo.setAttribute("class", "right");
-        let imgListenoirePseudo = document.createElement("img");
-        imgListenoirePseudo.setAttribute("src", img_bookmarks);
-        imgListenoirePseudo.style.verticalAlign = "bottom";
-        imgListenoirePseudo.style.cursor = "pointer";
-        imgListenoirePseudo.style.marginRight = "1px";
-        imgListenoirePseudo.style.marginLeft = "3px";
-        // ouverture de la fenetre de confiramtion/gestion sur le clic du bouton
-        imgListenoirePseudo.addEventListener("click", displayBlackListQuestion, false);
-        divListeNoirePseudo.appendChild(imgListenoirePseudo);
-        pseudo.parentElement.parentElement.insertBefore(divListeNoirePseudo, pseudo.parentElement);
-      }
+
+       if(postId > 0 && catId > 0){
+         // ajoute le bouton à coté des pseudos
+           let pseudos = root.querySelectorAll("table.messagetable > tbody > tr > td.messCase1 > " +
+                                               "div:not([postalrecall]) > b.s2");
+           for(let pseudo of pseudos) {
+               // construction du bouton
+               let divListeNoirePseudo = document.createElement("div");
+               divListeNoirePseudo.setAttribute("class", "right");
+               let imgListenoirePseudo = document.createElement("img");
+               imgListenoirePseudo.setAttribute("src", img_bookmarks);
+               imgListenoirePseudo.style.verticalAlign = "bottom";
+               imgListenoirePseudo.style.cursor = "pointer";
+               imgListenoirePseudo.style.marginRight = "1px";
+               imgListenoirePseudo.style.marginLeft = "3px";
+               // ouverture de la fenetre de confiramtion/gestion sur le clic du bouton
+               imgListenoirePseudo.addEventListener("click", displayBlackListQuestion, false);
+               divListeNoirePseudo.appendChild(imgListenoirePseudo);
+               pseudo.parentElement.parentElement.insertBefore(divListeNoirePseudo, pseudo.parentElement);
+           }
+       }
+      
     }
 
     // affichage de la fenêtre de gestion de la black liste
@@ -265,8 +308,7 @@ LocalMPStorage.initBLMPStorage().then(function() {
       tableList.style.borderCollapse = "collapse";
      
       for(let item of LocalMPStorage.bookmarks.list) {
-          console.warn('item :', item, item.numreponse);
-
+          
         let trRemove = document.createElement("tr");
 
         let tdInputOpenLink = document.createElement("td");
@@ -288,7 +330,7 @@ LocalMPStorage.initBLMPStorage().then(function() {
           //
        let tdRemovePseudo = document.createElement("td");
         tdRemovePseudo.style.verticalAlign = "bottom";
-        tdRemovePseudo.appendChild(document.createTextNode(item.label));
+        tdRemovePseudo.appendChild(document.createTextNode(item.label+ ' par ' + item.author));
         tdRemovePseudo.style.cursor = "default";
         trRemove.appendChild(tdRemovePseudo);
         let tdInputRemove = document.createElement("td");
@@ -319,7 +361,7 @@ LocalMPStorage.initBLMPStorage().then(function() {
     function displayBlackListQuestion(event) {
       event.stopPropagation();
        let postAnchor = this.parentElement.parentElement.querySelector("td.messCase1 > a").name;
-      //let pseudoValue = this.parentElement.parentElement.querySelector("div > b.s2").firstChild.nodeValue;
+      let authorValue = this.parentElement.parentElement.querySelector("div > b.s2").firstChild.nodeValue;
       // suppression des fenêtres ouvertes
       hidePopups();
       // construction de la fenêtre
@@ -333,6 +375,14 @@ LocalMPStorage.initBLMPStorage().then(function() {
       divBlackListQuestion.style.cursor = "default";
       let divQuestion = document.createElement("div");
       divQuestion.style.fontSize = "8pt";
+        let divLabel = document.createElement('div');
+        divLabel.appendChild(document.createTextNode("Nom du bookmark"));
+        let inputLabel = document.createElement('input');
+        inputLabel.setAttribute('type', 'text');
+        inputLabel.setAttribute('size', 50);
+        inputLabel.setAttribute('id', 'labelBM_'+postAnchor);
+        divLabel.appendChild(inputLabel);
+        divQuestion.appendChild(divLabel);
       let divValidation = document.createElement("div");
       divValidation.style.marginTop = "8px";
       divValidation.style.textAlign = "right";
@@ -350,7 +400,7 @@ LocalMPStorage.initBLMPStorage().then(function() {
       } else {*/
         divQuestion.appendChild(document.createTextNode("Ajouter ce post aux favoris ?"));
         inputOk.addEventListener("click", function() {
-          addToBookmarks(postAnchor, postId, catId, function(){
+          addToBookmarks(postAnchor, postId, catId, authorValue, document.getElementById('labelBM_'+postAnchor).value, function(){
               hidePopups();
           });
         }, false);
@@ -397,197 +447,7 @@ LocalMPStorage.initBLMPStorage().then(function() {
       }
     }, false);
 
-    // masque les messages des pseudos blacklistés
-    function hidePosts() {
-      let posts = root.querySelectorAll("table.messagetable > tbody > tr:not(.hfrMessageListeNoire) > " +
-        "td.messCase1 > div:not([postalrecall]) > b.s2");
-      for(let post of posts) {
-        let pseudo = post.firstChild.nodeValue;
-        post = post.parentElement.parentElement.parentElement;
-        /* if(isPseudoBlacklisted(pseudo)) {
-          post.classList.add("hfrMessageListeNoire");
-          post.classList.add("hfrStyleListeNoire");
-          post.classList.remove("hfrMessageAvecCitationListeNoire");
-          post.classList.remove("hfrStyleMessageAvecCitationListeNoire");
-          let oldtr = post.parentElement.querySelector("tr.hfrInfoListeNoire");
-          if(oldtr !== null) {
-            post.parentElement.removeChild(oldtr);
-          }
-          let tr = this.document.createElement("tr");
-          tr.setAttribute("id", post.querySelector("td.messCase1 > a[name]").getAttribute("name"));
-          tr.classList.add("hfrInfoListeNoire");
-          if(masquage_complet) {
-            tr.classList.add("hfrMasquageComplet");
-          }
-          let td = this.document.createElement("td");
-          let p = this.document.createElement("p");
-          p.setAttribute("style", "font-size:8pt");
-          p.appendChild(document.createTextNode(pseudo + " a été bloqué "));
-          let a = this.document.createElement("a");
-          a.setAttribute("href", "javascript:void(null);");
-          a.appendChild(this.document.createTextNode("Afficher le message"));
-          a.addEventListener("click", function(event) {
-            event.preventDefault();
-            let post = this.parentElement.parentElement.parentElement.nextElementSibling;
-            post.parentElement.removeChild(post.previousElementSibling);
-            post.classList.remove("hfrMessageListeNoire");
-          }, false);
-          p.appendChild(a);
-          td.appendChild(p);
-          tr.appendChild(td);
-          post.parentElement.insertBefore(tr, post);
-        } else {
-          post.classList.remove("hfrStyleListeNoire");
-        } */
-      }
-    }
-
-    // affiche les messages des pseudos retirés de la black liste
-    function showPosts() {
-      let posts = root.querySelectorAll("table.messagetable > tbody > tr.hfrMessageListeNoire > " +
-        "td.messCase1 > div:not([postalrecall]) > b.s2");
-      for(let post of posts) {
-        let pseudo = post.firstChild.nodeValue;
-        /*if(!isPseudoBlacklisted(pseudo)) {
-          post = post.parentElement.parentElement.parentElement;
-          post.parentElement.removeChild(post.previousElementSibling);
-          post.classList.remove("hfrMessageListeNoire");
-          post.classList.remove("hfrStyleListeNoire");
-        }*/
-      }
-      //hidePostsWithQuote();
-    }
-
-    // masque les citation des pseudos blacklistés
-    function hideQuotes() {
-      let quotes = root.querySelectorAll("div.container > " +
-        "table.citation:not(.hfrCitationListeNoire):not(.hfrInfoListeNoire), " +
-        "div.container > table.oldcitation:not(.hfrCitationListeNoire):not(.hfrInfoListeNoire)");
-      for(let quote of quotes) {
-        let title = quote.querySelector("tbody > tr.none > td > b.s1 > a.Topic");
-        if(title && title.firstChild && title.firstChild.nodeValue &&
-          title.firstChild.nodeValue.indexOf(" a écrit :") !== -1) {
-          title = title.firstChild.nodeValue;
-          let pseudo = title.substring(0, title.length - " a écrit :".length);
-          /*if(isPseudoBlacklisted(pseudo)) {
-            let citation = quote.classList.contains("citation") ? "citation" : "oldcitation";
-            quote.classList.add("hfrCitationListeNoire");
-            quote.classList.add("hfrStyleListeNoire");
-            let quoteListeNoire = this.document.createElement("table");
-            quoteListeNoire.classList.add(citation);
-            quoteListeNoire.classList.add("hfrInfoListeNoire");
-            if(masquage_complet) {
-              quoteListeNoire.classList.add("hfrMasquageComplet");
-            }
-            let trListeNoire = document.createElement("tr");
-            trListeNoire.setAttribute("class", "none");
-            let tdListeNoire = document.createElement("td");
-            let bListeNoire = document.createElement("p");
-            bListeNoire.setAttribute("class", "s1");
-            bListeNoire.appendChild(document.createTextNode(pseudo + " a été bloqué "));
-            let aListeNoire = document.createElement("a");
-            aListeNoire.setAttribute("href", "javascript:void(null);");
-            aListeNoire.appendChild(document.createTextNode("Afficher la citation"));
-            aListeNoire.addEventListener("click", function(event) {
-              event.preventDefault();
-              let quote = this.parentElement.parentElement.parentElement.parentElement.nextElementSibling;
-              quote.parentElement.removeChild(quote.previousElementSibling);
-              quote.classList.remove("hfrCitationListeNoire");
-            }, false);
-            bListeNoire.appendChild(aListeNoire);
-            tdListeNoire.appendChild(bListeNoire);
-            trListeNoire.appendChild(tdListeNoire);
-            quoteListeNoire.appendChild(trListeNoire);
-            quote.parentElement.insertBefore(quoteListeNoire, quote);
-          } else {
-            quote.classList.remove("hfrStyleListeNoire");
-          } */
-        }
-      }
-      // hidePostsWithQuote();
-    }
-
-    // affiche les citations des pseudos retirés de la black liste
-    function showQuotes() {
-      let quotes = root.querySelectorAll("div.container > table.citation.hfrCitationListeNoire, " +
-        "div.container > table.oldcitation.hfrCitationListeNoire");
-      for(let quote of quotes) {
-        let title = quote.querySelector("tbody > tr.none > td > b.s1 > a.Topic");
-        if(title && title.firstChild && title.firstChild.nodeValue &&
-          title.firstChild.nodeValue.indexOf(" a écrit :") !== -1) {
-          title = title.firstChild.nodeValue;
-          let pseudo = title.substring(0, title.length - " a écrit :".length);
-          /*if(!isPseudoBlacklisted(pseudo)) {
-            quote.parentElement.removeChild(quote.previousElementSibling);
-            quote.classList.remove("hfrCitationListeNoire");
-            quote.classList.remove("hfrStyleListeNoire");
-          }*/
-        }
-      }
-      //showPostsWithQuote();
-    }
-
-    // masque les messages contenant des citations des pseudos blacklistés
-    /*function hidePostsWithQuote() {
-      if(messages_avec_citation) {
-        let posts = root.querySelectorAll("table.messagetable > tbody > " +
-          "tr:not(.hfrMessageListeNoire):not(.hfrMessageAvecCitationListeNoire)");
-        for(let post of posts) {
-          if(post.querySelector("div.container > table.citation.hfrCitationListeNoire, " +
-              "div.container > table.oldcitation.hfrCitationListeNoire") !== null) {
-            let pseudo = post.querySelector("td.messCase1 > div:not([postalrecall]) > b.s2").firstChild.nodeValue;
-            post.classList.add("hfrMessageAvecCitationListeNoire");
-            post.classList.add("hfrStyleMessageAvecCitationListeNoire");
-            let tr = this.document.createElement("tr");
-            tr.classList.add("hfrInfoListeNoire");
-            if(masquage_complet) {
-              tr.classList.add("hfrMasquageComplet");
-            }
-            let td = this.document.createElement("td");
-            let p = this.document.createElement("p");
-            p.setAttribute("style", "font-size:8pt");
-            p.appendChild(document.createTextNode("Le message de " + pseudo + " contient une citation bloquée "));
-            let a = this.document.createElement("a");
-            a.setAttribute("href", "javascript:void(null);");
-            a.appendChild(this.document.createTextNode("Afficher le message"));
-            a.addEventListener("click", function(event) {
-              event.preventDefault();
-              let post = this.parentElement.parentElement.parentElement.nextElementSibling;
-              post.parentElement.removeChild(post.previousElementSibling);
-              post.classList.remove("hfrMessageAvecCitationListeNoire");
-            }, false);
-            p.appendChild(a);
-            td.appendChild(p);
-            tr.appendChild(td);
-            post.parentElement.insertBefore(tr, post);
-          } else {
-            post.classList.remove("hfrStyleMessageAvecCitationListeNoire");
-          }
-        }
-      }
-    }*/
-
-    // affiche les messages contenant des citations des pseudos retirés de la black liste
-    /*function showPostsWithQuote() {
-      let posts = root.querySelectorAll("table.messagetable > tbody > tr.hfrMessageAvecCitationListeNoire");
-      for(let post of posts) {
-        if((post.querySelector("div.container > table.citation.hfrCitationListeNoire, " +
-            "div.container > table.oldcitation.hfrCitationListeNoire") === null) ||
-          (messages_avec_citation === false)) {
-          if(post.previousElementSibling) {
-            post.parentElement.removeChild(post.previousElementSibling);
-          }
-          post.classList.remove("hfrMessageAvecCitationListeNoire");
-          post.classList.remove("hfrStyleMessageAvecCitationListeNoire");
-        }
-      }
-    }*/
-
-    // suppression du caractère spécial dans les pseudos longs et conversion en minuscules
-    function getNormalPseudo(pseudo) {
-      return pseudo.replace(/\u200b/g, "").toLowerCase();
-    }
-
+    
     function getIdFromAnchor(anchor) {
       return parseInt(anchor.replace('t', ''));
     }
@@ -602,7 +462,7 @@ LocalMPStorage.initBLMPStorage().then(function() {
     }
 
     // ajoute un pseudo à la black liste
-    function addToBookmarks(anchor, post, cat, callback) {
+    function addToBookmarks(anchor, post, cat, author, label, callback) {
 
         // We retrieve the latest version of the MPStorage datas
         LocalMPStorage.getData(function(res){
@@ -613,7 +473,8 @@ LocalMPStorage.initBLMPStorage().then(function() {
                 numreponse : getIdFromAnchor(anchor),
                 post : post,
                 cat : cat,
-                label : 'Osef_'+anchor,
+                author : author,
+                label : label || 'Osef_'+anchor,
                 createDate : now
             };
 
@@ -667,8 +528,6 @@ LocalMPStorage.initBLMPStorage().then(function() {
 
     // leggo!
     addButtons();
-    hidePosts();
-    hideQuotes();
 
   }
 });
