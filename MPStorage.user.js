@@ -185,12 +185,10 @@ var mpStorage = {
                         list : [
                             {
                                    username : 'MultiMP',
-                                   userId : 99887766,
                                    createDate : Date.now()
                             },
                             {
                                 username : 'MultiMP2',
-                                userId : 66778899,
                                 createDate : Date.now()
                             }
                         ],

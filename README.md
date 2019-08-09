@@ -75,6 +75,7 @@ Le JSON stocké devra respecter la structure décrite ci-dessous.
     version : MPSTORAGE_VERSION,
     mpFlags : MP_FLAGS,
     blacklist : BLACKLIST,
+	bookmarks: BOOKMARKS,
     sourceName : TOOLNAME,
     lastUpdate : TIMESTAMP
 
@@ -126,7 +127,6 @@ Exemple :
     list : [
         {
             username : PSEUDO_HFR,
-            userId : ID_HFR,
             createDate : TIMESTAMP
         }
     ],
@@ -137,6 +137,29 @@ Exemple :
 
 * **TOOLNAME** : Nom de l'outil utilisé pour modifier le JSON (Script GM, appli mobile...)
 * **TIMESTAMP** : Timestamp du moment où a été modifié le JSON
+
+#### Structure de BOOKMARKS
+
+```json
+{
+    list : [
+        {
+            numreponse : ID_HFR_REPONSE (sans le t),
+			post: ID_HFR_TOPIC,
+			cat: ID_HFR_CATEGORIE_TOPIC,
+			author: PSEUD0_HFR_AUTEUR_REPONSE,
+			label: STRING_LABEL_BOOKMARK,
+            createDate : TIMESTAMP
+        }
+    ],
+    sourceName : TOOLNAME,
+    lastUpdate : TIMESTAMP
+}
+```
+
+* **TOOLNAME** : Nom de l'outil utilisé pour modifier le JSON (Script GM, appli mobile...)
+* **TIMESTAMP** : Timestamp du moment où a été modifié le JSON
+
 
 #### Exemple complet
 
@@ -162,13 +185,25 @@ Exemple :
             "list":[
                {
                   "username":"MultiMP",
-                  "userId":99887766,
                   "createDate":1564993571925
                },
                {
                   "username":"MultiMP2",
-                  "userId":66778899,
                   "createDate":1564993571925
+               }
+            ],
+            "sourceName":"HFRGMTools",
+            "lastUpdate":1564993571925
+         },
+		 "bookmarks":{
+            "list":[
+               {
+					"numreponse" : 1234,
+					"post": 567,
+					"cat": 899,
+					"author": "MultiMP",
+					"label": "toto",
+					"createDate" : 1564993571925
                }
             ],
             "sourceName":"HFRGMTools",
