@@ -504,8 +504,8 @@ LocalMPStorage.initMultiMPStorage().then(function(){
                 var dir = sujet.querySelector(".sujetCase1").querySelector("img");
                 if (!(dir.getAttribute("alt") == "On"))
                     continue;
-                var c3 = sujet.querySelector(".sujetCase3");
-                var link = c3.querySelector("a");
+                var c9 = sujet.querySelector(".sujetCase9");
+                var link = c9.querySelector("a");
                 if (link === null)
                     continue;
                 var href = link.getAttribute("href");
@@ -613,8 +613,8 @@ LocalMPStorage.initMultiMPStorage().then(function(){
         for (let sujet of document.querySelectorAll(".sujet")) {
 
             var dir = sujet.querySelector(".sujetCase1").querySelector("img");
-            var c3 = sujet.querySelector(".sujetCase3");
-            var link = c3.querySelector("a");
+            var c9 = sujet.querySelector(".sujetCase9");
+            var link = c9.querySelector("a");
             if (link === null)
                 continue;
             var href = link.getAttribute("href");
