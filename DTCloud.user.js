@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          [HFR] DTCloud
 // @author        Wiripse, PetitJean, Rucous
-// @version       2019.8.5.1
+// @version       2019.9.19.0
 // @description   Gestion des DT dans le 'cloud' de chaque user via MPStorage
 // @icon          http://reho.st/self/40f387c9f48884a57e8bbe05e108ed4bd59b72ce.png
 // @downloadURL   https://github.com/Wiripse/HFRGMTools/raw/master/DTCloud.user.js
@@ -30,7 +30,7 @@
 
 // Historique
 // 2019.8.5.0 : Fork du script de PetitJean et ajout gestion MPStorage
-// 2019.8.5.1 : Option pour afficher ou non les mp comme catégorie.
+// 2019.9.19.0 : Option pour afficher ou non les mp comme catégorie.
 
 var LocalMPStorage = {
     /* Version of the MPStorage API used */
