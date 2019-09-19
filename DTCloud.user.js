@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          [HFR] DTCloud
 // @author        Wiripse, PetitJean, Rucous
-// @version       2019.8.5.0
+// @version       2019.8.5.1
 // @description   Gestion des DT dans le 'cloud' de chaque user via MPStorage
 // @icon          http://reho.st/self/40f387c9f48884a57e8bbe05e108ed4bd59b72ce.png
 // @downloadURL   https://github.com/Wiripse/HFRGMTools/raw/master/DTCloud.user.js
@@ -30,7 +30,7 @@
 
 // Historique
 // 2019.8.5.0 : Fork du script de PetitJean et ajout gestion MPStorage
-
+// 2019.8.5.1 : Option pour afficher ou non les mp comme catégorie.
 
 var LocalMPStorage = {
     /* Version of the MPStorage API used */
@@ -388,6 +388,8 @@ LocalMPStorage.initMultiMPStorage().then(function(){
         HFR.setValue ("hfr-multimp-notification-image", "https://forum-images.hardware.fr/themes_static/images_forum/1/newmp.gif");
         HFR.setValue ("hfr-multimp-notification-text", "");
     }
+    if (typeof HFR.getValue ("hfr-multimp-affichage-cat") != "string")
+		HFR.setValue ("hfr-multimp-affichage-cat", "oui");
 
     GM_registerMenuCommand("[HFR] Multi MP -> Affichage des signatures & statuts", function() {
         var param = prompt ("Afficher les signatures et les statuts ? (tapez \"non\" ou \"oui\")", HFR.getValue ("hfr-multimp-affichage-signatures", "non"));
@@ -427,6 +429,14 @@ LocalMPStorage.initMultiMPStorage().then(function(){
                 mp_notif.textContent = text.format (nb);
         }
     });
+    
+    GM_registerMenuCommand("[HFR] Multi MP -> Affichage de la catégorie", function() {
+      var param = prompt ("Afficher la catégorie MP ? (tapez \"non\" ou \"oui\")", HFR.getValue ("hfr-multimp-affichage-cat", "oui"));
+      var force = "non";
+      if (param == "oui")
+        force = "oui";
+      HFR.setValue ("hfr-multimp-affichage-cat", force);
+    });
 
     document.icons_theme = document.querySelector("#md_arbo_tree_1 > img:nth-child(1)").getAttribute("src").split("/")[5];
     if (typeof document.icons_theme == 'undefined' || document.icons_theme == null) {
@@ -461,6 +471,8 @@ LocalMPStorage.initMultiMPStorage().then(function(){
     }
 
     function fill_table(category, mode, fp) {
+		if (HFR.getValue ("hfr-multimp-affichage-cat") != "oui")
+			return;
         if (fp != true) {
             var tr = document.querySelector (".none tr");
             var td = tr.querySelector ("td:nth-child(2)");
