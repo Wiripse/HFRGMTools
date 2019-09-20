@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          [HFR] SouriardsToJS
 // @namespace     forum.hardware.fr
-// @version       2019.9.20.0
+// @version       2019.9.20.1
 // @namespace     HFR
 // @description
 // @include       https://forum.hardware.fr/wikismilies.php*
@@ -13,6 +13,8 @@
 // @grant         GM_setValue
 // @grant         GM_openInTab
 // @grant         GM.deleteValue
+
+// README : Go to https://forum.hardware.fr/wikismilies.php?config=hfr.inc&alpha=a&withouttag=0&threecol=0 and roulez jeunesse !
 
 // ==/UserScript==
 
@@ -86,7 +88,6 @@ GM.getValue('souriards', void 0).then(function(dataz) {
     HFRTools.checkPage().then(function(checkLetter){
 
         if(checkLetter){
-            console.warn('Checkletter');
             // No other page, we look for the next letter
             document.querySelectorAll('.cBackHeader').forEach(function(item, index){
                 if(currentChar !== nextChar && 5 === index){
