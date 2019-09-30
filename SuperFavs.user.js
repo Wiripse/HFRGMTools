@@ -1,12 +1,13 @@
 // ==UserScript==
 // @name          [HFR] SuperFavs
 // @author        Wiripse
-// @version       2019.9.30.0
+// @version       2019.9.30.1
 // @description   Gestion des SuperFavoris : Topics cyants mis en avant ou filtrables. Idée souflée par le génial Ezzz.
 // @icon          http://reho.st/self/40f387c9f48884a57e8bbe05e108ed4bd59b72ce.png
 // @downloadURL   https://github.com/Wiripse/HFRGMTools/raw/master/SuperFavs.user.js
 // @updateURL     https://github.com/Wiripse/HFRGMTools/raw/master/SuperFavs.user.js
 // @include       https://forum.hardware.fr/forum1f.php*
+// @include       https://forum.hardware.fr/forum1.php*
 // @homepageURL   https://github.com/Wiripse/HFRGMTools/
 // @noframes
 // @grant         GM.getValue
@@ -17,6 +18,7 @@
 // ==/UserScript==
 
 // Historique
+// 2019.9.30.1 : Fix pour que ça fonctionne aussi dans les drapals de catégories
 // 2019.9.30.0 : Premier jet
 
 var LocalMPStorage = {
@@ -128,7 +130,7 @@ var LocalMPStorage = {
         // SuperFavs_GM
         // Create the header tab ('onglet') to toggle favs list
         // **********
-        if (document.location.href.indexOf('https://forum.hardware.fr/forum1f.php') === 0) {
+        if (document.location.href.indexOf('https://forum.hardware.fr/forum1f.php') === 0 || document.location.href.indexOf('https://forum.hardware.fr/forum1.php') === 0) {
 
             var onglets = document.querySelector('.cadreonglet');
 
@@ -167,7 +169,7 @@ var LocalMPStorage = {
         // Rendering of the favorites according to SuperFavs list
         // **********
 
-        if (document.location.href.indexOf('https://forum.hardware.fr/forum1f.php') === 0) {
+        if (document.location.href.indexOf('https://forum.hardware.fr/forum1f.php') === 0 || document.location.href.indexOf('https://forum.hardware.fr/forum1.php') === 0) {
 
             // Iterate on each topic
             var topics = document.querySelectorAll('.sujetCase3');
