@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          [HFR] SuperFavs
 // @author        Wiripse
-// @version       2019.9.30.1
+// @version       2019.10.1.0
 // @description   Gestion des SuperFavoris : Topics cyants mis en avant ou filtrables. Idée souflée par le génial Ezzz.
 // @icon          http://reho.st/self/40f387c9f48884a57e8bbe05e108ed4bd59b72ce.png
 // @downloadURL   https://github.com/Wiripse/HFRGMTools/raw/master/SuperFavs.user.js
@@ -18,6 +18,7 @@
 // ==/UserScript==
 
 // Historique
+// 2019.10.1.0 : Fix toggle favs/superFavs avec DTCloud. Colorier toute la ligne d'un superFav. Affichage d'un message de catégorie vide. Gestion par classes et plus par style directement.
 // 2019.9.30.1 : Fix pour que ça fonctionne aussi dans les drapals de catégories
 // 2019.9.30.0 : Premier jet
 
@@ -130,7 +131,9 @@ var LocalMPStorage = {
         // SuperFavs_GM
         // Create the header tab ('onglet') to toggle favs list
         // **********
-        if (document.location.href.indexOf('https://forum.hardware.fr/forum1f.php') === 0 || document.location.href.indexOf('https://forum.hardware.fr/forum1.php') === 0) {
+
+        // FIXME : Useless test bcz script set to only work on those pages. But a nice idea would be to create util methods (isOnMP, isOnCyan...) to check where we are
+        if (document.location.href.indexOf('https://forum.hardware.fr/forum1f.php') === 0 || (document.location.href.indexOf('https://forum.hardware.fr/forum1.php') === 0 && document.querySelector('.cadreonglet'))) {
 
             var onglets = document.querySelector('.cadreonglet');
 
@@ -169,68 +172,141 @@ var LocalMPStorage = {
         // Rendering of the favorites according to SuperFavs list
         // **********
 
-        if (document.location.href.indexOf('https://forum.hardware.fr/forum1f.php') === 0 || document.location.href.indexOf('https://forum.hardware.fr/forum1.php') === 0) {
+        if (document.location.href.indexOf('https://forum.hardware.fr/forum1f.php') === 0 || (document.location.href.indexOf('https://forum.hardware.fr/forum1.php') === 0 && document.querySelector('.cadreonglet'))) {
 
+            // Custom CSS
+            var rowStyle = ".superFavRow { background-color : #D2B2FF; }";
+            var hiddenFav = ".hiddenFav { display : none; }";
+            var style = document.createElement("style");
+            style.type = "text/css";
+            style.appendChild(document.createTextNode(rowStyle));
+            style.appendChild(document.createTextNode(hiddenFav));
+            document.head.appendChild(style);
+
+            var topicRows = document.querySelectorAll('.sujet');
             // Iterate on each topic
-            var topics = document.querySelectorAll('.sujetCase3');
-            topics.forEach(function(topic) {
-                var topicUrl = new URLSearchParams(topic.querySelector('a').href);
-                var topicId = parseInt(topicUrl.get('post'));
+            topicRows.forEach(function(topicRow){
+                var topic = topicRow.querySelector('.sujetCase3');
+                if(!topicRow.classList.contains('privateMessage') && topic){
+                    // privateMessage class : fix to work with DTCloud
 
-                if (LocalMPStorage.superFavs.list.indexOf(topicId) < 0){
-                    // Simple favorite topic
-                    topic.style = '';
-                    if(LocalMPStorage.superFavs.onlySF){
-                        // Only displaying superFavs > Hide the simple favorite
-                        topic.parentNode.style.display = 'none';
-                    }else{
-                        // Displaying all the favorites
-                        topic.parentNode.style = '';
+                    var topicUrl = new URLSearchParams(topic.querySelector('a').href);
+                    var topicId = parseInt(topicUrl.get('post'));
+
+                    if (LocalMPStorage.superFavs.list.indexOf(topicId) < 0){
+                        // Simple favorite topic
+                        topic.style = '';
+                        if(LocalMPStorage.superFavs.onlySF){
+                            // Only displaying superFavs > Hide the simple favorite
+                            topicRow.classList.add('hiddenFav');
+                        }else{
+                            // Displaying all the favorites
+                            topicRow.classList.remove('hiddenFav');
+
+                            // Create icon to manage the fav status
+                            var imgBloc = topic.parentNode.querySelector('.sujetCase2');
+                            imgBloc.removeChild(imgBloc.querySelector('img'));
+                            var newImgBloc = document.createElement('img');
+                            newImgBloc.setAttribute('title', 'Ajouter aux super favoris');
+                            newImgBloc.setAttribute('src', LocalMPStorage.imgSimpleFav);
+                            // Handle onclick to add to SuperFavs list
+                            newImgBloc.onclick = function () {
+                                // Add to SuperFavs
+                                LocalMPStorage.superFavs.list.push(topicId);
+                                // Update MPStorage
+                                LocalMPStorage.updateMPStorage();
+                                // Render the result
+                                LocalMPStorage.renderFavs();
+                            };
+                            imgBloc.appendChild(newImgBloc);
+                        }
+
+                    } else {
+                        // SuperFav topic
+
+                        // Background color if in all fav display
+                        if (LocalMPStorage.superFavs.onlySF){
+                            topicRow.classList.remove('superFavRow');
+                            topicRow.querySelector('.sujetCase1').classList.remove('superFavRow');
+                            topicRow.querySelector('.sujetCase6').classList.remove('superFavRow');
+                            topicRow.querySelector('.sujetCase9').classList.remove('superFavRow');
+                        } else {
+                            topicRow.classList.add('superFavRow');
+                            topicRow.querySelector('.sujetCase1').classList.add('superFavRow');
+                            topicRow.querySelector('.sujetCase6').classList.add('superFavRow');
+                            topicRow.querySelector('.sujetCase9').classList.add('superFavRow');
+                        }
 
                         // Create icon to manage the fav status
-                        var imgBloc = topic.parentNode.querySelector('.sujetCase2');
-                        imgBloc.removeChild(imgBloc.querySelector('img'));
-                        var newImgBloc = document.createElement('img');
-                        newImgBloc.setAttribute('title', 'Ajouter aux super favoris');
-                        newImgBloc.setAttribute('src', LocalMPStorage.imgSimpleFav);
-                        // Handle onclick to add to SuperFavs list
-                        newImgBloc.onclick = function () {
-                            // Add to SuperFavs
-                            LocalMPStorage.superFavs.list.push(topicId);
-                            // Update MPStorage
-                            LocalMPStorage.updateMPStorage();
-                            // Render the result
-                            LocalMPStorage.renderFavs();
+                        var imgBlocSF = topic.parentNode.querySelector('.sujetCase2');
+                        imgBlocSF.removeChild(imgBlocSF.querySelector('img'));
+                        var newImgBlocSF = document.createElement('img');
+                        newImgBlocSF.setAttribute('title', 'Supprimer des super favoris');
+                        newImgBlocSF.setAttribute('src', LocalMPStorage.imgSuperFav);
+                        // Handle onclick to remove from SuperFavs list
+                        newImgBlocSF.onclick = function () {
+                            let i = LocalMPStorage.superFavs.list.findIndex(function(item){ return topicId === item; });
+                            if(0<=i){
+                                // Remove from SuperFavs
+                                LocalMPStorage.superFavs.list.splice(i, 1);
+                                // Update MPStorage
+                                LocalMPStorage.updateMPStorage();
+                                // Render the result
+                                LocalMPStorage.renderFavs();
+                            }
                         };
-                        imgBloc.appendChild(newImgBloc);
+                        imgBlocSF.appendChild(newImgBlocSF);
                     }
-
-                } else {
-                    // SuperFav topic
-                    // Background color if in all fav display
-                    topic.style = LocalMPStorage.superFavs.onlySF ? '' : 'background-color : #D2B2FF';
-
-                    // Create icon to manage the fav status
-                    var imgBlocSF = topic.parentNode.querySelector('.sujetCase2');
-                    imgBlocSF.removeChild(imgBlocSF.querySelector('img'));
-                    var newImgBlocSF = document.createElement('img');
-                    newImgBlocSF.setAttribute('title', 'Supprimer des super favoris');
-                    newImgBlocSF.setAttribute('src', LocalMPStorage.imgSuperFav);
-                    // Handle onclick to remove from SuperFavs list
-                    newImgBlocSF.onclick = function () {
-                        let i = LocalMPStorage.superFavs.list.findIndex(function(item){ return topicId === item; });
-                        if(0<=i){
-                            // Remove from SuperFavs
-                            LocalMPStorage.superFavs.list.splice(i, 1);
-                            // Update MPStorage
-                            LocalMPStorage.updateMPStorage();
-                            // Render the result
-                            LocalMPStorage.renderFavs();
-                        }
-                    };
-                    imgBlocSF.appendChild(newImgBlocSF);
                 }
             });
+
+            if(document.location.href.indexOf('https://forum.hardware.fr/forum1f.php') === 0){
+                // We manage empty categories if necessary with displaying an message
+
+                // FIXME : Would be better to create a map representing the topics; because now we won't display an empty row for the last cat since we work backward
+                // FIXME : Sync with DTCloud to add an empty row in the new "MP" cat if necessary
+
+                // Remove existing empty rows
+                document.querySelectorAll('.emptyRowFav').forEach(function(emptyRow){
+                    emptyRow.parentNode.removeChild(emptyRow);
+                });
+
+                var allRows = document.querySelector('.fondForum1fCat').parentNode.querySelectorAll('tr');
+
+                var isCat = false;
+                // Id of the current cat
+                var catId = 0;
+                // Number of displayed topics in the current cat
+                var nbTopicsCat = 0;
+
+                // Browse all rows
+                allRows.forEach(function(row){
+                    isCat = row.classList.contains('fondForum1fCat');
+
+                    if(!isCat){
+                        // Not a cat row : it's a topic, so we check if its hidden or not
+                        nbTopicsCat = nbTopicsCat + (row.classList.contains('hiddenFav') ? 0 : 1);
+                    } else {
+                        if(catId > 0){
+                            if (nbTopicsCat == 0){
+                                // The previous cat hasn't any displayed topic so we add an empty row
+                                var emptyRow = document.createElement('tr');
+                                emptyRow.setAttribute('class', 'sujet emptyRowFav');
+                                var emptyTd = document.createElement('td');
+                                emptyTd.setAttribute('colspan', 10);
+                                emptyTd.innerHTML = 'Aucun nouveau message';
+                                emptyRow.appendChild(emptyTd);
+                                row.parentNode.insertBefore(emptyRow, row);
+                            }
+                        }
+                        // Increment catId
+                        catId++;
+                        // Reset nbTopics for the new cat
+                        nbTopicsCat = 0;
+                    }
+                });
+            }
+
         }
     }
 }
