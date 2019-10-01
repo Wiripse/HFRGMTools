@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          [HFR] SuperFavs
 // @author        Wiripse
-// @version       2019.10.1.0
+// @version       2019.10.1.1
 // @description   Gestion des SuperFavoris : Topics cyants mis en avant ou filtrables. Idée souflée par le génial Ezzz.
 // @icon          http://reho.st/self/40f387c9f48884a57e8bbe05e108ed4bd59b72ce.png
 // @downloadURL   https://github.com/Wiripse/HFRGMTools/raw/master/SuperFavs.user.js
@@ -18,6 +18,7 @@
 // ==/UserScript==
 
 // Historique
+// 2019.10.1.1 : Fix pas de message catégorie vite pour les MP DTCloud.
 // 2019.10.1.0 : Fix toggle favs/superFavs avec DTCloud. Colorier toute la ligne d'un superFav. Affichage d'un message de catégorie vide. Gestion par classes et plus par style directement.
 // 2019.9.30.1 : Fix pour que ça fonctionne aussi dans les drapals de catégories
 // 2019.9.30.0 : Premier jet
@@ -278,16 +279,26 @@ var LocalMPStorage = {
                 var catId = 0;
                 // Number of displayed topics in the current cat
                 var nbTopicsCat = 0;
+                // Previous cat was MP ?
+                var wasPreviousMPCat = false;
 
                 // Browse all rows
                 allRows.forEach(function(row){
+
+                    // Manage MPCat (for DTCloud)
+                    var isMPCat = false;
+                    if(row.querySelector('a')){
+                        var catUrl = new URLSearchParams(row.querySelector('a').href);
+                        isMPCat = catUrl.get('cat') === 'prive';
+                    }
+
                     isCat = row.classList.contains('fondForum1fCat');
 
                     if(!isCat){
                         // Not a cat row : it's a topic, so we check if its hidden or not
                         nbTopicsCat = nbTopicsCat + (row.classList.contains('hiddenFav') ? 0 : 1);
                     } else {
-                        if(catId > 0){
+                        if(catId > 0 && !wasPreviousMPCat){
                             if (nbTopicsCat == 0){
                                 // The previous cat hasn't any displayed topic so we add an empty row
                                 var emptyRow = document.createElement('tr');
@@ -303,6 +314,8 @@ var LocalMPStorage = {
                         catId++;
                         // Reset nbTopics for the new cat
                         nbTopicsCat = 0;
+                        // Update status of the previous cat
+                        wasPreviousMPCat = wasPreviousMPCat ? false : isMPCat;
                     }
                 });
             }
