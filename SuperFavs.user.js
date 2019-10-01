@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          [HFR] SuperFavs
 // @author        Wiripse
-// @version       2019.10.1.1
+// @version       2019.10.1.2
 // @description   Gestion des SuperFavoris : Topics cyants mis en avant ou filtrables. Idée souflée par le génial Ezzz.
 // @icon          http://reho.st/self/40f387c9f48884a57e8bbe05e108ed4bd59b72ce.png
 // @downloadURL   https://github.com/Wiripse/HFRGMTools/raw/master/SuperFavs.user.js
@@ -18,50 +18,103 @@
 // ==/UserScript==
 
 // Historique
+// 2019.10.1.2 : Init mega script. Changement icones. Gestion favori/superfavori/hideable. Le toggle d'affichage affiche/masque les hideable. Un superfavori est toujours là, mais surligné.
 // 2019.10.1.1 : Fix pas de message catégorie vite pour les MP DTCloud.
 // 2019.10.1.0 : Fix toggle favs/superFavs avec DTCloud. Colorier toute la ligne d'un superFav. Affichage d'un message de catégorie vide. Gestion par classes et plus par style directement.
 // 2019.9.30.1 : Fix pour que ça fonctionne aussi dans les drapals de catégories
 // 2019.9.30.0 : Premier jet
 
+/**
+* Generic utils
+*/
+var HFRGMUtils = {
+    icons : {
+        eye : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAAHdElNRQfjCgEMDw+wNURyAAAAy0lEQVQoz7XQPUtCARjF8V8Xl4YGL1QSRBSBETT1LRz6CGkIOWmjq0MoglCDi5O09wX8Gi2XlkuBdBXEpTluw/WFXlbPszwPz38457Bxbf3Yzx3hTST9DRZ0TKSLSbTtZ48AVEQuPKrLCzV8uRQpL5GemRI4NZG4UldVMtMT0Bcr4kFOy4tUIvSMolg/t3JxaEdNYXGla+eBrhvXDmx7N8CtE5+mngw1M6xsbmSsIS90Z2xkvjSZaU9bsor54d7uf0WdOUbs9W9RG9Q3ePU3OdDkvqEAAAAldEVYdGRhdGU6Y3JlYXRlADIwMTktMTAtMDFUMTI6MTU6MTUrMDA6MDBbe9hYAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE5LTEwLTAxVDEyOjE1OjE1KzAwOjAwKiZg5AAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAAASUVORK5CYII=',
+        hide : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAAHdElNRQfjCgEMDiuVLZHiAAAA60lEQVQoz6XQvyvEARiA8c9dOsLg6gZxKQwmMloMJy6L1e8idaUUFlyUuwil7i9Ql9losJE/wWBSikFJV4ZLScfX4u6UnMEzvs/71tvDP4hK1NItjsQIfRu1SYgreXCuJGddgbov2S/l3pVmEc/WTJhVqN4uSIuYVBQIbMlrlzVT1ivG0elFIJCRt6ED81KELXtyglGN2BV348AYjhUthsU8giZkxd3ar7x+pxt2JNBrW17ah8CbHgw4LK9umhOt6JJVTMkIVTtMy9lzbcirS62SzpxS7hA1rE+XEfUaJF1Y8v4j6u8M1tZ/8AmbFzrFju54bwAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAxOS0xMC0wMVQxMjoxNDo0MyswMDowMJ+JiDgAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMTktMTAtMDFUMTI6MTQ6NDMrMDA6MDDu1DCEAAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAAABJRU5ErkJggg==',
+        settings : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAAbwAAAG8B8aLcQwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAHHSURBVDiNnZK9a5NRFMZ/z5tQQ1oaRBpEYtSI+g9Yqdghagalo4OCYBUEhw5FhKK4pOAgFsFFioPSd7CbUyUIVs3QQfwAnaoiNVStQwO11do0pDkO3lfepH72wIV7z/09zz3ncAVk3VpLFKNOXAwyZlb8DbwqJOUFjAClNVawFSBvZgBxYMDM+NMCBoC42+ejIbdjwKik7F9eHXXsLYCwQdrMPlzu63wfJDKb2gGYmln4CZ2//lSS0sHZCxnE/6HnVawHIMkD2v7DoM1pfrRgZnVJZYB3M4tnAyq3e0sN4MGzT9Emg7LTNMygKiliZtfmxnu7PXQI2RmAK317btSxe+tz/oSkCFANRGGDMeACcMkTQ2BdN8de8/VbjaO5bRc3bogfBPY65m7DDFwbL4Hhz+OnskDm/pOPLFVWMDP8wluAjLsbNrMX4QpKkvJBwi9Mpk/27Eo+f1XmzfQ8ADvTCYCkX5g8AUxLCvBS1MxGGsYzOOgtMLVje6q9O9YSIZVspWffZgQT/YnDp/vtcT2My33Jhph/2Hsb48jcl+V1i0s1UsnWZcSdxAH/eDP7SwOK+6OzdMRaVmJXAaqRyrkOZitkH9Wa0e9xGbOF14rekAAAAABJRU5ErkJggg==',
+        emptyHeart : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAAHdElNRQfjCR4KLC4JomLmAAAA0ElEQVQoz3XPPU7CABjG8V8rCWhaF2lD2OkEDh6iZ3BzYHHnBBrwDM46GE4hJszMpgmJHwOJbI2uxkFpROmzPR/55335VktHYKNAR6tyErdKhTcTTU1X1gqlG21Ch+49SWUyqampRE8m9WwmDkwcOa/Qdzit2NfWFHrqlHmkFNYOQmXow37t4MD7nhORRc3gzCfHVto768RKH0bmon91ZG60MWMz8VYdezD+HVxa6Faua+HiL3JoaQD6loa7jsq9yuVe5HV/DxSKH06NGhrbwRfHMyvA2fpC2gAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAxOS0wOS0zMFQxMDo0NDo0NiswMDowMJps0hgAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMTktMDktMzBUMTA6NDQ6NDYrMDA6MDDrMWqkAAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAAABJRU5ErkJggg==',
+        fullHeart : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAA3NCSVQICAjb4U/gAAAACXBIWXMAAARuAAAEbgHQo7JoAAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAAKJQTFRF////v0BAzDMzyDckwj0xvzUrwj0pwTcpvjsuwjgpvjwtvzsswDotwDsrvzgpwDsswDsqwDwrwTsswDkrwTkswTsswToqwDsqwToswDorwDorwDorwDorwDorwDorwDorwDorwDorwDorwDorwDorwDorwDorwDorwDorwDorwDorwDorwDorwTsswz4vyEQ1yUU2y0c40U9A1FND3FxM3V5Og1qrkwAAACx0Uk5TAAQFDhUYGSUnMjM0OUFERUlNUlliY3N5e4mW0NTa29/g6ezt7u/x8vb4/P0b22PaAAAAgUlEQVQYGVXBiRZCQAAF0EeoaNGqhBaSpteu//+1pslxZu4FYAUjG5I9DixIfkbmK2B9JDMfcAu+6itnS/4ULmLW7xtZCSox0seHmhT5805NjoSGBBENEZySmtIBQsGWCCEtLmyIOZTpmUo1QWN4onQYoNXfk7seNN3txoPB6+DvC5T8Gy0tAjNFAAAAAElFTkSuQmCC',
+    },
+    createOnglet: function(icon, title, onClickMethod){
+        // **********
+        // HFR4K_GM
+        // Create a header tab ('onglet')
+        // icon : Icon of the tab
+        // title : Title of the tab
+        // onClickMethod : Method to execute on click on the tab. Called with the Element tab itself as parameter.
+        // **********
+
+        if (document.querySelector('.cadreonglet')){
+            var onglets = document.querySelector('.cadreonglet');
+
+            // Rounded border left
+            var nBfOnglet = document.createElement('div');
+            nBfOnglet.setAttribute('class', 'beforonglet');
+            nBfOnglet.innerHTML = '&nbsp;';
+            onglets.appendChild(nBfOnglet);
+
+            // Create the new tab
+            var newTab = document.createElement('a');
+            newTab.setAttribute('class', 'onglet');
+            newTab.setAttribute('title', title);
+            var imgNewTab = document.createElement('img');
+            imgNewTab.setAttribute('src', icon);
+            newTab.appendChild(imgNewTab);
+            // Handle onclick
+            newTab.onclick = function () {
+                onClickMethod(newTab);
+            };
+            onglets.appendChild(newTab);
+
+            // Rounded border right
+            var nAfOnglet = document.createElement('div');
+            nAfOnglet.setAttribute('class', 'afteronglet');
+            nAfOnglet.innerHTML = '&nbsp;';
+            onglets.appendChild(nAfOnglet);
+        }
+
+    }
+};
+
+/**
+* Handling locally MPStorage
+*/
 var LocalMPStorage = {
     /* Version of the MPStorage API used */
     version : '0.1',
     /* Current toolname used to access MPStorage */
-    toolName : 'SuperFavs_GM',
-    /* Icon of SuperFav */
-    imgSimpleFav : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAAHdElNRQfjCR4KLC4JomLmAAAA0ElEQVQoz3XPPU7CABjG8V8rCWhaF2lD2OkEDh6iZ3BzYHHnBBrwDM46GE4hJszMpgmJHwOJbI2uxkFpROmzPR/55335VktHYKNAR6tyErdKhTcTTU1X1gqlG21Ch+49SWUyqampRE8m9WwmDkwcOa/Qdzit2NfWFHrqlHmkFNYOQmXow37t4MD7nhORRc3gzCfHVto768RKH0bmon91ZG60MWMz8VYdezD+HVxa6Faua+HiL3JoaQD6loa7jsq9yuVe5HV/DxSKH06NGhrbwRfHMyvA2fpC2gAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAxOS0wOS0zMFQxMDo0NDo0NiswMDowMJps0hgAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMTktMDktMzBUMTA6NDQ6NDYrMDA6MDDrMWqkAAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAAABJRU5ErkJggg==',
-    /* Icon of SimpleFav */
-    imgSuperFav : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAA3NCSVQICAjb4U/gAAAACXBIWXMAAARuAAAEbgHQo7JoAAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAAKJQTFRF////v0BAzDMzyDckwj0xvzUrwj0pwTcpvjsuwjgpvjwtvzsswDotwDsrvzgpwDsswDsqwDwrwTsswDkrwTkswTsswToqwDsqwToswDorwDorwDorwDorwDorwDorwDorwDorwDorwDorwDorwDorwDorwDorwDorwDorwDorwDorwDorwDorwTsswz4vyEQ1yUU2y0c40U9A1FND3FxM3V5Og1qrkwAAACx0Uk5TAAQFDhUYGSUnMjM0OUFERUlNUlliY3N5e4mW0NTa29/g6ezt7u/x8vb4/P0b22PaAAAAgUlEQVQYGVXBiRZCQAAF0EeoaNGqhBaSpteu//+1pslxZu4FYAUjG5I9DixIfkbmK2B9JDMfcAu+6itnS/4ULmLW7xtZCSox0seHmhT5805NjoSGBBENEZySmtIBQsGWCCEtLmyIOZTpmUo1QWN4onQYoNXfk7seNN3txoPB6+DvC5T8Gy0tAjNFAAAAAElFTkSuQmCC',
-    /* JSON datas from MPStorage about SuperFavs management */
-    superFavs: void 0,
+    toolName : 'HFR4K_GM',
+    /* JSON datas from MPStorage */
+    datas: void 0,
+    /* Scope of datas */
+    domains: {
+        superFavs : 'SuperFavs'
+    },
     /* Methods */
     getData : function(callback){
         // **********
-        // SuperFavs_GM
+        // HFR4K_GM
         // Get MPStorage data and store it locally
-        // CALLBACK is called with the superFavs data from MPStorage data
+        // CALLBACK is called with the datas from MPStorage
         // **********
         mpStorage.getStorageData(function(res){
             // Save datas locally
-            LocalMPStorage.superFavs = res.data.filter(function(d){return LocalMPStorage.version === d.version;})[0].superFavs;
-
-            // Init data if necessary
-            if(!LocalMPStorage.superFavs){
-                LocalMPStorage.superFavs = { list : [], onlySF : false};
-            }
+            LocalMPStorage.datas = res.data.filter(function(d){return LocalMPStorage.version === d.version;})[0];
 
             // We're done
-            callback(LocalMPStorage.superFavs);
+            callback(LocalMPStorage.datas);
         });
     },
     initMPStorage : function(){
         // **********
-        // SuperFavs_GM
+        // HFR4K_GM
         // Init MPStorage data
         // RETURN a promise
         // **********
         return new Promise((resolve, reject) => {
             try {
+
+                // FIXME : Handle corrupted datas/userchange
 
                 // We try to recover existing MPStorage conf locally
                 Promise.all([
@@ -111,69 +164,76 @@ var LocalMPStorage = {
             }
         });
     },
-    updateMPStorage: function(){
+    updateMPStorage: function(domain){
         // **********
-        // SuperFavs_GM
+        // HFR4K_GM
         // Update MPStorage datas with local datas
+        // domain : scope updated, to set relevant datas
         // **********
 
-        // Set relevant datas
-        LocalMPStorage.superFavs.sourceName = LocalMPStorage.toolName;
-        LocalMPStorage.superFavs.lastUpdate = Date.now();
+        // Setting relevant datas
+        switch (domain) {
+            case LocalMPStorage.domains.superFavs:
+                LocalMPStorage.datas.superFavs.sourceName = LocalMPStorage.toolName;
+                LocalMPStorage.datas.superFavs.lastUpdate = Date.now();
+                break;
+            case 'DTCloud':
+                break;
+            case 'Other':
+                break;
+            default:
+                break;
+        }
 
         // Add the new SuperFav datas to the global datas
-        mpStorage.storageData.data.filter(function(d){return LocalMPStorage.version === d.version;})[0].superFavs = LocalMPStorage.superFavs;
+        mpStorage.storageData.data.filter(function(d){return LocalMPStorage.version === d.version;})[0] = LocalMPStorage.datas;
 
         // And store the result with MPStorage
         mpStorage.setStorageData(mpStorage.storageData, LocalMPStorage.toolName);
-    },
-    manageOngletFavs: function(){
+    }
+};
+
+/**
+* Script specific functions
+*/
+var HFR4K = {
+    initPromise: function(){
         // **********
-        // SuperFavs_GM
-        // Create the header tab ('onglet') to toggle favs list
+        // HFR4K_GM
+        // Init the script as a promise
+        // **********
+        return LocalMPStorage.initMPStorage();
+    },
+    initTabs: function(){
+        // **********
+        // HFR4K_GM
+        // Create the headers tabs ('onglet')
         // **********
 
         // FIXME : Useless test bcz script set to only work on those pages. But a nice idea would be to create util methods (isOnMP, isOnCyan...) to check where we are
         if (document.location.href.indexOf('https://forum.hardware.fr/forum1f.php') === 0 || (document.location.href.indexOf('https://forum.hardware.fr/forum1.php') === 0 && document.querySelector('.cadreonglet'))) {
 
-            var onglets = document.querySelector('.cadreonglet');
-
-            // Rounded border left
-            var nBfOnglet = document.createElement('div');
-            nBfOnglet.setAttribute('class', 'beforonglet');
-            nBfOnglet.innerHTML = '&nbsp;';
-            onglets.appendChild(nBfOnglet);
-
-            // Create the new tab
-            var newBe = document.createElement('a');
-            newBe.setAttribute('class', 'onglet');
-            newBe.setAttribute('title', 'Afficher/masquer les super favoris');
-            var imgNewBe = document.createElement('img');
-            imgNewBe.setAttribute('src', LocalMPStorage.superFavs.onlySF ? LocalMPStorage.imgSuperFav : LocalMPStorage.imgSimpleFav);
-            newBe.appendChild(imgNewBe);
-            // Handle onclick to toggle favs list
-            newBe.onclick = function () {
-                LocalMPStorage.superFavs.onlySF = !LocalMPStorage.superFavs.onlySF;
-                imgNewBe.setAttribute('src', LocalMPStorage.superFavs.onlySF ? LocalMPStorage.imgSuperFav : LocalMPStorage.imgSimpleFav);
-                LocalMPStorage.updateMPStorage();
-                LocalMPStorage.renderFavs();
-            };
-            onglets.appendChild(newBe);
-
-            // Rounded border right
-            var nAfOnglet = document.createElement('div');
-            nAfOnglet.setAttribute('class', 'afteronglet');
-            nAfOnglet.innerHTML = '&nbsp;';
-            onglets.appendChild(nAfOnglet);
+            HFRGMUtils.createOnglet(LocalMPStorage.datas.superFavs.showHideable ? HFRGMUtils.icons.eye : HFRGMUtils.icons.hide, 'Afficher/masquer les favoris', function(tab){
+                LocalMPStorage.datas.superFavs.showHideable = !LocalMPStorage.datas.superFavs.showHideable;
+                tab.querySelector('img').setAttribute('src', LocalMPStorage.datas.superFavs.showHideable ? HFRGMUtils.icons.eye : HFRGMUtils.icons.hide);
+                LocalMPStorage.updateMPStorage(LocalMPStorage.domains.superFavs);
+                HFR4K.renderFavs();
+            });
         }
     },
     renderFavs: function(){
         // **********
-        // SuperFavs_GM
-        // Rendering of the favorites according to SuperFavs list
+        // HFR4K_GM
+        // Rendering of the favorites
         // **********
 
         if (document.location.href.indexOf('https://forum.hardware.fr/forum1f.php') === 0 || (document.location.href.indexOf('https://forum.hardware.fr/forum1.php') === 0 && document.querySelector('.cadreonglet'))) {
+
+
+            if(!LocalMPStorage.datas.superFavs || !LocalMPStorage.datas.superFavs.hideableList){
+                // Init datas if necessary
+                LocalMPStorage.datas.superFavs = { list : [], hideableList: [], showHideable : false};
+            }
 
             // Custom CSS
             var rowStyle = ".superFavRow { background-color : #D2B2FF; }";
@@ -183,6 +243,15 @@ var LocalMPStorage = {
             style.appendChild(document.createTextNode(rowStyle));
             style.appendChild(document.createTextNode(hiddenFav));
             document.head.appendChild(style);
+
+            // Reset display
+            document.querySelectorAll('.superFavRow').forEach(function(sfr){
+                sfr.classList.remove('superFavRow');
+            });
+            document.querySelectorAll('.hiddenFav').forEach(function(hf){
+                hf.classList.remove('hiddenFav');
+            });
+
 
             var topicRows = document.querySelectorAll('.sujet');
             // Iterate on each topic
@@ -194,71 +263,140 @@ var LocalMPStorage = {
                     var topicUrl = new URLSearchParams(topic.querySelector('a').href);
                     var topicId = parseInt(topicUrl.get('post'));
 
-                    if (LocalMPStorage.superFavs.list.indexOf(topicId) < 0){
-                        // Simple favorite topic
-                        topic.style = '';
-                        if(LocalMPStorage.superFavs.onlySF){
-                            // Only displaying superFavs > Hide the simple favorite
-                            topicRow.classList.add('hiddenFav');
-                        }else{
-                            // Displaying all the favorites
-                            topicRow.classList.remove('hiddenFav');
+                    if(LocalMPStorage.datas.superFavs.hideableList.indexOf(topicId) > -1){
+                        // Hideable topic
+                        if(LocalMPStorage.datas.superFavs.showHideable){
+                            // Display all topics
 
-                            // Create icon to manage the fav status
-                            var imgBloc = topic.parentNode.querySelector('.sujetCase2');
-                            imgBloc.removeChild(imgBloc.querySelector('img'));
-                            var newImgBloc = document.createElement('img');
-                            newImgBloc.setAttribute('title', 'Ajouter aux super favoris');
-                            newImgBloc.setAttribute('src', LocalMPStorage.imgSimpleFav);
+                            // Create icon to manage the status
+                            var imgBlocHide = topicRow.querySelector('.sujetCase2');
+                            imgBlocHide.removeChild(imgBlocHide.querySelector('img'));
+                            var newImgBlocHide = document.createElement('img');
+                            newImgBlocHide.setAttribute('title', 'Ajouter aux super favoris/Ne plus masquer');
+                            newImgBlocHide.setAttribute('src', HFRGMUtils.icons.hide);
+
                             // Handle onclick to add to SuperFavs list
-                            newImgBloc.onclick = function () {
+                            newImgBlocHide.onclick = function() {
+                                // Remove from Hideable
+                                let i = LocalMPStorage.datas.superFavs.hideableList.findIndex(function(item){ return topicId === item; });
+                                if(0<=i){
+                                    LocalMPStorage.datas.superFavs.hideableList.splice(i, 1);
+                                }
                                 // Add to SuperFavs
-                                LocalMPStorage.superFavs.list.push(topicId);
+                                LocalMPStorage.datas.superFavs.list.push(topicId);
                                 // Update MPStorage
-                                LocalMPStorage.updateMPStorage();
+                                LocalMPStorage.updateMPStorage(LocalMPStorage.domains.superFavs);
                                 // Render the result
-                                LocalMPStorage.renderFavs();
+                                HFR4K.renderFavs();
                             };
-                            imgBloc.appendChild(newImgBloc);
+
+                            // Handle rightclick to remove from Hideable list
+                            newImgBlocHide.oncontextmenu = function(){
+                                // Remove from Hideable
+                                let i = LocalMPStorage.datas.superFavs.hideableList.findIndex(function(item){ return topicId === item; });
+                                if(0<=i){
+                                    LocalMPStorage.datas.superFavs.hideableList.splice(i, 1);
+                                }
+                                // Update MPStorage
+                                LocalMPStorage.updateMPStorage(LocalMPStorage.domains.superFavs);
+                                // Render the result
+                                HFR4K.renderFavs();
+
+                                // Block contextmenu
+                                return false;
+                            };
+                            imgBlocHide.appendChild(newImgBlocHide);
+
+                        }else{
+                            // Don't display hideable topics
+                            topicRow.classList.add('hiddenFav');
                         }
 
-                    } else {
-                        // SuperFav topic
+                    } else if (LocalMPStorage.datas.superFavs.list.indexOf(topicId) > -1){
+                        // Super Favorite topic
 
-                        // Background color if in all fav display
-                        if (LocalMPStorage.superFavs.onlySF){
-                            topicRow.classList.remove('superFavRow');
-                            topicRow.querySelector('.sujetCase1').classList.remove('superFavRow');
-                            topicRow.querySelector('.sujetCase6').classList.remove('superFavRow');
-                            topicRow.querySelector('.sujetCase9').classList.remove('superFavRow');
-                        } else {
-                            topicRow.classList.add('superFavRow');
-                            topicRow.querySelector('.sujetCase1').classList.add('superFavRow');
-                            topicRow.querySelector('.sujetCase6').classList.add('superFavRow');
-                            topicRow.querySelector('.sujetCase9').classList.add('superFavRow');
-                        }
+                        // Background color
+                        topicRow.classList.add('superFavRow');
+                        topicRow.querySelector('.sujetCase1').classList.add('superFavRow');
+                        topicRow.querySelector('.sujetCase6').classList.add('superFavRow');
+                        topicRow.querySelector('.sujetCase9').classList.add('superFavRow');
 
-                        // Create icon to manage the fav status
-                        var imgBlocSF = topic.parentNode.querySelector('.sujetCase2');
+                        // Create icon to manage the status
+                        var imgBlocSF = topicRow.querySelector('.sujetCase2');
                         imgBlocSF.removeChild(imgBlocSF.querySelector('img'));
                         var newImgBlocSF = document.createElement('img');
-                        newImgBlocSF.setAttribute('title', 'Supprimer des super favoris');
-                        newImgBlocSF.setAttribute('src', LocalMPStorage.imgSuperFav);
+                        newImgBlocSF.setAttribute('title', 'Supprimer des super favoris/Masquer');
+                        newImgBlocSF.setAttribute('src', HFRGMUtils.icons.fullHeart);
                         // Handle onclick to remove from SuperFavs list
                         newImgBlocSF.onclick = function () {
-                            let i = LocalMPStorage.superFavs.list.findIndex(function(item){ return topicId === item; });
+                            let i = LocalMPStorage.datas.superFavs.list.findIndex(function(item){ return topicId === item; });
                             if(0<=i){
                                 // Remove from SuperFavs
-                                LocalMPStorage.superFavs.list.splice(i, 1);
+                                LocalMPStorage.datas.superFavs.list.splice(i, 1);
                                 // Update MPStorage
-                                LocalMPStorage.updateMPStorage();
+                                LocalMPStorage.updateMPStorage(LocalMPStorage.domains.superFavs);
                                 // Render the result
-                                LocalMPStorage.renderFavs();
+                                HFR4K.renderFavs();
                             }
                         };
+
+                        // Handle rightclick to add to Hideable list
+                        newImgBlocSF.oncontextmenu = function(){
+                            // Remove from SuperFavs
+                            let i = LocalMPStorage.datas.superFavs.list.findIndex(function(item){ return topicId === item; });
+                            if(0<=i){
+                                // Remove from SuperFavs
+                                LocalMPStorage.datas.superFavs.list.splice(i, 1);
+                            }
+                            // Add to Hideable
+                            LocalMPStorage.datas.superFavs.hideableList.push(topicId);
+                            // Update MPStorage
+                            LocalMPStorage.updateMPStorage(LocalMPStorage.domains.superFavs);
+                            // Render the result
+                            HFR4K.renderFavs();
+
+                            // Block contextmenu
+                            return false;
+                        };
                         imgBlocSF.appendChild(newImgBlocSF);
+                    } else if (topicRow.querySelector('.sujetCase2')){
+                        // Simple  topic
+
+                        // Create icon to manage the status
+                        var imgBloc = topicRow.querySelector('.sujetCase2');
+                        imgBloc.removeChild(imgBloc.querySelector('img'));
+                        var newImgBloc = document.createElement('img');
+                        newImgBloc.setAttribute('title', 'Ajouter aux super favoris/Masquer');
+                        newImgBloc.setAttribute('src', HFRGMUtils.icons.eye);
+
+                        // Handle onclick to add to SuperFavs list
+                        newImgBloc.onclick = function() {
+                            // Add to SuperFavs
+                            LocalMPStorage.datas.superFavs.list.push(topicId);
+                            // Update MPStorage
+                            LocalMPStorage.updateMPStorage(LocalMPStorage.domains.superFavs);
+                            // Render the result
+                            HFR4K.renderFavs();
+                        };
+
+                        // Handle rightclick to add to Hideable list
+                        newImgBloc.oncontextmenu = function(){
+                            // Add to Hideable
+                            LocalMPStorage.datas.superFavs.hideableList.push(topicId);
+                            // Update MPStorage
+                            LocalMPStorage.updateMPStorage(LocalMPStorage.domains.superFavs);
+                            // Render the result
+                            HFR4K.renderFavs();
+
+                            // Block contextmenu
+                            return false;
+                        };
+
+                        imgBloc.appendChild(newImgBloc);
                     }
+
                 }
+
             });
 
             if(document.location.href.indexOf('https://forum.hardware.fr/forum1f.php') === 0){
@@ -322,12 +460,14 @@ var LocalMPStorage = {
 
         }
     }
-}
+};
+
+
 
 // Init
-LocalMPStorage.initMPStorage().then(function(){
+HFR4K.initPromise().then(function(){
     // Init tabs
-    LocalMPStorage.manageOngletFavs();
+    HFR4K.initTabs();
     // Render Favs
-    LocalMPStorage.renderFavs();
+    HFR4K.renderFavs();
 });
