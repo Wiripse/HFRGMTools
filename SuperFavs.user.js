@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          [HFR] SuperFavs
 // @author        Wiripse
-// @version       2019.10.2.1
+// @version       2019.10.2.2
 // @description   Gestion des SuperFavoris : Topics cyants mis en avant ou filtrables. Idée souflée par le génial Ezzz.
 // @namespace     https://github.com/Wiripse/HFRGMTools/
 // @icon          data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAQAAAAAYLlVAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAAHdElNRQfjCgIILBJ4Jlj4AAAEPUlEQVRo3u3YfWjVVRgH8M91c9MWmWYyNaVGFOZL+VLqRJl2TcawLCJJLDN8KSWEElKwtH/UIhPJZiJCIIlmIKJk6rImaa6maVqCqFmoufLdfNna/PWHP+92U3fvxrb+8H7PH79znnt+z/N9nuf8znnOJYUUUrjVEUFPr8gB33lb1BRzbUWeN6U3ou1DCu1msApBrLW1QeBzsLaGvHFahbx0czVXYZtKbHPCe8rNB+9Lb8QIpMuVYQ7lAvMaMdA3xzyBy+kycB6TjWhC46sVOo/M6hB/IKMJCQxUeLVTTSADhxxqAuM5cmReG8QvsmVmNQGBWWZWD5o1gcFakSKQIlCfrbaNYTrjgDUqQ1lrwzW33rHYrB5yHbVBRUMTyLVKh7C/W54z6GGDbJR71jpkWmCCCErkO12burqmYIiNMfM87C3woWyQaYlMnWwxUQT0NbV2hXUjkG+dLFXGaibTD+iPjgZhvteRbaxSj2GrLvagX8MRGGG1lv7xvE8EKrTFX4iCle4Ai7TDR4YYrAt+bygCz/lMpgojrQL3uw/FIYHTSkMiXDLGVIsVSnc+0VGfLIFRPtXcRcOVWmgEhoJNIqL42m36gsMGKPatl3DUE/Y2BIEJlkl3wZMO2GKywtDvMnt1k40iraRhoz7uUqo3tuhteyLVyRCY5GPNnDXUEcXuxUFp8lAkCAO/yRHPeFmBcb7UFgs8riyx8sT7wDRzcNIwh+0NP7civbVBUZiKww5gjWtH7UXjLU8qtgkjUGA2ygy2Q6fQfGBt6HeRDIOwKTa/I5idrPnEBMaLOCXPHuwywjTTFNgpin2OyJUVRuIpW40xQxmmeSBZAolS0BLn5LgHXLDDQb/KkhuajeKKzSZaJOJRA71ovdut0F95chQCgVk1nvF49brLxCWd5QsEhqNEoFTEsfDX37T2rkAQ3i1uhFkCwbVnohQsttCVOEkLLURRqVhrvVGkm/b4Hp0tMkMJpuiajP+JCFzxmrv1Cds6lNkvihLnPCQNxeGm9IJ1GGmM0YgoSIZAMsfxKafC3kG0sVwPbMDf4A0P4qD9xtqlowXW4up1JwnUvgbi0d3FMNentAdbYmtjPMhTHo6Pa3sTLXVaA/HYI982JxUZ4g/wtKVOOGCSJeAb+bb50xeiTjRUCmqi2IC48UnjjIuTbLa5Lgr/96I0RSBFIP4ryInVdQ2Fy7arRLpH7FKpne7hP3Ix1NyIGqMtBIUCC2U5EZNftxH90qiRDmLOXkWsVK1OQa5e0hrc8CUlYIqlflKpq+4iquy8NiHiqA62m/mfQ7c2VPnRmRvI79SzDi40845+jrGgHnm9ca3/cz00zSfLynq8eH2x0a0eWlbIunqHzdYl6eC1sVyas3aqqiFN00srVUbFaofEidzneNIJi8P0m3o0ve7KIvWiEDU6vAFU46hlvqqfRymkkMKtjX8BU3kXUDClbEwAAAAldEVYdGRhdGU6Y3JlYXRlADIwMTktMTAtMDJUMDg6NDQ6MTgrMDA6MDAqoU1GAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE5LTEwLTAyVDA4OjQ0OjE4KzAwOjAwW/z1+gAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAAASUVORK5CYII=
@@ -17,6 +17,7 @@
 // ==/UserScript==
 
 // Historique
+// 2019.10.2.2 : Meilleure gestion du nettoyage des classes.
 // 2019.10.2.1 : Utilisation nouvelle methode init MPStorage. Fix style surlignage.
 // 2019.10.2.0 : Gestion du hover sur les titres de topic. Nettoyage.
 // 2019.10.1.2 : Init mega script. Changement icones. Gestion favori/superfavori/hideable. Le toggle d'affichage affiche/masque les hideable. Un superfavori est toujours là, mais surligné.
@@ -74,6 +75,15 @@ var HFRGMUtils = {
             onglets.appendChild(nAfOnglet);
         }
 
+    },
+    removeClassesFromElement(element, classes){
+        // **********
+        // HFR4K_GM
+        // Remove the classes (array of string) from the given Element
+        // **********
+        classes.forEach(function(classe){
+            element.classList.remove(classe);
+        });
     }
 };
 
@@ -204,7 +214,6 @@ var HFR4K = {
 
         if (document.location.href.indexOf('https://forum.hardware.fr/forum1f.php') === 0 || (document.location.href.indexOf('https://forum.hardware.fr/forum1.php') === 0 && document.querySelector('.cadreonglet'))) {
 
-
             if(!LocalMPStorage.datas.superFavs || !LocalMPStorage.datas.superFavs.hideableList){
                 // Init datas if necessary
                 LocalMPStorage.datas.superFavs = { list : [], hideableList: [], showHideable : false};
@@ -229,22 +238,9 @@ var HFR4K = {
             document.head.appendChild(style);
 
             // Reset display
-            document.querySelectorAll('.superFavRow').forEach(function(sfr){
-                sfr.classList.remove('superFavRow');
+            document.querySelectorAll('.superFavRow, .superFavRowAlt, .favRow, .favRowAlt, .hiddenFav').forEach(function(item){
+                HFRGMUtils.removeClassesFromElement(item, ['superFavRow', 'superFavRowAlt', 'favRow', 'favRowAlt', 'hiddenFav']);
             });
-            document.querySelectorAll('.superFavRowAlt').forEach(function(sfr){
-                sfr.classList.remove('superFavRowAlt');
-            });
-            document.querySelectorAll('.favRow').forEach(function(sfr){
-                sfr.classList.remove('favRow');
-            });
-            document.querySelectorAll('.favRowAlt').forEach(function(sfr){
-                sfr.classList.remove('favRowAlt');
-            });
-            document.querySelectorAll('.hiddenFav').forEach(function(hf){
-                hf.classList.remove('hiddenFav');
-            });
-
 
             var topicRows = document.querySelectorAll('.sujet');
             // Iterate on each topic
