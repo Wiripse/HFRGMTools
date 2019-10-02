@@ -1,14 +1,13 @@
 // ==UserScript==
 // @name          [HFR] SuperFavs
 // @author        Wiripse
-// @version       2019.10.2.3
+// @version       2019.10.2.4
 // @description   Gestion des SuperFavoris : Topics cyants mis en avant ou filtrables. Idée souflée par le génial Ezzz.
 // @namespace     https://github.com/Wiripse/HFRGMTools/
 // @icon          data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAQAAAAAYLlVAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAAHdElNRQfjCgIILBJ4Jlj4AAAEPUlEQVRo3u3YfWjVVRgH8M91c9MWmWYyNaVGFOZL+VLqRJl2TcawLCJJLDN8KSWEElKwtH/UIhPJZiJCIIlmIKJk6rImaa6maVqCqFmoufLdfNna/PWHP+92U3fvxrb+8H7PH79znnt+z/N9nuf8znnOJYUUUrjVEUFPr8gB33lb1BRzbUWeN6U3ou1DCu1msApBrLW1QeBzsLaGvHFahbx0czVXYZtKbHPCe8rNB+9Lb8QIpMuVYQ7lAvMaMdA3xzyBy+kycB6TjWhC46sVOo/M6hB/IKMJCQxUeLVTTSADhxxqAuM5cmReG8QvsmVmNQGBWWZWD5o1gcFakSKQIlCfrbaNYTrjgDUqQ1lrwzW33rHYrB5yHbVBRUMTyLVKh7C/W54z6GGDbJR71jpkWmCCCErkO12burqmYIiNMfM87C3woWyQaYlMnWwxUQT0NbV2hXUjkG+dLFXGaibTD+iPjgZhvteRbaxSj2GrLvagX8MRGGG1lv7xvE8EKrTFX4iCle4Ai7TDR4YYrAt+bygCz/lMpgojrQL3uw/FIYHTSkMiXDLGVIsVSnc+0VGfLIFRPtXcRcOVWmgEhoJNIqL42m36gsMGKPatl3DUE/Y2BIEJlkl3wZMO2GKywtDvMnt1k40iraRhoz7uUqo3tuhteyLVyRCY5GPNnDXUEcXuxUFp8lAkCAO/yRHPeFmBcb7UFgs8riyx8sT7wDRzcNIwh+0NP7civbVBUZiKww5gjWtH7UXjLU8qtgkjUGA2ygy2Q6fQfGBt6HeRDIOwKTa/I5idrPnEBMaLOCXPHuwywjTTFNgpin2OyJUVRuIpW40xQxmmeSBZAolS0BLn5LgHXLDDQb/KkhuajeKKzSZaJOJRA71ovdut0F95chQCgVk1nvF49brLxCWd5QsEhqNEoFTEsfDX37T2rkAQ3i1uhFkCwbVnohQsttCVOEkLLURRqVhrvVGkm/b4Hp0tMkMJpuiajP+JCFzxmrv1Cds6lNkvihLnPCQNxeGm9IJ1GGmM0YgoSIZAMsfxKafC3kG0sVwPbMDf4A0P4qD9xtqlowXW4up1JwnUvgbi0d3FMNentAdbYmtjPMhTHo6Pa3sTLXVaA/HYI982JxUZ4g/wtKVOOGCSJeAb+bb50xeiTjRUCmqi2IC48UnjjIuTbLa5Lgr/96I0RSBFIP4ryInVdQ2Fy7arRLpH7FKpne7hP3Ix1NyIGqMtBIUCC2U5EZNftxH90qiRDmLOXkWsVK1OQa5e0hrc8CUlYIqlflKpq+4iquy8NiHiqA62m/mfQ7c2VPnRmRvI79SzDi40845+jrGgHnm9ca3/cz00zSfLynq8eH2x0a0eWlbIunqHzdYl6eC1sVyas3aqqiFN00srVUbFaofEidzneNIJi8P0m3o0ve7KIvWiEDU6vAFU46hlvqqfRymkkMKtjX8BU3kXUDClbEwAAAAldEVYdGRhdGU6Y3JlYXRlADIwMTktMTAtMDJUMDg6NDQ6MTgrMDA6MDAqoU1GAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE5LTEwLTAyVDA4OjQ0OjE4KzAwOjAwW/z1+gAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAAASUVORK5CYII=
 // @downloadURL   https://github.com/Wiripse/HFRGMTools/raw/master/SuperFavs.user.js
 // @updateURL     https://github.com/Wiripse/HFRGMTools/raw/master/SuperFavs.user.js
-// @include       https://forum.hardware.fr/forum1f.php*
-// @include       https://forum.hardware.fr/forum1.php*
+// @include       https://forum.hardware.fr/*
 // @homepageURL   https://github.com/Wiripse/HFRGMTools/
 // @noframes
 // @grant         GM.getValue
@@ -19,6 +18,7 @@
 // ==/UserScript==
 
 // Historique
+// 2019.10.2.4 : Ajout des settings. Divers fixs. Refacto.
 // 2019.10.2.3 : Fix pour compatibilité VM&cie.
 // 2019.10.2.2 : Meilleure gestion du nettoyage des classes.
 // 2019.10.2.1 : Utilisation nouvelle methode init MPStorage. Fix style surlignage.
@@ -74,6 +74,9 @@ var HFRGMUtils = {
         settings : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAAbwAAAG8B8aLcQwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAHHSURBVDiNnZK9a5NRFMZ/z5tQQ1oaRBpEYtSI+g9Yqdghagalo4OCYBUEhw5FhKK4pOAgFsFFioPSd7CbUyUIVs3QQfwAnaoiNVStQwO11do0pDkO3lfepH72wIV7z/09zz3ncAVk3VpLFKNOXAwyZlb8DbwqJOUFjAClNVawFSBvZgBxYMDM+NMCBoC42+ejIbdjwKik7F9eHXXsLYCwQdrMPlzu63wfJDKb2gGYmln4CZ2//lSS0sHZCxnE/6HnVawHIMkD2v7DoM1pfrRgZnVJZYB3M4tnAyq3e0sN4MGzT9Emg7LTNMygKiliZtfmxnu7PXQI2RmAK317btSxe+tz/oSkCFANRGGDMeACcMkTQ2BdN8de8/VbjaO5bRc3bogfBPY65m7DDFwbL4Hhz+OnskDm/pOPLFVWMDP8wluAjLsbNrMX4QpKkvJBwi9Mpk/27Eo+f1XmzfQ8ADvTCYCkX5g8AUxLCvBS1MxGGsYzOOgtMLVje6q9O9YSIZVspWffZgQT/YnDp/vtcT2My33Jhph/2Hsb48jcl+V1i0s1UsnWZcSdxAH/eDP7SwOK+6OzdMRaVmJXAaqRyrkOZitkH9Wa0e9xGbOF14rekAAAAABJRU5ErkJggg==',
         emptyHeart : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAAHdElNRQfjCR4KLC4JomLmAAAA0ElEQVQoz3XPPU7CABjG8V8rCWhaF2lD2OkEDh6iZ3BzYHHnBBrwDM46GE4hJszMpgmJHwOJbI2uxkFpROmzPR/55335VktHYKNAR6tyErdKhTcTTU1X1gqlG21Ch+49SWUyqampRE8m9WwmDkwcOa/Qdzit2NfWFHrqlHmkFNYOQmXow37t4MD7nhORRc3gzCfHVto768RKH0bmon91ZG60MWMz8VYdezD+HVxa6Faua+HiL3JoaQD6loa7jsq9yuVe5HV/DxSKH06NGhrbwRfHMyvA2fpC2gAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAxOS0wOS0zMFQxMDo0NDo0NiswMDowMJps0hgAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMTktMDktMzBUMTA6NDQ6NDYrMDA6MDDrMWqkAAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAAABJRU5ErkJggg==',
         fullHeart : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAA3NCSVQICAjb4U/gAAAACXBIWXMAAARuAAAEbgHQo7JoAAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAAKJQTFRF////v0BAzDMzyDckwj0xvzUrwj0pwTcpvjsuwjgpvjwtvzsswDotwDsrvzgpwDsswDsqwDwrwTsswDkrwTkswTsswToqwDsqwToswDorwDorwDorwDorwDorwDorwDorwDorwDorwDorwDorwDorwDorwDorwDorwDorwDorwDorwDorwDorwTsswz4vyEQ1yUU2y0c40U9A1FND3FxM3V5Og1qrkwAAACx0Uk5TAAQFDhUYGSUnMjM0OUFERUlNUlliY3N5e4mW0NTa29/g6ezt7u/x8vb4/P0b22PaAAAAgUlEQVQYGVXBiRZCQAAF0EeoaNGqhBaSpteu//+1pslxZu4FYAUjG5I9DixIfkbmK2B9JDMfcAu+6itnS/4ULmLW7xtZCSox0seHmhT5805NjoSGBBENEZySmtIBQsGWCCEtLmyIOZTpmUo1QWN4onQYoNXfk7seNN3txoPB6+DvC5T8Gy0tAjNFAAAAAElFTkSuQmCC',
+        list : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAAHdElNRQfjCgILMjh1mhCoAAAAcElEQVQoz2NkOMxwlAE3sGJg6GDABzqYoAxGXCqYoNJlDHnYFbAwMDAwMPxn+MvAwMDA0MDAAZe5xTAPagtxbsAJYAqKGTLxuYGBgZWBk7ZuYGSIYgjCHw5mDD8Z1mFzA8yRhdCAwumL/7jcwEgougGwYxYcPyO9lQAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAxOS0xMC0wMlQxMTo1MDo1NiswMDowMCwrrMUAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMTktMTAtMDJUMTE6NTA6NTYrMDA6MDBddhR5AAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAAABJRU5ErkJggg==',
+        uncheck: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAA3NCSVQICAjb4U/gAAAACXBIWXMAAABvAAAAbwHxotxDAAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAADZQTFRF/////wAA5Bsb4Rsb4xoa4Rwc4xsb4Rsb4hsb4hsb4hsb4yIi4yYm8ZSU98DA98HB98LC////D8BLZgAAAAp0Uk5TAAEmcH+As7Xm9myQZpsAAABqSURBVBhXZY9JDgMhDASrbWDy/98OwfYcQhRF1LGl3gRgLiMrEhDIhgComYXQcL7ELOEXP+6QXcKUhaySutU7eIvAfQVMjQZyr7KIgqWXAeoiVwG5hWbU+yNsS0rbcoQetcewc/pxjv/7D9JkQzloZ2NlAAAAAElFTkSuQmCC',
+        check : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAA3NCSVQICAjb4U/gAAAACXBIWXMAAARuAAAEbgHQo7JoAAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAAGxQTFRF////AP//KK6GJK2JJK+JJq2HJa6HJa+JJa6IJa6IJa6IJq6IKK+JKK+KK7CLLrGNM7OPNLOQNbSRObWTPLeVQLiWRLmZRrqaVsCjY8WqacetgNC5htK9j9XCltjGndrJruHTtuTXueXZvufcQhO/KQAAAAp0Uk5TAAEmcH+As7Xm9myQZpsAAAB3SURBVBhXZY9HEgMhEAMFLLPQzjnH/f8ffcCmtkzfNFXSSJIkHy0li14FFzIA5OAkyfVUeicpMCJIPle1XZG9YtXLYQOd7Kfn7wNgSjBbAJPnESApwW7Yw+NMORiwfp2ul2K0Ejq9375J3fgtkH1brK3ejPub/wG/CwjxA06BTgAAAABJRU5ErkJggg==',
     },
     createOnglet: function(icon, title, onClickMethod){
         // **********
@@ -89,13 +92,13 @@ var HFRGMUtils = {
 
             // Rounded border left
             var nBfOnglet = document.createElement('div');
-            nBfOnglet.setAttribute('class', 'beforonglet');
+            nBfOnglet.classList.add('beforonglet', 'customTabGM');
             nBfOnglet.innerHTML = '&nbsp;';
             onglets.appendChild(nBfOnglet);
 
             // Create the new tab
             var newTab = document.createElement('a');
-            newTab.setAttribute('class', 'onglet');
+            newTab.classList.add('onglet', 'customTabGM');
             newTab.setAttribute('title', title);
             var imgNewTab = document.createElement('img');
             imgNewTab.setAttribute('src', icon);
@@ -108,13 +111,13 @@ var HFRGMUtils = {
 
             // Rounded border right
             var nAfOnglet = document.createElement('div');
-            nAfOnglet.setAttribute('class', 'afteronglet');
+            nAfOnglet.classList.add('afteronglet', 'customTabGM');
             nAfOnglet.innerHTML = '&nbsp;';
             onglets.appendChild(nAfOnglet);
         }
 
     },
-    removeClassesFromElement(element, classes){
+    removeClassesFromElement: function(element, classes){
         // **********
         // HFR4K_GM
         // Remove the classes (array of string) from the given Element
@@ -122,7 +125,26 @@ var HFRGMUtils = {
         classes.forEach(function(classe){
             element.classList.remove(classe);
         });
-    }
+    },
+    checkDataStorage: function(){
+        // **********
+        // HFR4K_GM
+        // Init LocalMPStorage datas if something missing
+        // TODO : Put in MPStorage lib
+        // **********
+
+        if(!LocalMPStorage.datas.superFavs){
+            LocalMPStorage.datas.superFavs = { list : [], hideableList: [], showHideable : false, settings : {}};
+        }
+        if (!LocalMPStorage.datas.superFavs.hideableList){
+            LocalMPStorage.datas.superFavs.hideableList = [];
+            LocalMPStorage.datas.superFavs.showHideable = false;
+        }
+        if (!LocalMPStorage.datas.superFavs.settings){
+            LocalMPStorage.datas.superFavs.settings = {};
+        }
+
+    },
 };
 
 /**
@@ -165,6 +187,7 @@ var LocalMPStorage = {
                         GM.setValue('mpStorage_username', mpStorage.username);
                         GM.setValue('mpStorage_mpId', mpStorage.mpId);
                         GM.setValue('mpStorage_mpRepId', mpStorage.mpRepId);
+                        HFRGMUtils.checkDataStorage();
                         resolve();
                     });
                 });
@@ -220,6 +243,11 @@ var LocalMPStorage = {
 * Script specific functions
 */
 var HFR4K = {
+    /* Toggle to show/hide settings */
+    showSettings : false,
+    /* Element of the main tab */
+    mainTab: void 0,
+    /* Functions */
     initPromise: function(){
         // **********
         // HFR4K_GM
@@ -227,21 +255,233 @@ var HFR4K = {
         // **********
         return LocalMPStorage.initMPStorage();
     },
-    initTabs: function(){
+    fullRender: function(){
+        // **********
+        // HFR4K_GM
+        // Make the full rendering of the current page (when a new page is open)
+        // **********
+
+        // Custom CSS
+        var style = document.createElement('style');
+        style.type = 'text/css';
+        var superFavRowStyle = '.superFavRow { background-color : '+LocalMPStorage.datas.superFavs.settings.superFavColor+'; } .superFavRow:hover, .superFavRow:hover .superFavRowAlt{ background-color: '+LocalMPStorage.datas.superFavs.settings.superFavColorHover+';}';
+        var superFavRowStyleAlt = '.superFavRowAlt { background-color : '+LocalMPStorage.datas.superFavs.settings.superFavColorHover+'; }';
+        var favRowStyle = '.favRow { background-color : #F7F7F7; } .favRow:hover, .favRow:hover .favRowAlt{ background-color: #DEDFDF;}';
+        var favRowStyleAlt = '.favRowAlt { background-color : #DEDFDF; }';
+        var hiddenFav = '.hiddenFav { display : none; }';
+        style.appendChild(document.createTextNode(superFavRowStyle));
+        style.appendChild(document.createTextNode(superFavRowStyleAlt));
+        style.appendChild(document.createTextNode(favRowStyle));
+        style.appendChild(document.createTextNode(favRowStyleAlt));
+        style.appendChild(document.createTextNode(hiddenFav));
+        style.appendChild(document.createTextNode('.hfr4kHiddenTab { display : none; }'));
+        style.appendChild(document.createTextNode('.hfr4kLabelSettingItem { padding-left: 5rem;}'));
+        style.appendChild(document.createTextNode('.hfr4kColorBox { width: 1rem; height: 1rem; display: inline-block; background-color: #D2B2FF;}'));
+        document.head.appendChild(style);
+
+
+        // Identify the main table to be able to hide it next
+        if(document.querySelectorAll('.main')){
+            document.querySelectorAll('.main').forEach((tab) => {
+                if (!tab.classList.contains('fastsearchMain') && !tab.classList.contains('hfrGMCustom')) {
+                    HFR4K.mainTab = tab;
+                    tab.classList.add('hfr4kMainTab');
+                }
+            });
+        }
+
+        // Rest of the rendering
+        HFR4K.simpleRender();
+
+    },
+    simpleRender: function(){
+        // **********
+        // HFR4K_GM
+        // Make the partial rendering of the current page (when something as changed after a user action)
+        // **********
+
+        // Render tabs
+        HFR4K.renderTabs();
+
+        // Render Favs
+        HFR4K.renderFavs();
+
+    },
+    createTableSettings: function(classes, elementAfter){
+        // **********
+        // HFR4K_GM
+        // Create table settings
+        // **********
+        var table = document.createElement('table');
+        table.classList.add('main', 'hfrGMCustom', ...classes);
+        table.setAttribute('cellspacing', 0);
+        table.setAttribute('cellpadding', 2);
+        var taBody = document.createElement('tbody');
+        table.appendChild(taBody);
+
+
+        var rowTitle = document.createElement('tr');
+        rowTitle.classList.add('cBackHeader', 'fondForum1fCat');
+        var title = document.createElement('th');
+        // TODO Style plus propre
+        title.innerHTML = 'Paramètres HFR4K<br /><br /><br />';
+        title.setAttribute('colspan', 2);
+        rowTitle.appendChild(title);
+        taBody.appendChild(rowTitle);
+
+
+        // *** Favoris *** //
+        var catFavoris = document.createElement('tr');
+        catFavoris.classList.add('cBackHeader', 'fondForum1fCat', 'hfr4kSettingRow');
+
+        var colFavTitle = document.createElement('th');
+        colFavTitle.setAttribute('colspan', 2);
+        colFavTitle.setAttribute('scope', 'col');
+        colFavTitle.innerHTML = 'Topics Favoris';
+        catFavoris.appendChild(colFavTitle);
+        taBody.appendChild(catFavoris);
+
+        // Setting Fav Activation
+        var rowFavStatus = document.createElement('tr');
+        rowFavStatus.classList.add('sujet', 'ligne_booleen', 'cBackCouleurTab3', 'hfr4kSettingRow');
+        var colFavStatusTitle = document.createElement('td');
+        colFavStatusTitle.setAttribute('scope', 'row');
+        colFavStatusTitle.classList.add('sujetCase3', 'hfr4kLabelSettingItem');
+        colFavStatusTitle.innerHTML = '<span class="cCatTopic">Activer ?</span>';
+        rowFavStatus.appendChild(colFavStatusTitle);
+        var colFavStatusCb = document.createElement('td');
+        colFavStatusCb.setAttribute('scope', 'row');
+        colFavStatusCb.classList.add('sujetCase3', 'hfr4kLabelSettingItem');
+        var iconFavStatus = document.createElement('img');
+        var favStatus = false;
+        iconFavStatus.setAttribute('src', LocalMPStorage.datas.superFavs.settings.active ? HFRGMUtils.icons.uncheck : HFRGMUtils.icons.check);
+        iconFavStatus.onclick = function(){
+            LocalMPStorage.datas.superFavs.settings.active = !LocalMPStorage.datas.superFavs.settings.active;
+            iconFavStatus.setAttribute('src', LocalMPStorage.datas.superFavs.settings.active ? HFRGMUtils.icons.uncheck : HFRGMUtils.icons.check);
+            LocalMPStorage.updateMPStorage(LocalMPStorage.domains.superFavs);
+            // Render tabs
+            HFR4K.renderTabs();
+        };
+        colFavStatusCb.appendChild(iconFavStatus);
+        rowFavStatus.appendChild(colFavStatusCb);
+        taBody.appendChild(rowFavStatus);
+
+        // Setting Fav Color
+        var rowFavColor = document.createElement('tr');
+        rowFavColor.classList.add('sujet', 'ligne_booleen', 'cBackCouleurTab3', 'hfr4kSettingRow');
+        var colFavColorTitle = document.createElement('td');
+        colFavColorTitle.setAttribute('scope', 'row');
+        colFavColorTitle.classList.add('sujetCase3', 'hfr4kLabelSettingItem');
+        colFavColorTitle.innerHTML = '<span class="cCatTopic">Couleur SuperFav</span>';
+        rowFavColor.appendChild(colFavColorTitle);
+        var colFavColorVal = document.createElement('td');
+        colFavColorVal.setAttribute('scope', 'row');
+        colFavColorVal.classList.add('sujetCase3', 'hfr4kLabelSettingItem');
+        var colorBoxFavColor = document.createElement('span');
+        colorBoxFavColor.classList.add('hfr4kColorBox');
+        colorBoxFavColor.style = 'background-color : '+(LocalMPStorage.datas.superFavs.settings.superFavColor ? LocalMPStorage.datas.superFavs.settings.superFavColor : '#D2B2FF')+ ';';
+        colFavColorVal.appendChild(colorBoxFavColor);
+        var favColorInput = document.createElement('input');
+        favColorInput.setAttribute('type', 'text');
+        favColorInput.value = LocalMPStorage.datas.superFavs.settings.superFavColor ? LocalMPStorage.datas.superFavs.settings.superFavColor : '#D2B2FF';
+        favColorInput.onchange = function(){
+            if(favColorInput.value){
+                var favColor = favColorInput.value.replace('#', '');
+                if(favColor.length === 6 && favColor.match(/^[0-9a-fA-F]+$/)){
+                    colorBoxFavColor.style = 'background-color : #'+favColor+';';
+                    LocalMPStorage.datas.superFavs.settings.superFavColor = '#'+favColor;
+                    LocalMPStorage.updateMPStorage(LocalMPStorage.domains.superFavs);
+                }
+            }
+        }
+        colFavColorVal.appendChild(favColorInput);
+        rowFavColor.appendChild(colFavColorVal);
+        taBody.appendChild(rowFavColor);
+
+        // Setting Fav Color Hover
+        var rowFavColorHover = document.createElement('tr');
+        rowFavColorHover.classList.add('sujet', 'ligne_booleen', 'cBackCouleurTab3', 'hfr4kSettingRow');
+        var colFavColorHoverTitle = document.createElement('td');
+        colFavColorHoverTitle.setAttribute('scope', 'row');
+        colFavColorHoverTitle.classList.add('sujetCase3', 'hfr4kLabelSettingItem');
+        colFavColorHoverTitle.innerHTML = '<span class="cCatTopic">Couleur Hover SuperFav</span>';
+        rowFavColorHover.appendChild(colFavColorHoverTitle);
+        var colFavColorHoverVal = document.createElement('td');
+        colFavColorHoverVal.setAttribute('scope', 'row');
+        colFavColorHoverVal.classList.add('sujetCase3', 'hfr4kLabelSettingItem');
+        var colorBoxFavColorHover = document.createElement('span');
+        colorBoxFavColorHover.classList.add('hfr4kColorBox');
+        colorBoxFavColorHover.style = 'background-color : '+(LocalMPStorage.datas.superFavs.settings.superFavColorHover ? LocalMPStorage.datas.superFavs.settings.superFavColorHover : '#B580FF')+ ';';
+        colFavColorHoverVal.appendChild(colorBoxFavColorHover);
+        var favColorHoverInput = document.createElement('input');
+        favColorHoverInput.setAttribute('type', 'text');
+        favColorHoverInput.value = LocalMPStorage.datas.superFavs.settings.superFavColorHover ? LocalMPStorage.datas.superFavs.settings.superFavColorHover : '#B580FF';
+        favColorHoverInput.onchange = function(){
+            if(favColorHoverInput.value){
+                var favColorHover = favColorHoverInput.value.replace('#', '');
+                if(favColorHover.length === 6 && favColorHover.match(/^[0-9a-fA-F]+$/)){
+                    colorBoxFavColorHover.style = 'background-color : #'+favColorHover+';';
+                    LocalMPStorage.datas.superFavs.settings.superFavColorHover = '#'+favColorHover;
+                    LocalMPStorage.updateMPStorage(LocalMPStorage.domains.superFavs);
+                }
+            }
+        }
+        colFavColorHoverVal.appendChild(favColorHoverInput);
+        rowFavColorHover.appendChild(colFavColorHoverVal);
+        taBody.appendChild(rowFavColorHover);
+
+        // FIRE IN THE HOLE !!!
+        elementAfter.parentNode.insertBefore(table, elementAfter);
+    },
+    renderTabs: function(){
         // **********
         // HFR4K_GM
         // Create the headers tabs ('onglet')
         // **********
 
+        // Delete previous tabs
+        document.querySelectorAll('.customTabGM').forEach(function(customTab){
+            customTab.parentNode.removeChild(customTab);
+        });
+
+
+        // Create tab for the settings
+        if(HFR4K.mainTab){
+            HFRGMUtils.createOnglet(HFRGMUtils.icons.settings ,'Réglages/Retour aux topics', function(tab){
+                HFR4K.showSettings = !HFR4K.showSettings;
+                tab.querySelector('img').setAttribute('src', HFR4K.showSettings ? HFRGMUtils.icons.list : HFRGMUtils.icons.settings);
+                if(HFR4K.showSettings){
+                    // Show the settings/hide the topics
+                    if(!document.querySelector('.hfr4kSettings')){
+                        // Create table settings if necessary
+                        HFR4K.createTableSettings(['hfr4kSettings', 'hfr4kHiddenTab'], HFR4K.mainTab);
+                    }
+                    document.querySelector('.hfr4kMainTab').classList.add('hfr4kHiddenTab');
+                    document.querySelector('.hfr4kSettings').classList.remove('hfr4kHiddenTab');
+                }else{
+                    // Hide the settings/show the topics
+                    document.querySelector('.hfr4kMainTab').classList.remove('hfr4kHiddenTab');
+                    document.querySelector('.hfr4kSettings').classList.add('hfr4kHiddenTab');
+                    // Render the result
+                    HFR4K.simpleRender();
+                }
+            });
+        }
+
+
         // FIXME : Useless test bcz script set to only work on those pages. But a nice idea would be to create util methods (isOnMP, isOnCyan...) to check where we are
         if (document.location.href.indexOf('https://forum.hardware.fr/forum1f.php') === 0 || (document.location.href.indexOf('https://forum.hardware.fr/forum1.php') === 0 && document.querySelector('.cadreonglet'))) {
 
-            HFRGMUtils.createOnglet(LocalMPStorage.datas.superFavs.showHideable ? HFRGMUtils.icons.eye : HFRGMUtils.icons.hide, 'Afficher/masquer les favoris', function(tab){
-                LocalMPStorage.datas.superFavs.showHideable = !LocalMPStorage.datas.superFavs.showHideable;
-                tab.querySelector('img').setAttribute('src', LocalMPStorage.datas.superFavs.showHideable ? HFRGMUtils.icons.eye : HFRGMUtils.icons.hide);
-                LocalMPStorage.updateMPStorage(LocalMPStorage.domains.superFavs);
-                HFR4K.renderFavs();
-            });
+            // Tab for SuperFav
+            if(LocalMPStorage.datas.superFavs.settings.active){
+                HFRGMUtils.createOnglet(LocalMPStorage.datas.superFavs.showHideable ? HFRGMUtils.icons.eye : HFRGMUtils.icons.hide, 'Afficher/masquer les favoris', function(tab){
+                    LocalMPStorage.datas.superFavs.showHideable = !LocalMPStorage.datas.superFavs.showHideable;
+                    tab.querySelector('img').setAttribute('src', LocalMPStorage.datas.superFavs.showHideable ? HFRGMUtils.icons.eye : HFRGMUtils.icons.hide);
+                    LocalMPStorage.updateMPStorage(LocalMPStorage.domains.superFavs);
+                    HFR4K.renderFavs();
+                });
+            }
+
         }
     },
     renderFavs: function(){
@@ -252,89 +492,122 @@ var HFR4K = {
 
         if (document.location.href.indexOf('https://forum.hardware.fr/forum1f.php') === 0 || (document.location.href.indexOf('https://forum.hardware.fr/forum1.php') === 0 && document.querySelector('.cadreonglet'))) {
 
-            if(!LocalMPStorage.datas.superFavs || !LocalMPStorage.datas.superFavs.hideableList){
-                // Init datas if necessary
-                LocalMPStorage.datas.superFavs = { list : [], hideableList: [], showHideable : false};
-            }
-
-            // TODO : Params structure :
-            // superFavColor; superFavHoverColor
-
-            // Custom CSS
-            var superFavRowStyle = '.superFavRow { background-color : #D2B2FF; } .superFavRow:hover, .superFavRow:hover .superFavRowAlt{ background-color: #B580FF;}';
-            var superFavRowStyleAlt = '.superFavRowAlt { background-color : #B580FF; }';
-            var favRowStyle = '.favRow { background-color : #F7F7F7; } .favRow:hover, .favRow:hover .favRowAlt{ background-color: #DEDFDF;}';
-            var favRowStyleAlt = '.favRowAlt { background-color : #DEDFDF; }';
-            var hiddenFav = '.hiddenFav { display : none; }';
-            var style = document.createElement('style');
-            style.type = 'text/css';
-            style.appendChild(document.createTextNode(superFavRowStyle));
-            style.appendChild(document.createTextNode(superFavRowStyleAlt));
-            style.appendChild(document.createTextNode(favRowStyle));
-            style.appendChild(document.createTextNode(favRowStyleAlt));
-            style.appendChild(document.createTextNode(hiddenFav));
-            document.head.appendChild(style);
-
             // Reset display
             document.querySelectorAll('.superFavRow, .superFavRowAlt, .favRow, .favRowAlt, .hiddenFav').forEach(function(item){
                 HFRGMUtils.removeClassesFromElement(item, ['superFavRow', 'superFavRowAlt', 'favRow', 'favRowAlt', 'hiddenFav']);
             });
 
-            var topicRows = document.querySelectorAll('.sujet');
-            // Iterate on each topic
-            topicRows.forEach(function(topicRow){
+            // Render if necessary
+            if(LocalMPStorage.datas.superFavs.settings.active){
 
-                // Remove onmouse events added by some HFR conf
-                topicRow.setAttribute('onmouseover', void 0);
-                topicRow.setAttribute('onmouseout', void 0);
+                var topicRows = document.querySelectorAll('.sujet');
+                // Iterate on each topic
+                topicRows.forEach(function(topicRow){
 
-                var topic = topicRow.querySelector('.sujetCase3');
-                if(!topicRow.classList.contains('privateMessage') && topic){
-                    // privateMessage class : fix to work with DTCloud
+                    // Remove onmouse events added by some HFR conf
+                    topicRow.setAttribute('onmouseover', void 0);
+                    topicRow.setAttribute('onmouseout', void 0);
 
-                    var topicUrl = new URLSearchParams(topic.querySelector('a').href);
-                    var topicId = parseInt(topicUrl.get('post'));
+                    var topic = topicRow.querySelector('.sujetCase3');
+                    if(!topicRow.classList.contains('privateMessage') && !topicRow.classList.contains('hfr4kSettingRow') && topic){
+                        // privateMessage class : fix to work with DTCloud
 
-                    if(LocalMPStorage.datas.superFavs.hideableList.indexOf(topicId) > -1){
-                        // Hideable topic
-                        if(LocalMPStorage.datas.superFavs.showHideable){
-                            // Display all topics
+                        var topicUrl = new URLSearchParams(topic.querySelector('a').href);
+                        var topicId = parseInt(topicUrl.get('post'));
+
+                        if(LocalMPStorage.datas.superFavs.hideableList.indexOf(topicId) > -1){
+                            // Hideable topic
+                            if(LocalMPStorage.datas.superFavs.showHideable){
+                                // Display all topics
+
+                                // Background color
+                                topicRow.classList.add('favRow');
+                                topicRow.querySelector('.sujetCase1').classList.add('favRowAlt');
+                                topicRow.querySelector('.sujetCase6').classList.add('favRowAlt');
+                                topicRow.querySelector('.sujetCase9').classList.add('favRowAlt');
+
+                                // Create icon to manage the status
+                                var imgBlocHide = topicRow.querySelector('.sujetCase2');
+                                imgBlocHide.removeChild(imgBlocHide.querySelector('img'));
+                                var newImgBlocHide = document.createElement('img');
+                                newImgBlocHide.setAttribute('title', 'Ajouter aux super favoris/Ne plus masquer');
+                                newImgBlocHide.setAttribute('src', HFRGMUtils.icons.hide);
+
+                                // Handle onclick to add to SuperFavs list
+                                newImgBlocHide.onclick = function() {
+                                    // Remove from Hideable
+                                    let i = LocalMPStorage.datas.superFavs.hideableList.findIndex(function(item){ return topicId === item; });
+                                    if(0<=i){
+                                        LocalMPStorage.datas.superFavs.hideableList.splice(i, 1);
+                                    }
+                                    // Add to SuperFavs
+                                    LocalMPStorage.datas.superFavs.list.push(topicId);
+                                    // Update MPStorage
+                                    LocalMPStorage.updateMPStorage(LocalMPStorage.domains.superFavs);
+                                    // Render the result
+                                    HFR4K.renderFavs();
+                                };
+
+                                // Handle rightclick to remove from Hideable list
+                                newImgBlocHide.oncontextmenu = function(){
+                                    // Remove from Hideable
+                                    let i = LocalMPStorage.datas.superFavs.hideableList.findIndex(function(item){ return topicId === item; });
+                                    if(0<=i){
+                                        LocalMPStorage.datas.superFavs.hideableList.splice(i, 1);
+                                    }
+                                    // Update MPStorage
+                                    LocalMPStorage.updateMPStorage(LocalMPStorage.domains.superFavs);
+                                    // Render the result
+                                    HFR4K.renderFavs();
+
+                                    // Block contextmenu
+                                    return false;
+                                };
+                                imgBlocHide.appendChild(newImgBlocHide);
+
+                            }else{
+                                // Don't display hideable topics
+                                topicRow.classList.add('hiddenFav');
+                            }
+
+                        } else if (LocalMPStorage.datas.superFavs.list.indexOf(topicId) > -1){
+                            // Super Favorite topic
 
                             // Background color
-                            topicRow.classList.add('favRow');
-                            topicRow.querySelector('.sujetCase1').classList.add('favRowAlt');
-                            topicRow.querySelector('.sujetCase6').classList.add('favRowAlt');
-                            topicRow.querySelector('.sujetCase9').classList.add('favRowAlt');
+                            topicRow.classList.add('superFavRow');
+                            topicRow.querySelector('.sujetCase1').classList.add('superFavRowAlt');
+                            topicRow.querySelector('.sujetCase6').classList.add('superFavRowAlt');
+                            topicRow.querySelector('.sujetCase9').classList.add('superFavRowAlt');
 
                             // Create icon to manage the status
-                            var imgBlocHide = topicRow.querySelector('.sujetCase2');
-                            imgBlocHide.removeChild(imgBlocHide.querySelector('img'));
-                            var newImgBlocHide = document.createElement('img');
-                            newImgBlocHide.setAttribute('title', 'Ajouter aux super favoris/Ne plus masquer');
-                            newImgBlocHide.setAttribute('src', HFRGMUtils.icons.hide);
-
-                            // Handle onclick to add to SuperFavs list
-                            newImgBlocHide.onclick = function() {
-                                // Remove from Hideable
-                                let i = LocalMPStorage.datas.superFavs.hideableList.findIndex(function(item){ return topicId === item; });
+                            var imgBlocSF = topicRow.querySelector('.sujetCase2');
+                            imgBlocSF.removeChild(imgBlocSF.querySelector('img'));
+                            var newImgBlocSF = document.createElement('img');
+                            newImgBlocSF.setAttribute('title', 'Supprimer des super favoris/Masquer');
+                            newImgBlocSF.setAttribute('src', HFRGMUtils.icons.fullHeart);
+                            // Handle onclick to remove from SuperFavs list
+                            newImgBlocSF.onclick = function () {
+                                let i = LocalMPStorage.datas.superFavs.list.findIndex(function(item){ return topicId === item; });
                                 if(0<=i){
-                                    LocalMPStorage.datas.superFavs.hideableList.splice(i, 1);
+                                    // Remove from SuperFavs
+                                    LocalMPStorage.datas.superFavs.list.splice(i, 1);
+                                    // Update MPStorage
+                                    LocalMPStorage.updateMPStorage(LocalMPStorage.domains.superFavs);
+                                    // Render the result
+                                    HFR4K.renderFavs();
                                 }
-                                // Add to SuperFavs
-                                LocalMPStorage.datas.superFavs.list.push(topicId);
-                                // Update MPStorage
-                                LocalMPStorage.updateMPStorage(LocalMPStorage.domains.superFavs);
-                                // Render the result
-                                HFR4K.renderFavs();
                             };
 
-                            // Handle rightclick to remove from Hideable list
-                            newImgBlocHide.oncontextmenu = function(){
-                                // Remove from Hideable
-                                let i = LocalMPStorage.datas.superFavs.hideableList.findIndex(function(item){ return topicId === item; });
+                            // Handle rightclick to add to Hideable list
+                            newImgBlocSF.oncontextmenu = function(){
+                                // Remove from SuperFavs
+                                let i = LocalMPStorage.datas.superFavs.list.findIndex(function(item){ return topicId === item; });
                                 if(0<=i){
-                                    LocalMPStorage.datas.superFavs.hideableList.splice(i, 1);
+                                    // Remove from SuperFavs
+                                    LocalMPStorage.datas.superFavs.list.splice(i, 1);
                                 }
+                                // Add to Hideable
+                                LocalMPStorage.datas.superFavs.hideableList.push(topicId);
                                 // Update MPStorage
                                 LocalMPStorage.updateMPStorage(LocalMPStorage.domains.superFavs);
                                 // Render the result
@@ -343,175 +616,121 @@ var HFR4K = {
                                 // Block contextmenu
                                 return false;
                             };
-                            imgBlocHide.appendChild(newImgBlocHide);
+                            imgBlocSF.appendChild(newImgBlocSF);
+                        } else if (topicRow.querySelector('.sujetCase2')){
+                            // Simple  topic
 
-                        }else{
-                            // Don't display hideable topics
-                            topicRow.classList.add('hiddenFav');
-                        }
+                            // Background color
+                            topicRow.classList.add('favRow');
+                            topicRow.querySelector('.sujetCase1').classList.add('favRowAlt');
+                            topicRow.querySelector('.sujetCase6').classList.add('favRowAlt');
+                            topicRow.querySelector('.sujetCase9').classList.add('favRowAlt');
 
-                    } else if (LocalMPStorage.datas.superFavs.list.indexOf(topicId) > -1){
-                        // Super Favorite topic
+                            // Create icon to manage the status
+                            var imgBloc = topicRow.querySelector('.sujetCase2');
+                            imgBloc.removeChild(imgBloc.querySelector('img'));
+                            var newImgBloc = document.createElement('img');
+                            newImgBloc.setAttribute('title', 'Ajouter aux super favoris/Masquer');
+                            newImgBloc.setAttribute('src', HFRGMUtils.icons.eye);
 
-                        // Background color
-                        topicRow.classList.add('superFavRow');
-                        topicRow.querySelector('.sujetCase1').classList.add('superFavRowAlt');
-                        topicRow.querySelector('.sujetCase6').classList.add('superFavRowAlt');
-                        topicRow.querySelector('.sujetCase9').classList.add('superFavRowAlt');
-
-                        // Create icon to manage the status
-                        var imgBlocSF = topicRow.querySelector('.sujetCase2');
-                        imgBlocSF.removeChild(imgBlocSF.querySelector('img'));
-                        var newImgBlocSF = document.createElement('img');
-                        newImgBlocSF.setAttribute('title', 'Supprimer des super favoris/Masquer');
-                        newImgBlocSF.setAttribute('src', HFRGMUtils.icons.fullHeart);
-                        // Handle onclick to remove from SuperFavs list
-                        newImgBlocSF.onclick = function () {
-                            let i = LocalMPStorage.datas.superFavs.list.findIndex(function(item){ return topicId === item; });
-                            if(0<=i){
-                                // Remove from SuperFavs
-                                LocalMPStorage.datas.superFavs.list.splice(i, 1);
+                            // Handle onclick to add to SuperFavs list
+                            newImgBloc.onclick = function() {
+                                // Add to SuperFavs
+                                LocalMPStorage.datas.superFavs.list.push(topicId);
                                 // Update MPStorage
                                 LocalMPStorage.updateMPStorage(LocalMPStorage.domains.superFavs);
                                 // Render the result
                                 HFR4K.renderFavs();
-                            }
-                        };
+                            };
 
-                        // Handle rightclick to add to Hideable list
-                        newImgBlocSF.oncontextmenu = function(){
-                            // Remove from SuperFavs
-                            let i = LocalMPStorage.datas.superFavs.list.findIndex(function(item){ return topicId === item; });
-                            if(0<=i){
-                                // Remove from SuperFavs
-                                LocalMPStorage.datas.superFavs.list.splice(i, 1);
-                            }
-                            // Add to Hideable
-                            LocalMPStorage.datas.superFavs.hideableList.push(topicId);
-                            // Update MPStorage
-                            LocalMPStorage.updateMPStorage(LocalMPStorage.domains.superFavs);
-                            // Render the result
-                            HFR4K.renderFavs();
+                            // Handle rightclick to add to Hideable list
+                            newImgBloc.oncontextmenu = function(){
+                                // Add to Hideable
+                                LocalMPStorage.datas.superFavs.hideableList.push(topicId);
+                                // Update MPStorage
+                                LocalMPStorage.updateMPStorage(LocalMPStorage.domains.superFavs);
+                                // Render the result
+                                HFR4K.renderFavs();
 
-                            // Block contextmenu
-                            return false;
-                        };
-                        imgBlocSF.appendChild(newImgBlocSF);
-                    } else if (topicRow.querySelector('.sujetCase2')){
-                        // Simple  topic
+                                // Block contextmenu
+                                return false;
+                            };
 
-                        // Background color
-                        topicRow.classList.add('favRow');
-                        topicRow.querySelector('.sujetCase1').classList.add('favRowAlt');
-                        topicRow.querySelector('.sujetCase6').classList.add('favRowAlt');
-                        topicRow.querySelector('.sujetCase9').classList.add('favRowAlt');
+                            imgBloc.appendChild(newImgBloc);
+                        }
 
-                        // Create icon to manage the status
-                        var imgBloc = topicRow.querySelector('.sujetCase2');
-                        imgBloc.removeChild(imgBloc.querySelector('img'));
-                        var newImgBloc = document.createElement('img');
-                        newImgBloc.setAttribute('title', 'Ajouter aux super favoris/Masquer');
-                        newImgBloc.setAttribute('src', HFRGMUtils.icons.eye);
-
-                        // Handle onclick to add to SuperFavs list
-                        newImgBloc.onclick = function() {
-                            // Add to SuperFavs
-                            LocalMPStorage.datas.superFavs.list.push(topicId);
-                            // Update MPStorage
-                            LocalMPStorage.updateMPStorage(LocalMPStorage.domains.superFavs);
-                            // Render the result
-                            HFR4K.renderFavs();
-                        };
-
-                        // Handle rightclick to add to Hideable list
-                        newImgBloc.oncontextmenu = function(){
-                            // Add to Hideable
-                            LocalMPStorage.datas.superFavs.hideableList.push(topicId);
-                            // Update MPStorage
-                            LocalMPStorage.updateMPStorage(LocalMPStorage.domains.superFavs);
-                            // Render the result
-                            HFR4K.renderFavs();
-
-                            // Block contextmenu
-                            return false;
-                        };
-
-                        imgBloc.appendChild(newImgBloc);
                     }
 
+                });
+
+                if(document.location.href.indexOf('https://forum.hardware.fr/forum1f.php') === 0){
+                    // We manage empty categories if necessary with displaying an message
+
+                    // FIXME : Would be better to create a map representing the topics; because now we won't display an empty row for the last cat since we work backward
+                    // FIXME : Sync with DTCloud to add an empty row in the new "MP" cat if necessary
+
+                    // Remove existing empty rows
+                    document.querySelectorAll('.emptyRowFav').forEach(function(emptyRow){
+                        emptyRow.parentNode.removeChild(emptyRow);
+                    });
+
+                    var allRows = document.querySelector('.fondForum1fCat').parentNode.querySelectorAll('tr');
+
+                    var isCat = false;
+                    // Id of the current cat
+                    var catId = 0;
+                    // Number of displayed topics in the current cat
+                    var nbTopicsCat = 0;
+                    // Previous cat was MP ?
+                    var wasPreviousMPCat = false;
+
+                    // Browse all rows
+                    allRows.forEach(function(row){
+
+                        // Manage MPCat (for DTCloud)
+                        var isMPCat = false;
+                        if(row.querySelector('a')){
+                            var catUrl = new URLSearchParams(row.querySelector('a').href);
+                            isMPCat = catUrl.get('cat') === 'prive';
+                        }
+
+                        isCat = row.classList.contains('fondForum1fCat') && !row.classList.contains('hfr4kSettingRow');
+
+                        if(!isCat){
+                            // Not a cat row : it's a topic, so we check if its hidden or not
+                            nbTopicsCat = nbTopicsCat + (row.classList.contains('hiddenFav') ? 0 : 1);
+                        } else {
+                            if(catId > 0 && !wasPreviousMPCat){
+                                if (nbTopicsCat == 0){
+                                    // The previous cat hasn't any displayed topic so we add an empty row
+                                    var emptyRow = document.createElement('tr');
+                                    emptyRow.setAttribute('class', 'sujet emptyRowFav');
+                                    var emptyTd = document.createElement('td');
+                                    emptyTd.setAttribute('colspan', 10);
+                                    emptyTd.innerHTML = 'Aucun nouveau message';
+                                    emptyRow.appendChild(emptyTd);
+                                    row.parentNode.insertBefore(emptyRow, row);
+                                }
+                            }
+                            // Increment catId
+                            catId++;
+                            // Reset nbTopics for the new cat
+                            nbTopicsCat = 0;
+                            // Update status of the previous cat
+                            wasPreviousMPCat = wasPreviousMPCat ? false : isMPCat;
+                        }
+                    });
                 }
 
-            });
-
-            if(document.location.href.indexOf('https://forum.hardware.fr/forum1f.php') === 0){
-                // We manage empty categories if necessary with displaying an message
-
-                // FIXME : Would be better to create a map representing the topics; because now we won't display an empty row for the last cat since we work backward
-                // FIXME : Sync with DTCloud to add an empty row in the new "MP" cat if necessary
-
-                // Remove existing empty rows
-                document.querySelectorAll('.emptyRowFav').forEach(function(emptyRow){
-                    emptyRow.parentNode.removeChild(emptyRow);
-                });
-
-                var allRows = document.querySelector('.fondForum1fCat').parentNode.querySelectorAll('tr');
-
-                var isCat = false;
-                // Id of the current cat
-                var catId = 0;
-                // Number of displayed topics in the current cat
-                var nbTopicsCat = 0;
-                // Previous cat was MP ?
-                var wasPreviousMPCat = false;
-
-                // Browse all rows
-                allRows.forEach(function(row){
-
-                    // Manage MPCat (for DTCloud)
-                    var isMPCat = false;
-                    if(row.querySelector('a')){
-                        var catUrl = new URLSearchParams(row.querySelector('a').href);
-                        isMPCat = catUrl.get('cat') === 'prive';
-                    }
-
-                    isCat = row.classList.contains('fondForum1fCat');
-
-                    if(!isCat){
-                        // Not a cat row : it's a topic, so we check if its hidden or not
-                        nbTopicsCat = nbTopicsCat + (row.classList.contains('hiddenFav') ? 0 : 1);
-                    } else {
-                        if(catId > 0 && !wasPreviousMPCat){
-                            if (nbTopicsCat == 0){
-                                // The previous cat hasn't any displayed topic so we add an empty row
-                                var emptyRow = document.createElement('tr');
-                                emptyRow.setAttribute('class', 'sujet emptyRowFav');
-                                var emptyTd = document.createElement('td');
-                                emptyTd.setAttribute('colspan', 10);
-                                emptyTd.innerHTML = 'Aucun nouveau message';
-                                emptyRow.appendChild(emptyTd);
-                                row.parentNode.insertBefore(emptyRow, row);
-                            }
-                        }
-                        // Increment catId
-                        catId++;
-                        // Reset nbTopics for the new cat
-                        nbTopicsCat = 0;
-                        // Update status of the previous cat
-                        wasPreviousMPCat = wasPreviousMPCat ? false : isMPCat;
-                    }
-                });
             }
-
         }
     }
 };
 
 
 
-// Init
+// Ok, now it's time to work
 HFR4K.initPromise().then(function(){
-    // Init tabs
-    HFR4K.initTabs();
-    // Render Favs
-    HFR4K.renderFavs();
+    // LocalMPStorage done, we can render the page
+    HFR4K.fullRender();
 });
