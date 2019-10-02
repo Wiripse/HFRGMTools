@@ -19,6 +19,62 @@ var mpStorage = {
     /* Local copy of the data stored in MPStorage */
     storageData: {},
     /* Methods */
+    initLocalStorage: function(username, mpId, mpRepId, callback){
+        // **********
+        // HFRGMTools
+        // Full init of LocalStorage from MPStorage
+        // If parameters are wrong, launch initMPStorage
+        // If parameters seems, try to read MPStorage; if it fails, launch initMPStorage
+        // Finally, save content of MPStorage in storageData
+        // CALLBACK is called with a copy of MPStorage datas
+        // **********
+
+        if(!!username && !!mpId && mpId > 0 && !!mpRepId && mpRepId > 0){
+            // Parameters seems OK
+            var url = 'https://forum.hardware.fr/message.php?config=hfr.inc';
+            var args = '&cat=prive&post=' + mpId + '&numreponse=' + mpRepId + '&page=1&p=1&subcat=0&sondage=0&owntopic=0';
+
+            var initOk = false;
+            var dataz;
+
+            // Try to read MPStorage
+            mpStorage.loadPage(url, 'get', args, function (resp) {
+
+                // Try if content of the MP is OK
+                if (resp.getElementById('content_form')){
+                    dataz = JSON.parse(resp.getElementById('content_form').value);
+                    initOk = !!dataz.lastUpdate;
+                }
+
+                if(initOk){
+                    // Content OK, we save all the infos
+                    mpStorage.username = username;
+                    mpStorage.mpId = mpId;
+                    mpStorage.mpRepId = mpRepId;
+                    mpStorage.storageData = dataz;
+                    // Save the status
+                    mpStorage.initiated = true;
+                    // Callback
+                    callback(mpStorage.storageData);
+                }else{
+                    // Content of MPStorage was not ok (MP not existing, corrupted datas...)
+                    // We launch a full initStorage
+                    mpStorage.initStorage(function(){
+                        mpStorage.getStorageData(callback);
+                    });
+                }
+
+            });
+
+        }else{
+            // Wrong parameters
+            // We launch a full initStorage
+            mpStorage.initStorage(function(){
+                mpStorage.getStorageData(callback);
+            });
+        }
+    },
+
     initStorage: function (callback) {
         // **********
         // HFRGMTools
@@ -44,15 +100,20 @@ var mpStorage = {
         // Method to retrieve the JSON stored in the MPStorage
         // CALLBACK is called with the JSON retrieved
         // **********
-
         if (mpStorage.initiated){
             var url = 'https://forum.hardware.fr/message.php?config=hfr.inc';
             var args = '&cat=prive&post=' + mpStorage.mpId + '&numreponse=' + mpStorage.mpRepId + '&page=1&p=1&subcat=0&sondage=0&owntopic=0';
 
             // Get request
             mpStorage.loadPage(url, 'get', args, function (resp) {
-                mpStorage.storageData = JSON.parse(resp.getElementById('content_form').value);
-                callback(mpStorage.storageData);
+                try {
+                    mpStorage.storageData = JSON.parse(resp.getElementById('content_form').value);
+                    callback(mpStorage.storageData);
+                }
+                catch(error) {
+                    alert('Erreur lors de la récupération du MPStorage...');
+                    console.error(error);
+                }
             });
         }
     },
@@ -171,11 +232,11 @@ var mpStorage = {
                     mpFlags: {
                         list: [
                             {
-                                    'uri': 'https://forum.hardware.fr/forum2.php?config=hfr.inc&cat=prive&post=123456&page=1&p=1&sondage=0&owntopic=0&trash=0&trash_post=0&print=0&numreponse=0&quote_only=0&new=0&nojs=0#t789987',
-                                    'post': 123456,
-                                    'page': 1,
-                                    'href': 't789987',
-                                    'p': '1'
+                                'uri': 'https://forum.hardware.fr/forum2.php?config=hfr.inc&cat=prive&post=123456&page=1&p=1&sondage=0&owntopic=0&trash=0&trash_post=0&print=0&numreponse=0&quote_only=0&new=0&nojs=0#t789987',
+                                'post': 123456,
+                                'page': 1,
+                                'href': 't789987',
+                                'p': '1'
                             }
                         ],
                         sourceName: 'HFRGMTools',
@@ -184,8 +245,8 @@ var mpStorage = {
                     blacklist: {
                         list : [
                             {
-                                   username : 'MultiMP',
-                                   createDate : Date.now()
+                                username : 'MultiMP',
+                                createDate : Date.now()
                             },
                             {
                                 username : 'MultiMP2',
