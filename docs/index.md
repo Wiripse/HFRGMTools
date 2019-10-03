@@ -41,7 +41,7 @@ Lorsque l'option est activée, un onglet est ajouté afin de filtrer les favoris
 
 ### 2019.10.3.0
 
-Nouvelle gestion des clics pour SuperFav. Onglet pour les MPs. Checkbox pour statut option dans les settings.
+Nouvelle gestion des clics pour SuperFav. Onglet pour les MPs. Checkbox pour statut option dans les settings. Message nouvelle version.
 
 ### 2019.10.2.4
 
