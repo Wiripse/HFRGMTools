@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          [HFR] DTCloud
 // @author        Wiripse, PetitJean, Rucous
-// @version       2019.9.19.0
+// @version       2019.10.3.0
 // @description   Gestion des DT dans le 'cloud' de chaque user via MPStorage
 // @icon          http://reho.st/self/40f387c9f48884a57e8bbe05e108ed4bd59b72ce.png
 // @downloadURL   https://github.com/Wiripse/HFRGMTools/raw/master/DTCloud.user.js
@@ -25,12 +25,13 @@
 // @grant         GM_xmlhttpRequest
 // @grant         GM_registerMenuCommand
 // @grant         GM_openInTab
-// @require https://raw.githubusercontent.com/Wiripse/HFRGMTools/master/MPStorage.user.js
+// @require https://raw.githubusercontent.com/Wiripse/HFRGMTools/master/MPStorage.user.js?v=2019.10.3.0
 // ==/UserScript==
 
 // Historique
-// 2019.8.5.0 : Fork du script de PetitJean et ajout gestion MPStorage
+// 2019.10.3.0 : Fix pour ne pas supprimer la zone de notif si utilise aussi HFR4K.
 // 2019.9.19.0 : Option pour afficher ou non les mp comme catégorie.
+// 2019.8.5.0 : Fork du script de PetitJean et ajout gestion MPStorage
 
 var LocalMPStorage = {
     /* Version of the MPStorage API used */
@@ -473,7 +474,8 @@ LocalMPStorage.initMultiMPStorage().then(function(){
     function fill_table(category, mode, fp) {
 		if (HFR.getValue ("hfr-multimp-affichage-cat") != "oui")
 			return;
-        if (fp != true) {
+        if (fp != true && !mpStorage.storageData.data.filter(function(d){return LocalMPStorage.version === d.version;})[0].hfr4k) {
+            // Dirty tmp fix to avoid fucking with HFR4K notification system
             var tr = document.querySelector (".none tr");
             var td = tr.querySelector ("td:nth-child(2)");
             tr.removeChild(td);
@@ -753,5 +755,6 @@ LocalMPStorage.initMultiMPStorage().then(function(){
             mpStorage.setStorageData(mpStorage.storageData, LocalMPStorage.toolName);
         }
     }
+
 
 });
