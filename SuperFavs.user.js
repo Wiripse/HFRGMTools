@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          [HFR] SuperFavs
 // @author        Wiripse
-// @version       2019.10.3.1
+// @version       2019.10.3.2
 // @description   Gestion des SuperFavoris : Topics cyants mis en avant ou filtrables. Idée souflée par le génial Ezzz.
 // @namespace     https://wiripse.github.io/HFRGMTools/
 // @icon          data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAQAAAAAYLlVAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAAHdElNRQfjCgIILBJ4Jlj4AAAEPUlEQVRo3u3YfWjVVRgH8M91c9MWmWYyNaVGFOZL+VLqRJl2TcawLCJJLDN8KSWEElKwtH/UIhPJZiJCIIlmIKJk6rImaa6maVqCqFmoufLdfNna/PWHP+92U3fvxrb+8H7PH79znnt+z/N9nuf8znnOJYUUUrjVEUFPr8gB33lb1BRzbUWeN6U3ou1DCu1msApBrLW1QeBzsLaGvHFahbx0czVXYZtKbHPCe8rNB+9Lb8QIpMuVYQ7lAvMaMdA3xzyBy+kycB6TjWhC46sVOo/M6hB/IKMJCQxUeLVTTSADhxxqAuM5cmReG8QvsmVmNQGBWWZWD5o1gcFakSKQIlCfrbaNYTrjgDUqQ1lrwzW33rHYrB5yHbVBRUMTyLVKh7C/W54z6GGDbJR71jpkWmCCCErkO12burqmYIiNMfM87C3woWyQaYlMnWwxUQT0NbV2hXUjkG+dLFXGaibTD+iPjgZhvteRbaxSj2GrLvagX8MRGGG1lv7xvE8EKrTFX4iCle4Ai7TDR4YYrAt+bygCz/lMpgojrQL3uw/FIYHTSkMiXDLGVIsVSnc+0VGfLIFRPtXcRcOVWmgEhoJNIqL42m36gsMGKPatl3DUE/Y2BIEJlkl3wZMO2GKywtDvMnt1k40iraRhoz7uUqo3tuhteyLVyRCY5GPNnDXUEcXuxUFp8lAkCAO/yRHPeFmBcb7UFgs8riyx8sT7wDRzcNIwh+0NP7civbVBUZiKww5gjWtH7UXjLU8qtgkjUGA2ygy2Q6fQfGBt6HeRDIOwKTa/I5idrPnEBMaLOCXPHuwywjTTFNgpin2OyJUVRuIpW40xQxmmeSBZAolS0BLn5LgHXLDDQb/KkhuajeKKzSZaJOJRA71ovdut0F95chQCgVk1nvF49brLxCWd5QsEhqNEoFTEsfDX37T2rkAQ3i1uhFkCwbVnohQsttCVOEkLLURRqVhrvVGkm/b4Hp0tMkMJpuiajP+JCFzxmrv1Cds6lNkvihLnPCQNxeGm9IJ1GGmM0YgoSIZAMsfxKafC3kG0sVwPbMDf4A0P4qD9xtqlowXW4up1JwnUvgbi0d3FMNentAdbYmtjPMhTHo6Pa3sTLXVaA/HYI982JxUZ4g/wtKVOOGCSJeAb+bb50xeiTjRUCmqi2IC48UnjjIuTbLa5Lgr/96I0RSBFIP4ryInVdQ2Fy7arRLpH7FKpne7hP3Ix1NyIGqMtBIUCC2U5EZNftxH90qiRDmLOXkWsVK1OQa5e0hrc8CUlYIqlflKpq+4iquy8NiHiqA62m/mfQ7c2VPnRmRvI79SzDi40845+jrGgHnm9ca3/cz00zSfLynq8eH2x0a0eWlbIunqHzdYl6eC1sVyas3aqqiFN00srVUbFaofEidzneNIJi8P0m3o0ve7KIvWiEDU6vAFU46hlvqqfRymkkMKtjX8BU3kXUDClbEwAAAAldEVYdGRhdGU6Y3JlYXRlADIwMTktMTAtMDJUMDg6NDQ6MTgrMDA6MDAqoU1GAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE5LTEwLTAyVDA4OjQ0OjE4KzAwOjAwW/z1+gAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAAASUVORK5CYII=
@@ -16,10 +16,11 @@
 // @grant         GM_setValue
 // @grant         GM.openInTab
 // @grant         GM_openInTab
-// @require       https://raw.githubusercontent.com/Wiripse/HFRGMTools/master/MPStorage.user.js?v=2019.10.3.1
+// @require       https://raw.githubusercontent.com/Wiripse/HFRGMTools/master/MPStorage.user.js?v=2019.10.3.2
 // ==/UserScript==
 
 // Historique
+// 2019.10.3.2 : Aides selecteur couleur. Changement message nouvelle version.
 // 2019.10.3.1 : Fix couleurs par défaut.
 // 2019.10.3.0 : Nouvelle gestion des clics pour SuperFav. Onglet pour les MPs. Checkbox pour statut option dans les settings. Message nouvelle version.
 // 2019.10.2.3 : Fix pour compatibilité VM&cie.
@@ -32,7 +33,7 @@
 // 2019.9.30.1 : Fix pour que ça fonctionne aussi dans les drapals de catégories
 // 2019.9.30.0 : Premier jet
 
-const version = '2019.10.3.1';
+const version = '2019.10.3.2';
 
 //**********************************************************************//
 //************************* GM/VM/TM/FDP SHIT **************************//
@@ -358,7 +359,7 @@ var HFR4K = {
                 imgUpgradeVersion.style.verticalAlign = 'bottom';
                 divMessageVersion.appendChild(imgUpgradeVersion);
                 divMessageVersion.appendChild(document.createTextNode('\u00a0'));
-                divMessageVersion.appendChild(document.createTextNode('Version '+ version + ' installée. Voir les nouveautés.'));
+                divMessageVersion.appendChild(document.createTextNode('HFR4K a été mis à jour en version '+ version + ' : voir les nouveautés'));
                 mpHead.appendChild(divMessageVersion);
             }
         }
@@ -412,7 +413,6 @@ var HFR4K = {
         title.setAttribute('colspan', 2);
         rowTitle.appendChild(title);
         taBody.appendChild(rowTitle);
-
 
         // *** Favoris *** //
         var catFavoris = document.createElement('tr');
@@ -479,6 +479,8 @@ var HFR4K = {
             }
         }
         colFavColorVal.appendChild(favColorInput);
+        colFavColorVal.appendChild(document.createTextNode('Valeur par défaut #D2B2FF - '));
+        colFavColorVal.appendChild(HFR4K.getLinkColorTable());
         rowFavColor.appendChild(colFavColorVal);
         taBody.appendChild(rowFavColor);
 
@@ -511,11 +513,24 @@ var HFR4K = {
             }
         }
         colFavColorHoverVal.appendChild(favColorHoverInput);
+        colFavColorHoverVal.appendChild(document.createTextNode('Valeur par défaut #B580FF - '));
+        colFavColorHoverVal.appendChild(HFR4K.getLinkColorTable());
         rowFavColorHover.appendChild(colFavColorHoverVal);
         taBody.appendChild(rowFavColorHover);
 
         // FIRE IN THE HOLE !!!
         elementAfter.parentNode.insertBefore(table, elementAfter);
+    },
+    getLinkColorTable: function(){
+        // **********
+        // HFR4K_GM
+        // Create a link to MDN's color table
+        // **********
+        var linkColorTable = document.createElement('a');
+        linkColorTable.setAttribute('href', 'https://developer.mozilla.org/fr/docs/Web/CSS/Couleurs_CSS/S%C3%A9lecteur_de_couleurs');
+        linkColorTable.setAttribute('target', '_blank');
+        linkColorTable.innerHTML = 'Palette de couleurs';
+        return linkColorTable;
     },
     renderTabs: function(){
         // **********

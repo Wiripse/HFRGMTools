@@ -39,6 +39,10 @@ Lorsque l'option est activée, un onglet est ajouté afin de filtrer les favoris
 
 ## Changelog
 
+### 2019.10.3.2
+
+Aides selecteur couleur. Changement message nouvelle version.
+
 ### 2019.10.3.1
 
 Fix couleurs par défaut.
