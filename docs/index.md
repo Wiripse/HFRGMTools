@@ -2,7 +2,7 @@
 
 ## Warning
 
-La documentation sur MPStorage est [ici](./mpstorage).
+La documentation technique sur MPStorage est [ici](./mpstorage). Il n'est pas nécessaire de la lire pour utiliser HFR4K.
 
 ## C'est quoi ?
 
@@ -10,13 +10,19 @@ HFR4K est un userscript destiné à améliorer l'utilisation de la version Web d
 
 ## Comment l'installer ?
 
-TODO
+Il faut installer sur le navigateur une extension capable de gérer les UserScripts : TamperMonkey, GreaseMonkey, ViolentMonkey...
+
+Puis installer le script HFR4K [ici](https://github.com/Wiripse/HFRGMTools/raw/master/SuperFavs.user.js).
 
 ## Comment l'utiliser ?
 
+### Version
+
+Pour connaître la version installée, chercher la phrase _Enhanced by HFR4K_ dans le footer de n'importe quelle page du forum.
+
 ### Settings
 
-TODO
+Les réglages sont accessibles en cliquant sur l'onglet représentant un rond doré devant une boîte marron.
 
 ### SuperFavoris
 
