@@ -2,7 +2,7 @@
 
 Utilitaires de scripts GreaseMonkey pour HFR.
 
-Voir [la documentation utilisateur](https://wiripse.github.io/HFRGMTools/).
+Si tu n'es pas développeur, va plutôt ici sur [la documentation utilisateur](https://wiripse.github.io/HFRGMTools/).
 
 ## MPStorage Version 0.1
 
