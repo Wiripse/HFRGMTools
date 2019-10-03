@@ -20,6 +20,10 @@ Puis installer le script HFR4K [ici](https://github.com/Wiripse/HFRGMTools/raw/m
 
 Pour connaître la version installée, chercher la phrase _Enhanced by HFR4K_ dans le footer de n'importe quelle page du forum.
 
+### Mise à jour
+
+Lorsque le script aura été mis à jour automatiquement par l'extension, un message s'affichera au dessus de la liste des drapeaux.
+
 ### Settings
 
 Les réglages sont accessibles en cliquant sur l'onglet représentant un rond doré devant une boîte marron.
