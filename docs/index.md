@@ -12,7 +12,7 @@ HFR4K est un userscript destiné à améliorer l'utilisation de la version Web d
 
 Il faut installer sur le navigateur une extension capable de gérer les UserScripts : TamperMonkey, GreaseMonkey, ViolentMonkey...
 
-Puis installer le script HFR4K [ici](https://github.com/Wiripse/HFRGMTools/raw/master/SuperFavs.user.js).
+Puis installer le script HFR4K [ici](https://www.youtube.com/watch?v=dQw4w9WgXcQ).
 
 ## Comment l'utiliser ?
 
