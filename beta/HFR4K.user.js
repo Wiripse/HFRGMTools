@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          [BETA] HFR4K
 // @author        Wiripse
-// @version       2019.10.4.1
+// @version       2019.10.4.2
 // @description   HFR en mieux
 // @namespace     https://wiripse.github.io/HFRGMTools/
 // @icon          data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAQAAAAAYLlVAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAAHdElNRQfjCgIILBJ4Jlj4AAAEPUlEQVRo3u3YfWjVVRgH8M91c9MWmWYyNaVGFOZL+VLqRJl2TcawLCJJLDN8KSWEElKwtH/UIhPJZiJCIIlmIKJk6rImaa6maVqCqFmoufLdfNna/PWHP+92U3fvxrb+8H7PH79znnt+z/N9nuf8znnOJYUUUrjVEUFPr8gB33lb1BRzbUWeN6U3ou1DCu1msApBrLW1QeBzsLaGvHFahbx0czVXYZtKbHPCe8rNB+9Lb8QIpMuVYQ7lAvMaMdA3xzyBy+kycB6TjWhC46sVOo/M6hB/IKMJCQxUeLVTTSADhxxqAuM5cmReG8QvsmVmNQGBWWZWD5o1gcFakSKQIlCfrbaNYTrjgDUqQ1lrwzW33rHYrB5yHbVBRUMTyLVKh7C/W54z6GGDbJR71jpkWmCCCErkO12burqmYIiNMfM87C3woWyQaYlMnWwxUQT0NbV2hXUjkG+dLFXGaibTD+iPjgZhvteRbaxSj2GrLvagX8MRGGG1lv7xvE8EKrTFX4iCle4Ai7TDR4YYrAt+bygCz/lMpgojrQL3uw/FIYHTSkMiXDLGVIsVSnc+0VGfLIFRPtXcRcOVWmgEhoJNIqL42m36gsMGKPatl3DUE/Y2BIEJlkl3wZMO2GKywtDvMnt1k40iraRhoz7uUqo3tuhteyLVyRCY5GPNnDXUEcXuxUFp8lAkCAO/yRHPeFmBcb7UFgs8riyx8sT7wDRzcNIwh+0NP7civbVBUZiKww5gjWtH7UXjLU8qtgkjUGA2ygy2Q6fQfGBt6HeRDIOwKTa/I5idrPnEBMaLOCXPHuwywjTTFNgpin2OyJUVRuIpW40xQxmmeSBZAolS0BLn5LgHXLDDQb/KkhuajeKKzSZaJOJRA71ovdut0F95chQCgVk1nvF49brLxCWd5QsEhqNEoFTEsfDX37T2rkAQ3i1uhFkCwbVnohQsttCVOEkLLURRqVhrvVGkm/b4Hp0tMkMJpuiajP+JCFzxmrv1Cds6lNkvihLnPCQNxeGm9IJ1GGmM0YgoSIZAMsfxKafC3kG0sVwPbMDf4A0P4qD9xtqlowXW4up1JwnUvgbi0d3FMNentAdbYmtjPMhTHo6Pa3sTLXVaA/HYI982JxUZ4g/wtKVOOGCSJeAb+bb50xeiTjRUCmqi2IC48UnjjIuTbLa5Lgr/96I0RSBFIP4ryInVdQ2Fy7arRLpH7FKpne7hP3Ix1NyIGqMtBIUCC2U5EZNftxH90qiRDmLOXkWsVK1OQa5e0hrc8CUlYIqlflKpq+4iquy8NiHiqA62m/mfQ7c2VPnRmRvI79SzDi40845+jrGgHnm9ca3/cz00zSfLynq8eH2x0a0eWlbIunqHzdYl6eC1sVyas3aqqiFN00srVUbFaofEidzneNIJi8P0m3o0ve7KIvWiEDU6vAFU46hlvqqfRymkkMKtjX8BU3kXUDClbEwAAAAldEVYdGRhdGU6Y3JlYXRlADIwMTktMTAtMDJUMDg6NDQ6MTgrMDA6MDAqoU1GAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE5LTEwLTAyVDA4OjQ0OjE4KzAwOjAwW/z1+gAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAAASUVORK5CYII=
@@ -20,6 +20,7 @@
 // ==/UserScript==
 
 // Historique
+// 2019.10.4.2 : Choix des couleurs des favoris simples.
 // 2019.10.4.1 : Clic-droit onglet MP.
 // 2019.10.4.0 : Init bêta. Fix sur lecture des paramètres d'URL.
 // 2019.10.3.3 : Icône nouveau MP. Footer avec version. Meilleure vérification de la page courante.
@@ -36,7 +37,7 @@
 // 2019.9.30.1 : Fix pour que ça fonctionne aussi dans les drapals de catégories
 // 2019.9.30.0 : Premier jet
 
-const version = '2019.10.4.1';
+const version = '2019.10.4.2';
 
 //**********************************************************************//
 //************************* GM/VM/TM/FDP SHIT **************************//
@@ -172,6 +173,10 @@ var HFRGMUtils = {
         }
         if (!LocalMPStorage.datas.superFavs.settings){
             LocalMPStorage.datas.superFavs.settings = { active: false, superFavColor : '#D2B2FF', superFavColorHover : '#B580FF'};
+        }
+        if (!LocalMPStorage.datas.superFavs.settings.simpleFavColor || !LocalMPStorage.datas.superFavs.settings.simpleFavColor){
+            LocalMPStorage.datas.superFavs.settings.simpleFavColor = '#F7F7F7';
+            LocalMPStorage.datas.superFavs.settings.simpleFavColorHover = '#DEDFDF';
         }
         if (!LocalMPStorage.datas.hfr4k){
             LocalMPStorage.datas.hfr4k = { lastVersion : '2000.1.1.0'};
@@ -385,8 +390,8 @@ var HFR4K = {
         style.type = 'text/css';
         var superFavRowStyle = '.superFavRow { background-color : '+LocalMPStorage.datas.superFavs.settings.superFavColor+'; } .superFavRow:hover, .superFavRow:hover .superFavRowAlt{ background-color: '+LocalMPStorage.datas.superFavs.settings.superFavColorHover+';}';
         var superFavRowStyleAlt = '.superFavRowAlt { background-color : '+LocalMPStorage.datas.superFavs.settings.superFavColorHover+'; }';
-        var favRowStyle = '.favRow { background-color : #F7F7F7; } .favRow:hover, .favRow:hover .favRowAlt{ background-color: #DEDFDF;}';
-        var favRowStyleAlt = '.favRowAlt { background-color : #DEDFDF; }';
+        var favRowStyle = '.favRow { background-color : '+LocalMPStorage.datas.superFavs.settings.simpleFavColor+'; } .favRow:hover, .favRow:hover .favRowAlt{ background-color: '+LocalMPStorage.datas.superFavs.settings.simpleFavColorHover+';}';
+        var favRowStyleAlt = '.favRowAlt { background-color : '+LocalMPStorage.datas.superFavs.settings.simpleFavColorHover+'; }';
         var hiddenFav = '.hiddenFav { display : none; }';
         style.appendChild(document.createTextNode(superFavRowStyle));
         style.appendChild(document.createTextNode(superFavRowStyleAlt));
@@ -594,6 +599,74 @@ var HFR4K = {
         colFavColorHoverVal.appendChild(HFR4K.getLinkColorTable());
         rowFavColorHover.appendChild(colFavColorHoverVal);
         taBody.appendChild(rowFavColorHover);
+
+        // Setting Simple Fav Color
+        var rowSFavColor = document.createElement('tr');
+        rowSFavColor.classList.add('sujet', 'ligne_booleen', 'cBackCouleurTab3', 'hfr4kSettingRow');
+        var colSFavColorTitle = document.createElement('td');
+        colSFavColorTitle.setAttribute('scope', 'row');
+        colSFavColorTitle.classList.add('sujetCase3', 'hfr4kLabelSettingItem');
+        colSFavColorTitle.innerHTML = '<span class="cCatTopic">Couleur Favori</span>';
+        rowSFavColor.appendChild(colSFavColorTitle);
+        var colSFavColorVal = document.createElement('td');
+        colSFavColorVal.setAttribute('scope', 'row');
+        colSFavColorVal.classList.add('sujetCase3', 'hfr4kLabelSettingItem');
+        var colorBoxSFavColor = document.createElement('span');
+        colorBoxSFavColor.classList.add('hfr4kColorBox');
+        colorBoxSFavColor.style = 'background-color : '+(LocalMPStorage.datas.superFavs.settings.simpleFavColor ? LocalMPStorage.datas.superFavs.settings.simpleFavColor : '#F7F7F7')+ ';';
+        colSFavColorVal.appendChild(colorBoxSFavColor);
+        var sfavColorInput = document.createElement('input');
+        sfavColorInput.setAttribute('type', 'text');
+        sfavColorInput.value = LocalMPStorage.datas.superFavs.settings.simpleFavColor ? LocalMPStorage.datas.superFavs.settings.simpleFavColor : '#F7F7F7';
+        sfavColorInput.onchange = function(){
+            if(sfavColorInput.value){
+                var sfavColor = sfavColorInput.value.replace('#', '');
+                if(sfavColor.length === 6 && sfavColor.match(/^[0-9a-fA-F]+$/)){
+                    colorBoxSFavColor.style = 'background-color : #'+sfavColor+';';
+                    LocalMPStorage.datas.superFavs.settings.simpleFavColor = '#'+sfavColor;
+                    LocalMPStorage.updateMPStorage(LocalMPStorage.domains.superFavs);
+                }
+            }
+        }
+        colSFavColorVal.appendChild(sfavColorInput);
+        colSFavColorVal.appendChild(document.createTextNode('Valeur par défaut #F7F7F7 - '));
+        colSFavColorVal.appendChild(HFR4K.getLinkColorTable());
+        rowSFavColor.appendChild(colSFavColorVal);
+        taBody.appendChild(rowSFavColor);
+
+        // Setting Simple Fav Color Hover
+        var rowSFavColorHover = document.createElement('tr');
+        rowSFavColorHover.classList.add('sujet', 'ligne_booleen', 'cBackCouleurTab3', 'hfr4kSettingRow');
+        var colSFavColorHoverTitle = document.createElement('td');
+        colSFavColorHoverTitle.setAttribute('scope', 'row');
+        colSFavColorHoverTitle.classList.add('sujetCase3', 'hfr4kLabelSettingItem');
+        colSFavColorHoverTitle.innerHTML = '<span class="cCatTopic">Couleur Hover Favori</span>';
+        rowSFavColorHover.appendChild(colSFavColorHoverTitle);
+        var colSFavColorHoverVal = document.createElement('td');
+        colSFavColorHoverVal.setAttribute('scope', 'row');
+        colSFavColorHoverVal.classList.add('sujetCase3', 'hfr4kLabelSettingItem');
+        var colorBoxSFavColorHover = document.createElement('span');
+        colorBoxSFavColorHover.classList.add('hfr4kColorBox');
+        colorBoxSFavColorHover.style = 'background-color : '+(LocalMPStorage.datas.superFavs.settings.simpleFavColorHover ? LocalMPStorage.datas.superFavs.settings.simpleFavColorHover : '#DEDFDF')+ ';';
+        colSFavColorHoverVal.appendChild(colorBoxSFavColorHover);
+        var sfavColorHoverInput = document.createElement('input');
+        sfavColorHoverInput.setAttribute('type', 'text');
+        sfavColorHoverInput.value = LocalMPStorage.datas.superFavs.settings.simpleFavColorHover ? LocalMPStorage.datas.superFavs.settings.simpleFavColorHover : '#DEDFDF';
+        sfavColorHoverInput.onchange = function(){
+            if(sfavColorHoverInput.value){
+                var sfavColorHover = sfavColorHoverInput.value.replace('#', '');
+                if(sfavColorHover.length === 6 && sfavColorHover.match(/^[0-9a-fA-F]+$/)){
+                    colorBoxSFavColorHover.style = 'background-color : #'+sfavColorHover+';';
+                    LocalMPStorage.datas.superFavs.settings.simpleFavColorHover = '#'+sfavColorHover;
+                    LocalMPStorage.updateMPStorage(LocalMPStorage.domains.superFavs);
+                }
+            }
+        }
+        colSFavColorHoverVal.appendChild(sfavColorHoverInput);
+        colSFavColorHoverVal.appendChild(document.createTextNode('Valeur par défaut #DEDFDF - '));
+        colSFavColorHoverVal.appendChild(HFR4K.getLinkColorTable());
+        rowSFavColorHover.appendChild(colSFavColorHoverVal);
+        taBody.appendChild(rowSFavColorHover);
 
         // FIRE IN THE HOLE !!!
         elementAfter.parentNode.insertBefore(table, elementAfter);

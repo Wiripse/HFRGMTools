@@ -55,8 +55,14 @@ Lorsque l'option est activée, un onglet est ajouté afin de filtrer les favoris
 * Activer/désactiver l'option
 * Choisir la couleur d'un super favori
 * Choisir la couleur d'un super favori lorsque l'on passe dessus
+* Choisir la couleur d'un favori simple
+* Choisir la couleur d'un favori simple lorsque l'on passe dessus
 
 ## Changelog
+
+### 2019.10.4.2
+
+Choix des couleurs des favoris simples.
 
 ### 2019.10.4.1
 
