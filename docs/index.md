@@ -28,6 +28,15 @@ Lorsque le script aura été mis à jour automatiquement par l'extension, un mes
 
 Les réglages sont accessibles en cliquant sur l'onglet représentant un rond doré devant une boîte marron.
 
+### Onglet MP
+
+Un nouvel onglet permet d'accéder aux MP. 
+
+Il se présente sous la forme d'une enveloppe. Lorsqu'il existe un MP non lu, l'enveloppe clignotte.
+
+* Clic > Ouvrir les MP
+* Clic-droit > Ouvrir les MP dans un nouvel onglet
+
 ### SuperFavoris
 
 Permet de gérer trois états distincts entre les topics favoris :
@@ -48,6 +57,10 @@ Lorsque l'option est activée, un onglet est ajouté afin de filtrer les favoris
 * Choisir la couleur d'un super favori lorsque l'on passe dessus
 
 ## Changelog
+
+### 2019.10.4.1
+
+Clic-droit onglet MP.
 
 ### 2019.10.4.0
 
