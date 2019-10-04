@@ -49,6 +49,10 @@ Lorsque l'option est activée, un onglet est ajouté afin de filtrer les favoris
 
 ## Changelog
 
+### 2019.10.4.0
+
+Init bêta. Fix sur lecture des paramètres d'URL.
+
 ### 2019.10.3.3
 
 Icône nouveau MP. Footer avec version. Meilleure vérification de la page courante.
