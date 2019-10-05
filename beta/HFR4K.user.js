@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          [BETA] HFR4K
 // @author        Wiripse
-// @version       2019.10.5.2
+// @version       2019.10.5.3
 // @description   HFR en mieux
 // @namespace     https://wiripse.github.io/HFRGMTools/
 // @icon          data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAQAAAAAYLlVAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAAHdElNRQfjCgIILBJ4Jlj4AAAEPUlEQVRo3u3YfWjVVRgH8M91c9MWmWYyNaVGFOZL+VLqRJl2TcawLCJJLDN8KSWEElKwtH/UIhPJZiJCIIlmIKJk6rImaa6maVqCqFmoufLdfNna/PWHP+92U3fvxrb+8H7PH79znnt+z/N9nuf8znnOJYUUUrjVEUFPr8gB33lb1BRzbUWeN6U3ou1DCu1msApBrLW1QeBzsLaGvHFahbx0czVXYZtKbHPCe8rNB+9Lb8QIpMuVYQ7lAvMaMdA3xzyBy+kycB6TjWhC46sVOo/M6hB/IKMJCQxUeLVTTSADhxxqAuM5cmReG8QvsmVmNQGBWWZWD5o1gcFakSKQIlCfrbaNYTrjgDUqQ1lrwzW33rHYrB5yHbVBRUMTyLVKh7C/W54z6GGDbJR71jpkWmCCCErkO12burqmYIiNMfM87C3woWyQaYlMnWwxUQT0NbV2hXUjkG+dLFXGaibTD+iPjgZhvteRbaxSj2GrLvagX8MRGGG1lv7xvE8EKrTFX4iCle4Ai7TDR4YYrAt+bygCz/lMpgojrQL3uw/FIYHTSkMiXDLGVIsVSnc+0VGfLIFRPtXcRcOVWmgEhoJNIqL42m36gsMGKPatl3DUE/Y2BIEJlkl3wZMO2GKywtDvMnt1k40iraRhoz7uUqo3tuhteyLVyRCY5GPNnDXUEcXuxUFp8lAkCAO/yRHPeFmBcb7UFgs8riyx8sT7wDRzcNIwh+0NP7civbVBUZiKww5gjWtH7UXjLU8qtgkjUGA2ygy2Q6fQfGBt6HeRDIOwKTa/I5idrPnEBMaLOCXPHuwywjTTFNgpin2OyJUVRuIpW40xQxmmeSBZAolS0BLn5LgHXLDDQb/KkhuajeKKzSZaJOJRA71ovdut0F95chQCgVk1nvF49brLxCWd5QsEhqNEoFTEsfDX37T2rkAQ3i1uhFkCwbVnohQsttCVOEkLLURRqVhrvVGkm/b4Hp0tMkMJpuiajP+JCFzxmrv1Cds6lNkvihLnPCQNxeGm9IJ1GGmM0YgoSIZAMsfxKafC3kG0sVwPbMDf4A0P4qD9xtqlowXW4up1JwnUvgbi0d3FMNentAdbYmtjPMhTHo6Pa3sTLXVaA/HYI982JxUZ4g/wtKVOOGCSJeAb+bb50xeiTjRUCmqi2IC48UnjjIuTbLa5Lgr/96I0RSBFIP4ryInVdQ2Fy7arRLpH7FKpne7hP3Ix1NyIGqMtBIUCC2U5EZNftxH90qiRDmLOXkWsVK1OQa5e0hrc8CUlYIqlflKpq+4iquy8NiHiqA62m/mfQ7c2VPnRmRvI79SzDi40845+jrGgHnm9ca3/cz00zSfLynq8eH2x0a0eWlbIunqHzdYl6eC1sVyas3aqqiFN00srVUbFaofEidzneNIJi8P0m3o0ve7KIvWiEDU6vAFU46hlvqqfRymkkMKtjX8BU3kXUDClbEwAAAAldEVYdGRhdGU6Y3JlYXRlADIwMTktMTAtMDJUMDg6NDQ6MTgrMDA6MDAqoU1GAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE5LTEwLTAyVDA4OjQ0OjE4KzAwOjAwW/z1+gAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAAASUVORK5CYII=
@@ -20,6 +20,7 @@
 // ==/UserScript==
 
 // Historique
+// 2019.10.5.3 : EgoPost. Icône aide settings. Catégories compactes. Petits fixs.
 // 2019.10.5.2 : Mode lock des SuperFav. Fix EgoQuote citations trad oldschool.
 // 2019.10.5.1 : Option EgoQuote post complet. Fix EgoQuote citations traditionnelles. Refacto table settings.
 // 2019.10.5.0 : EgoQuote.
@@ -40,7 +41,7 @@
 // 2019.9.30.1 : Fix pour que ça fonctionne aussi dans les drapals de catégories
 // 2019.9.30.0 : Premier jet
 
-const version = '2019.10.5.2';
+const version = '2019.10.5.3';
 
 //**********************************************************************//
 //************************* GM/VM/TM/FDP SHIT **************************//
@@ -138,7 +139,9 @@ var HFRGMUtils = {
             };
             // Handle rightClick
             newTab.oncontextmenu = function () {
-                rightClickMethod(newTab);
+                if(rightClickMethod){
+                    rightClickMethod(newTab);
+                }
                 // Block contextmenu
                 return false;
             };
@@ -175,7 +178,7 @@ var HFRGMUtils = {
             LocalMPStorage.datas.superFavs.showHideable = false;
         }
         if (!LocalMPStorage.datas.superFavs.settings){
-            LocalMPStorage.datas.superFavs.settings = { active: false, superFavColor : '#D2B2FF', superFavColorHover : '#B580FF', simpleFavColor : '#F7F7F7', simpleFavColorHover : '#DEDFDF'};
+            LocalMPStorage.datas.superFavs.settings = { active: false, superFavColor : '#D2B2FF', superFavColorHover : '#B580FF', simpleFavColor : '#F7F7F7', simpleFavColorHover : '#DEDFDF', compactCats : false };
         }
         if (!LocalMPStorage.datas.superFavs.settings.simpleFavColor || !LocalMPStorage.datas.superFavs.settings.simpleFavColor){
             LocalMPStorage.datas.superFavs.settings.simpleFavColor = '#F7F7F7';
@@ -430,6 +433,7 @@ var HFR4K = {
         style.appendChild(document.createTextNode('.hfr4kUpdateBox { background-color: #FF464B;} .hfr4kUpdateBox:hover { font-weight : bold;  cursor: pointer; }'));
         style.appendChild(document.createTextNode('.hfr4kEgoQuote { background-color: '+LocalMPStorage.datas.egoQuote.color+' !important;}'));
         style.appendChild(document.createTextNode('.hfr4kEgoPost { background-color: '+LocalMPStorage.datas.egoPost.color+' !important;}'));
+        style.appendChild(document.createTextNode('.hfr4kHiddenCat { display : none; }'));
         document.head.appendChild(style);
 
 
@@ -492,20 +496,26 @@ var HFR4K = {
         HFR4K.renderEgoPosts();
 
         // Rest of the rendering
-        HFR4K.simpleRender();
+        HFR4K.simpleRender(true);
 
     },
-    simpleRender: function(){
+    simpleRender: function(withTabs){
         // **********
         // HFR4K_GM
         // Make the partial rendering of the current page (when something as changed after a user action)
+        // withTabs : Render the tabs ?
         // **********
 
-        // Render tabs
-        HFR4K.renderTabs();
+        if(withTabs){
+            // Render tabs
+            HFR4K.renderTabs();
+        }
 
         // Render Favs
         HFR4K.renderFavs();
+
+        // THEN Render Compact Cats
+        HFR4K.renderCompactCats();
 
     },
     createTableSettings: function(classes, elementAfter){
@@ -550,6 +560,13 @@ var HFR4K = {
             HFR4K.renderTabs();
         }));
 
+        // Setting Compact Cats
+        taBody.appendChild(HFR4K.getCheckboxSetting('Catégories compactes ?', LocalMPStorage.datas.superFavs.settings.compactCats, function(cb){
+            LocalMPStorage.datas.superFavs.settings.compactCats = !LocalMPStorage.datas.superFavs.settings.compactCats;
+            cb.checked = LocalMPStorage.datas.superFavs.settings.compactCats;
+            LocalMPStorage.updateMPStorage(LocalMPStorage.domains.superFavs);
+        }));
+
         // Setting Lock Fav
         taBody.appendChild(HFR4K.getCheckboxSetting('Verrouiller ?', LocalMPStorage.datas.superFavs.settings.locked, function(cb){
             LocalMPStorage.datas.superFavs.settings.locked = !LocalMPStorage.datas.superFavs.settings.locked;
@@ -582,7 +599,6 @@ var HFR4K = {
             LocalMPStorage.datas.superFavs.settings.simpleFavColorHover = newColor;
             LocalMPStorage.updateMPStorage(LocalMPStorage.domains.superFavs);
         }));
-
 
 
         // *************************************************************************************** //
@@ -766,7 +782,7 @@ var HFR4K = {
                     document.querySelector('.hfr4kMainTab').classList.remove('hfr4kHiddenTab');
                     document.querySelector('.hfr4kSettings').classList.add('hfr4kHiddenTab');
                     // Render the result
-                    HFR4K.simpleRender();
+                    HFR4K.simpleRender(true);
                 }
             });
         }
@@ -782,7 +798,7 @@ var HFR4K = {
                     }
                     tab.querySelector('img').setAttribute('src', LocalMPStorage.datas.superFavs.onlySF ? HFRGMUtils.icons.fullHeart : (LocalMPStorage.datas.superFavs.showHideable ? HFRGMUtils.icons.hide : HFRGMUtils.icons.eye));
                     LocalMPStorage.updateMPStorage(LocalMPStorage.domains.superFavs);
-                    HFR4K.renderFavs();
+                    HFR4K.simpleRender(false);
                 }, function(tab){
                     LocalMPStorage.datas.superFavs.onlySF = !LocalMPStorage.datas.superFavs.onlySF;
                     if(LocalMPStorage.datas.superFavs.onlySF){
@@ -790,7 +806,7 @@ var HFR4K = {
                     }
                     tab.querySelector('img').setAttribute('src', LocalMPStorage.datas.superFavs.onlySF ? HFRGMUtils.icons.fullHeart : (LocalMPStorage.datas.superFavs.showHideable ? HFRGMUtils.icons.hide : HFRGMUtils.icons.eye));
                     LocalMPStorage.updateMPStorage(LocalMPStorage.domains.superFavs);
-                    HFR4K.renderFavs();
+                    HFR4K.simpleRender(false);
                     // Block contextmenu
                     return false;
                 });
@@ -1004,66 +1020,6 @@ var HFR4K = {
                     }
 
                 });
-
-                if(document.location.href.indexOf('https://forum.hardware.fr/forum1f.php') === 0){
-                    // We manage empty categories if necessary with displaying an message
-
-                    // FIXME : Would be better to create a map representing the topics; because now we won't display an empty row for the last cat since we work backward
-                    // FIXME : Sync with DTCloud to add an empty row in the new "MP" cat if necessary
-
-                    // Remove existing empty rows
-                    document.querySelectorAll('.emptyRowFav').forEach(function(emptyRow){
-                        emptyRow.parentNode.removeChild(emptyRow);
-                    });
-
-                    var allRows = document.querySelector('.fondForum1fCat').parentNode.querySelectorAll('tr');
-
-                    var isCat = false;
-                    // Id of the current cat
-                    var catId = 0;
-                    // Number of displayed topics in the current cat
-                    var nbTopicsCat = 0;
-                    // Previous cat was MP ?
-                    var wasPreviousMPCat = false;
-
-                    // Browse all rows
-                    allRows.forEach(function(row){
-
-                        // Manage MPCat (for DTCloud)
-                        var isMPCat = false;
-                        if(row.querySelector('a')){
-                            var catUrl = new URLSearchParams(row.querySelector('a').href);
-                            isMPCat = catUrl.get('cat') === 'prive';
-                        }
-
-                        isCat = row.classList.contains('fondForum1fCat') && !row.classList.contains('hfr4kSettingRow');
-
-                        if(!isCat){
-                            // Not a cat row : it's a topic, so we check if its hidden or not
-                            nbTopicsCat = nbTopicsCat + (row.classList.contains('hiddenFav') ? 0 : 1);
-                        } else {
-                            if(catId > 0 && !wasPreviousMPCat){
-                                if (nbTopicsCat == 0){
-                                    // The previous cat hasn't any displayed topic so we add an empty row
-                                    var emptyRow = document.createElement('tr');
-                                    emptyRow.setAttribute('class', 'sujet emptyRowFav');
-                                    var emptyTd = document.createElement('td');
-                                    emptyTd.setAttribute('colspan', 10);
-                                    emptyTd.innerHTML = 'Aucun nouveau message';
-                                    emptyRow.appendChild(emptyTd);
-                                    row.parentNode.insertBefore(emptyRow, row);
-                                }
-                            }
-                            // Increment catId
-                            catId++;
-                            // Reset nbTopics for the new cat
-                            nbTopicsCat = 0;
-                            // Update status of the previous cat
-                            wasPreviousMPCat = wasPreviousMPCat ? false : isMPCat;
-                        }
-                    });
-                }
-
             }
         }
     },
@@ -1116,6 +1072,70 @@ var HFR4K = {
                     post.classList.add('hfr4kEgoPost');
                 }
             });
+        }
+    },
+    renderCompactCats : function(){
+        // **********
+        // HFR4K_GM
+        // Remove empty cats or display an empty row, depending on user's choice
+        // WARNING : Call it AFTER all other topics list change, to avoid conflicts
+        // **********
+
+        // Reset
+        document.querySelectorAll('.hfr4kHiddenCat').forEach(function(item){
+            HFRGMUtils.removeClassesFromElement(item, ['hfr4kHiddenCat']);
+        });
+        document.querySelectorAll('.emptyRowFav').forEach(function(eRow){
+            eRow.parentNode.removeChild(eRow);
+        });
+
+        if (HFRGMUtils.pageCheck.isOnStars() || HFRGMUtils.pageCheck.isOnCyans() || HFRGMUtils.pageCheck.isOnRead()) {
+            if(document.querySelector('table.hfr4kMainTab')){
+                document.querySelector('table.hfr4kMainTab').querySelectorAll('tr.cBackHeader.fondForum1fCat').forEach(function(cat){
+                    // Scan the content of the cat
+                    var hasTopics = false;
+                    var nextCat = false;
+                    var curSibling = cat;
+                    while(!nextCat && curSibling.nextSibling){
+                        // Look for next sibling
+                        curSibling = curSibling.nextSibling;
+                        // Check if next sibling is a topic
+                        hasTopics = curSibling.classList.contains('superFavRow') || curSibling.classList.contains('favRow');
+                        // Check if next sibling is a cat
+                        nextCat = curSibling.classList.contains('fondForum1fCat');
+                        if(curSibling.className==='sujet'){
+                            // If it's an empty row, we hide it and we consider we reached the next cat because the next sibling is the next cat or nothing
+                            curSibling.classList.add('hfr4kHiddenCat');
+                            nextCat = true;
+                        }
+                        // Stop if found next cat, or cur cat has topics or there's no sibling
+                        nextCat = nextCat || hasTopics || !curSibling.nextSibling;
+                    }
+
+                    // Cat is considered empty
+                    if(!hasTopics){
+                        if(LocalMPStorage.datas.superFavs.settings.compactCats){
+                            // If compact cats, we hide it
+                            cat.classList.add('hfr4kHiddenCat');
+                        }else if (nextCat){
+                            // Else we add an empty row
+                            var emptyRow = document.createElement('tr');
+                            emptyRow.setAttribute('class', 'sujet emptyRowFav');
+                            var emptyTd = document.createElement('td');
+                            emptyTd.setAttribute('colspan', 10);
+                            emptyTd.innerHTML = 'Aucun nouveau message';
+                            emptyRow.appendChild(emptyTd);
+                            if(cat.nextSibling){
+                                // There's a next cat, we insert the row before it
+                                cat.parentNode.insertBefore(emptyRow, cat.nextSibling);
+                            }else{
+                                // Last cat, we insert the rowdirectly in the parent
+                                cat.parentNode.appendChild(emptyRow);
+                            }
+                        }
+                    }
+                });
+            }
         }
     }
 };

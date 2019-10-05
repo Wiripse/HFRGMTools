@@ -54,6 +54,7 @@ Lorsque l'option est activée, un onglet est ajouté afin de filtrer les favoris
 
 * Activer/désactiver l'option
 * Verrouiller l'état des favoris (affichage des icônes standard et clics désactivés)
+* Afficher/Masquer les catégories vides (mode compact)
 * Choisir la couleur d'un super favori
 * Choisir la couleur d'un super favori lorsque l'on passe dessus
 * Choisir la couleur d'un favori simple
@@ -71,7 +72,22 @@ Basé sur _[HFR] Ego Quote_ de [Roger21](http://roger21.free.fr/hfr/).
 * Choisir la couleur des quotes
 * Colorer uniquement les quotes/tout le post contenant le(s) quote(s)
 
+### EgoPost
+
+Mettre en avant via une couleur spéciale les posts de l'utilisateur. 
+
+Basé sur _[HFR] Ego Posts_ de [n0m1s](https://github.com/TheMrNomis/HFR-scripts/).
+
+#### Paramètres
+
+* Activer/désactiver l'option
+* Choisir la couleur des posts
+
 ## Changelog
+
+### 2019.10.5.3
+
+EgoPost. Icône aide settings. Catégories compactes. Petits fixs.
 
 ### 2019.10.5.2
 
