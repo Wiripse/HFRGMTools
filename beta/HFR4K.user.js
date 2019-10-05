@@ -704,14 +704,16 @@ var HFR4K = {
         });
 
         // Tab for MPs
-        HFRGMUtils.createOnglet(HFR4K.imageMP ,'Ouvrir les MPs', function(tab){
-            window.location = 'https://forum.hardware.fr/forum1.php?config=hfr.inc&cat=prive&page=1&subcat=&sondage=0&owntopic=0&trash=0&trash_post=0&moderation=0&new=0&nojs=0&subcatgroup=0';
-        }, function(tab){
-            GM.openInTab('https://forum.hardware.fr/forum1.php?config=hfr.inc&cat=prive&page=1&subcat=&sondage=0&owntopic=0&trash=0&trash_post=0&moderation=0&new=0&nojs=0&subcatgroup=0');
-        });
+        if(!HFRGMUtils.pageCheck.isOnMP()){
+            HFRGMUtils.createOnglet(HFR4K.imageMP ,'Ouvrir les MPs', function(tab){
+                window.location = 'https://forum.hardware.fr/forum1.php?config=hfr.inc&cat=prive&page=1&subcat=&sondage=0&owntopic=0&trash=0&trash_post=0&moderation=0&new=0&nojs=0&subcatgroup=0';
+            }, function(tab){
+                GM.openInTab('https://forum.hardware.fr/forum1.php?config=hfr.inc&cat=prive&page=1&subcat=&sondage=0&owntopic=0&trash=0&trash_post=0&moderation=0&new=0&nojs=0&subcatgroup=0');
+            });
+        }
 
         // Create tab for the settings
-        if(HFR4K.mainTab){
+        if(HFR4K.mainTab && !(HFRGMUtils.pageCheck.isOnTopic() || HFRGMUtils.pageCheck.isOnTopicTxt() || HFRGMUtils.pageCheck.isOnMP())){
             HFRGMUtils.createOnglet(HFRGMUtils.icons.settings ,'Réglages/Retour aux topics', function(tab){
                 HFR4K.showSettings = !HFR4K.showSettings;
                 tab.querySelector('img').setAttribute('src', HFR4K.showSettings ? HFRGMUtils.icons.list : HFRGMUtils.icons.settings);
