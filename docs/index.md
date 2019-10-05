@@ -68,8 +68,13 @@ Basé sur _[HFR] Ego Quote_ de [Roger21](http://roger21.free.fr/hfr/).
 
 * Activer/désactiver l'option
 * Choisir la couleur des quotes
+* Colorer uniquement les quotes/tout le post contenant le(s) quote(s)
 
 ## Changelog
+
+### 2019.10.5.1
+
+Option EgoQuote post complet. Fix EgoQuote citations traditionnelles. Refacto table settings.
 
 ### 2019.10.5.0
 
