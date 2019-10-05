@@ -39,7 +39,7 @@ Il se présente sous la forme d'une enveloppe. Lorsqu'il existe un MP non lu, l'
 
 ### SuperFavoris
 
-Permet de gérer trois états distincts entre les topics favoris :
+Permet de gérer trois états distincts entre les topics favoris via leur icône :
 
 * Simple favori (par défaut/icône oeil)
 * Super favori (clic-droit/icône coeur et surlignage)
@@ -53,6 +53,7 @@ Lorsque l'option est activée, un onglet est ajouté afin de filtrer les favoris
 #### Paramètres
 
 * Activer/désactiver l'option
+* Verrouiller l'état des favoris (affichage des icônes standard et clics désactivés)
 * Choisir la couleur d'un super favori
 * Choisir la couleur d'un super favori lorsque l'on passe dessus
 * Choisir la couleur d'un favori simple
@@ -71,6 +72,10 @@ Basé sur _[HFR] Ego Quote_ de [Roger21](http://roger21.free.fr/hfr/).
 * Colorer uniquement les quotes/tout le post contenant le(s) quote(s)
 
 ## Changelog
+
+### 2019.10.5.2
+
+Mode lock des SuperFav. Fix EgoQuote citations trad oldschool.
 
 ### 2019.10.5.1
 

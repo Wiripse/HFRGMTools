@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          [BETA] HFR4K
 // @author        Wiripse
-// @version       2019.10.5.1
+// @version       2019.10.5.2
 // @description   HFR en mieux
 // @namespace     https://wiripse.github.io/HFRGMTools/
 // @icon          data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAQAAAAAYLlVAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAAHdElNRQfjCgIILBJ4Jlj4AAAEPUlEQVRo3u3YfWjVVRgH8M91c9MWmWYyNaVGFOZL+VLqRJl2TcawLCJJLDN8KSWEElKwtH/UIhPJZiJCIIlmIKJk6rImaa6maVqCqFmoufLdfNna/PWHP+92U3fvxrb+8H7PH79znnt+z/N9nuf8znnOJYUUUrjVEUFPr8gB33lb1BRzbUWeN6U3ou1DCu1msApBrLW1QeBzsLaGvHFahbx0czVXYZtKbHPCe8rNB+9Lb8QIpMuVYQ7lAvMaMdA3xzyBy+kycB6TjWhC46sVOo/M6hB/IKMJCQxUeLVTTSADhxxqAuM5cmReG8QvsmVmNQGBWWZWD5o1gcFakSKQIlCfrbaNYTrjgDUqQ1lrwzW33rHYrB5yHbVBRUMTyLVKh7C/W54z6GGDbJR71jpkWmCCCErkO12burqmYIiNMfM87C3woWyQaYlMnWwxUQT0NbV2hXUjkG+dLFXGaibTD+iPjgZhvteRbaxSj2GrLvagX8MRGGG1lv7xvE8EKrTFX4iCle4Ai7TDR4YYrAt+bygCz/lMpgojrQL3uw/FIYHTSkMiXDLGVIsVSnc+0VGfLIFRPtXcRcOVWmgEhoJNIqL42m36gsMGKPatl3DUE/Y2BIEJlkl3wZMO2GKywtDvMnt1k40iraRhoz7uUqo3tuhteyLVyRCY5GPNnDXUEcXuxUFp8lAkCAO/yRHPeFmBcb7UFgs8riyx8sT7wDRzcNIwh+0NP7civbVBUZiKww5gjWtH7UXjLU8qtgkjUGA2ygy2Q6fQfGBt6HeRDIOwKTa/I5idrPnEBMaLOCXPHuwywjTTFNgpin2OyJUVRuIpW40xQxmmeSBZAolS0BLn5LgHXLDDQb/KkhuajeKKzSZaJOJRA71ovdut0F95chQCgVk1nvF49brLxCWd5QsEhqNEoFTEsfDX37T2rkAQ3i1uhFkCwbVnohQsttCVOEkLLURRqVhrvVGkm/b4Hp0tMkMJpuiajP+JCFzxmrv1Cds6lNkvihLnPCQNxeGm9IJ1GGmM0YgoSIZAMsfxKafC3kG0sVwPbMDf4A0P4qD9xtqlowXW4up1JwnUvgbi0d3FMNentAdbYmtjPMhTHo6Pa3sTLXVaA/HYI982JxUZ4g/wtKVOOGCSJeAb+bb50xeiTjRUCmqi2IC48UnjjIuTbLa5Lgr/96I0RSBFIP4ryInVdQ2Fy7arRLpH7FKpne7hP3Ix1NyIGqMtBIUCC2U5EZNftxH90qiRDmLOXkWsVK1OQa5e0hrc8CUlYIqlflKpq+4iquy8NiHiqA62m/mfQ7c2VPnRmRvI79SzDi40845+jrGgHnm9ca3/cz00zSfLynq8eH2x0a0eWlbIunqHzdYl6eC1sVyas3aqqiFN00srVUbFaofEidzneNIJi8P0m3o0ve7KIvWiEDU6vAFU46hlvqqfRymkkMKtjX8BU3kXUDClbEwAAAAldEVYdGRhdGU6Y3JlYXRlADIwMTktMTAtMDJUMDg6NDQ6MTgrMDA6MDAqoU1GAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE5LTEwLTAyVDA4OjQ0OjE4KzAwOjAwW/z1+gAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAAASUVORK5CYII=
@@ -20,6 +20,7 @@
 // ==/UserScript==
 
 // Historique
+// 2019.10.5.2 : Mode lock des SuperFav. Fix EgoQuote citations trad oldschool.
 // 2019.10.5.1 : Option EgoQuote post complet. Fix EgoQuote citations traditionnelles. Refacto table settings.
 // 2019.10.5.0 : EgoQuote.
 // 2019.10.4.2 : Choix des couleurs des favoris simples.
@@ -39,7 +40,7 @@
 // 2019.9.30.1 : Fix pour que ça fonctionne aussi dans les drapals de catégories
 // 2019.9.30.0 : Premier jet
 
-const version = '2019.10.5.1';
+const version = '2019.10.5.2';
 
 //**********************************************************************//
 //************************* GM/VM/TM/FDP SHIT **************************//
@@ -531,6 +532,13 @@ var HFR4K = {
             HFR4K.renderTabs();
         }));
 
+        // Setting Lock Fav
+        taBody.appendChild(HFR4K.getCheckboxSetting('Verrouiller ?', LocalMPStorage.datas.superFavs.settings.locked, function(cb){
+            LocalMPStorage.datas.superFavs.settings.locked = !LocalMPStorage.datas.superFavs.settings.locked;
+            cb.checked = LocalMPStorage.datas.superFavs.settings.locked;
+            LocalMPStorage.updateMPStorage(LocalMPStorage.domains.superFavs);
+        }));
+
         // Setting Super Fav Color
         taBody.appendChild(HFR4K.getColorSetting('Couleur SuperFav', LocalMPStorage.datas.superFavs.settings.superFavColor, '#D2B2FF', function(newColor){
             LocalMPStorage.datas.superFavs.settings.superFavColor = newColor;
@@ -795,45 +803,47 @@ var HFR4K = {
                                     topicRow.querySelector('.sujetCase6').classList.add('favRowAlt');
                                     topicRow.querySelector('.sujetCase9').classList.add('favRowAlt');
 
-                                    // Create icon to manage the status
-                                    var imgBlocHide = topicRow.querySelector('.sujetCase2');
-                                    imgBlocHide.removeChild(imgBlocHide.querySelector('img'));
-                                    var newImgBlocHide = document.createElement('img');
-                                    newImgBlocHide.setAttribute('title', 'Ajouter aux super favoris/Ne plus masquer');
-                                    newImgBlocHide.setAttribute('src', HFRGMUtils.icons.hide);
+                                    if(!LocalMPStorage.datas.superFavs.settings.locked){
+                                        // Create icon to manage the status
+                                        var imgBlocHide = topicRow.querySelector('.sujetCase2');
+                                        imgBlocHide.removeChild(imgBlocHide.querySelector('img'));
+                                        var newImgBlocHide = document.createElement('img');
+                                        newImgBlocHide.setAttribute('title', 'Ajouter aux super favoris/Ne plus masquer');
+                                        newImgBlocHide.setAttribute('src', HFRGMUtils.icons.hide);
 
-                                    // Handle onclick to add to remove from Hideable list
-                                    newImgBlocHide.onclick = function() {
-                                        // Remove from Hideable
-                                        let i = LocalMPStorage.datas.superFavs.hideableList.findIndex(function(item){ return topicId === item; });
-                                        if(0<=i){
-                                            LocalMPStorage.datas.superFavs.hideableList.splice(i, 1);
-                                        }
-                                        // Update MPStorage
-                                        LocalMPStorage.updateMPStorage(LocalMPStorage.domains.superFavs);
-                                        // Render the result
-                                        HFR4K.renderFavs();
-                                    };
 
-                                    // Handle rightclick to add to SuperFavs list
-                                    newImgBlocHide.oncontextmenu = function(){
-                                        // Remove from Hideable
-                                        let i = LocalMPStorage.datas.superFavs.hideableList.findIndex(function(item){ return topicId === item; });
-                                        if(0<=i){
-                                            LocalMPStorage.datas.superFavs.hideableList.splice(i, 1);
-                                        }
-                                        // Add to SuperFavs
-                                        LocalMPStorage.datas.superFavs.list.push(topicId);
-                                        // Update MPStorage
-                                        LocalMPStorage.updateMPStorage(LocalMPStorage.domains.superFavs);
-                                        // Render the result
-                                        HFR4K.renderFavs();
+                                        // Handle onclick to add to remove from Hideable list
+                                        newImgBlocHide.onclick = function() {
+                                            // Remove from Hideable
+                                            let i = LocalMPStorage.datas.superFavs.hideableList.findIndex(function(item){ return topicId === item; });
+                                            if(0<=i){
+                                                LocalMPStorage.datas.superFavs.hideableList.splice(i, 1);
+                                            }
+                                            // Update MPStorage
+                                            LocalMPStorage.updateMPStorage(LocalMPStorage.domains.superFavs);
+                                            // Render the result
+                                            HFR4K.renderFavs();
+                                        };
 
-                                        // Block contextmenu
-                                        return false;
-                                    };
-                                    imgBlocHide.appendChild(newImgBlocHide);
+                                        // Handle rightclick to add to SuperFavs list
+                                        newImgBlocHide.oncontextmenu = function(){
+                                            // Remove from Hideable
+                                            let i = LocalMPStorage.datas.superFavs.hideableList.findIndex(function(item){ return topicId === item; });
+                                            if(0<=i){
+                                                LocalMPStorage.datas.superFavs.hideableList.splice(i, 1);
+                                            }
+                                            // Add to SuperFavs
+                                            LocalMPStorage.datas.superFavs.list.push(topicId);
+                                            // Update MPStorage
+                                            LocalMPStorage.updateMPStorage(LocalMPStorage.domains.superFavs);
+                                            // Render the result
+                                            HFR4K.renderFavs();
 
+                                            // Block contextmenu
+                                            return false;
+                                        };
+                                        imgBlocHide.appendChild(newImgBlocHide);
+                                    }
                                 }else{
                                     // Don't display hideable topics
                                     topicRow.classList.add('hiddenFav');
@@ -862,59 +872,48 @@ var HFR4K = {
                                 topicRow.querySelector('.sujetCase9').classList.add('favRowAlt');
                             }
 
-                            // Create icon to manage the status
-                            var imgBlocSF = topicRow.querySelector('.sujetCase2');
-                            imgBlocSF.removeChild(imgBlocSF.querySelector('img'));
-                            var newImgBlocSF = document.createElement('img');
-                            newImgBlocSF.setAttribute('title', 'Supprimer des super favoris/Masquer');
-                            newImgBlocSF.setAttribute('src', HFRGMUtils.icons.fullHeart);
-                            // Handle onclick to remove from SuperFavs list
-                            newImgBlocSF.onclick = function () {
-                                let i = LocalMPStorage.datas.superFavs.list.findIndex(function(item){ return topicId === item; });
-                                if(0<=i){
+                            if(!LocalMPStorage.datas.superFavs.settings.locked){
+                                // Create icon to manage the status
+                                var imgBlocSF = topicRow.querySelector('.sujetCase2');
+                                imgBlocSF.removeChild(imgBlocSF.querySelector('img'));
+                                var newImgBlocSF = document.createElement('img');
+                                newImgBlocSF.setAttribute('title', 'Supprimer des super favoris/Masquer');
+                                newImgBlocSF.setAttribute('src', HFRGMUtils.icons.fullHeart);
+
+                                // Handle onclick to add to Hideable list
+                                newImgBlocSF.onclick = function() {
                                     // Remove from SuperFavs
-                                    LocalMPStorage.datas.superFavs.list.splice(i, 1);
+                                    let i = LocalMPStorage.datas.superFavs.list.findIndex(function(item){ return topicId === item; });
+                                    if(0<=i){
+                                        // Remove from SuperFavs
+                                        LocalMPStorage.datas.superFavs.list.splice(i, 1);
+                                    }
+                                    // Add to Hideable
+                                    LocalMPStorage.datas.superFavs.hideableList.push(topicId);
                                     // Update MPStorage
                                     LocalMPStorage.updateMPStorage(LocalMPStorage.domains.superFavs);
                                     // Render the result
                                     HFR4K.renderFavs();
-                                }
-                            };
+                                };
 
-
-                            // Handle onclick to add to Hideable list
-                            newImgBlocSF.onclick = function() {
-                                // Remove from SuperFavs
-                                let i = LocalMPStorage.datas.superFavs.list.findIndex(function(item){ return topicId === item; });
-                                if(0<=i){
+                                // Handle rightclick to remove from SuperFavs
+                                newImgBlocSF.oncontextmenu = function(){
                                     // Remove from SuperFavs
-                                    LocalMPStorage.datas.superFavs.list.splice(i, 1);
-                                }
-                                // Add to Hideable
-                                LocalMPStorage.datas.superFavs.hideableList.push(topicId);
-                                // Update MPStorage
-                                LocalMPStorage.updateMPStorage(LocalMPStorage.domains.superFavs);
-                                // Render the result
-                                HFR4K.renderFavs();
-                            };
+                                    let i = LocalMPStorage.datas.superFavs.list.findIndex(function(item){ return topicId === item; });
+                                    if(0<=i){
+                                        // Remove from SuperFavs
+                                        LocalMPStorage.datas.superFavs.list.splice(i, 1);
+                                    }
+                                    // Update MPStorage
+                                    LocalMPStorage.updateMPStorage(LocalMPStorage.domains.superFavs);
+                                    // Render the result
+                                    HFR4K.renderFavs();
 
-                            // Handle rightclick to remove from SuperFavs
-                            newImgBlocSF.oncontextmenu = function(){
-                                // Remove from SuperFavs
-                                let i = LocalMPStorage.datas.superFavs.list.findIndex(function(item){ return topicId === item; });
-                                if(0<=i){
-                                    // Remove from SuperFavs
-                                    LocalMPStorage.datas.superFavs.list.splice(i, 1);
-                                }
-                                // Update MPStorage
-                                LocalMPStorage.updateMPStorage(LocalMPStorage.domains.superFavs);
-                                // Render the result
-                                HFR4K.renderFavs();
-
-                                // Block contextmenu
-                                return false;
-                            };
-                            imgBlocSF.appendChild(newImgBlocSF);
+                                    // Block contextmenu
+                                    return false;
+                                };
+                                imgBlocSF.appendChild(newImgBlocSF);
+                            }
                         } else if (topicRow.querySelector('.sujetCase2')){
                             // Simple  topic
 
@@ -925,38 +924,39 @@ var HFR4K = {
                                 topicRow.querySelector('.sujetCase6').classList.add('favRowAlt');
                                 topicRow.querySelector('.sujetCase9').classList.add('favRowAlt');
 
-                                // Create icon to manage the status
-                                var imgBloc = topicRow.querySelector('.sujetCase2');
-                                imgBloc.removeChild(imgBloc.querySelector('img'));
-                                var newImgBloc = document.createElement('img');
-                                newImgBloc.setAttribute('title', 'Ajouter aux super favoris/Masquer');
-                                newImgBloc.setAttribute('src', HFRGMUtils.icons.eye);
+                                if(!LocalMPStorage.datas.superFavs.settings.locked){
+                                    // Create icon to manage the status
+                                    var imgBloc = topicRow.querySelector('.sujetCase2');
+                                    imgBloc.removeChild(imgBloc.querySelector('img'));
+                                    var newImgBloc = document.createElement('img');
+                                    newImgBloc.setAttribute('title', 'Ajouter aux super favoris/Masquer');
+                                    newImgBloc.setAttribute('src', HFRGMUtils.icons.eye);
 
-                                // Handle onclick to add to Hideable list
-                                newImgBloc.onclick = function() {
-                                    // Add to Hideable
-                                    LocalMPStorage.datas.superFavs.hideableList.push(topicId);
-                                    // Update MPStorage
-                                    LocalMPStorage.updateMPStorage(LocalMPStorage.domains.superFavs);
-                                    // Render the result
-                                    HFR4K.renderFavs();
+                                    // Handle onclick to add to Hideable list
+                                    newImgBloc.onclick = function() {
+                                        // Add to Hideable
+                                        LocalMPStorage.datas.superFavs.hideableList.push(topicId);
+                                        // Update MPStorage
+                                        LocalMPStorage.updateMPStorage(LocalMPStorage.domains.superFavs);
+                                        // Render the result
+                                        HFR4K.renderFavs();
 
-                                };
+                                    };
 
-                                // Handle rightclick to add to SuperFavs list
-                                newImgBloc.oncontextmenu = function(){
-                                    // Add to SuperFavs
-                                    LocalMPStorage.datas.superFavs.list.push(topicId);
-                                    // Update MPStorage
-                                    LocalMPStorage.updateMPStorage(LocalMPStorage.domains.superFavs);
-                                    // Render the result
-                                    HFR4K.renderFavs();
+                                    // Handle rightclick to add to SuperFavs list
+                                    newImgBloc.oncontextmenu = function(){
+                                        // Add to SuperFavs
+                                        LocalMPStorage.datas.superFavs.list.push(topicId);
+                                        // Update MPStorage
+                                        LocalMPStorage.updateMPStorage(LocalMPStorage.domains.superFavs);
+                                        // Render the result
+                                        HFR4K.renderFavs();
 
-                                    // Block contextmenu
-                                    return false;
-                                };
-
-                                imgBloc.appendChild(newImgBloc);
+                                        // Block contextmenu
+                                        return false;
+                                    };
+                                    imgBloc.appendChild(newImgBloc);
+                                }
                             }else{
                                 // Only SuperFav, don't display a simple fav
                                 topicRow.classList.add('hiddenFav');
@@ -1047,6 +1047,16 @@ var HFR4K = {
                         }else{
                             quoteLink.closest('table.oldcitation').classList.add('hfr4kEgoQuote');
                         }
+                    }
+                }
+            });
+            document.querySelectorAll('b.s1').forEach(function(quoteLink){
+                if(quoteLink.textContent.split(' a écrit').length === 2 && HFRGMUtils.getSimplePseudo(mpStorage.username) === HFRGMUtils.getSimplePseudo(quoteLink.textContent.split(' a écrit')[0]) && quoteLink.closest('table.oldcitation')){
+                    if(LocalMPStorage.datas.egoQuote.wholePost){
+                        quoteLink.closest('tr.message').classList.add('hfr4kEgoQuote');
+                    }else{
+                        quoteLink.closest('table.oldcitation').classList.add('hfr4kEgoQuote');
+
                     }
                 }
             });
