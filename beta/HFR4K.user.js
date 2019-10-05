@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          [BETA] HFR4K
 // @author        Wiripse
-// @version       2019.10.4.2
+// @version       2019.10.5.0
 // @description   HFR en mieux
 // @namespace     https://wiripse.github.io/HFRGMTools/
 // @icon          data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAQAAAAAYLlVAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAAHdElNRQfjCgIILBJ4Jlj4AAAEPUlEQVRo3u3YfWjVVRgH8M91c9MWmWYyNaVGFOZL+VLqRJl2TcawLCJJLDN8KSWEElKwtH/UIhPJZiJCIIlmIKJk6rImaa6maVqCqFmoufLdfNna/PWHP+92U3fvxrb+8H7PH79znnt+z/N9nuf8znnOJYUUUrjVEUFPr8gB33lb1BRzbUWeN6U3ou1DCu1msApBrLW1QeBzsLaGvHFahbx0czVXYZtKbHPCe8rNB+9Lb8QIpMuVYQ7lAvMaMdA3xzyBy+kycB6TjWhC46sVOo/M6hB/IKMJCQxUeLVTTSADhxxqAuM5cmReG8QvsmVmNQGBWWZWD5o1gcFakSKQIlCfrbaNYTrjgDUqQ1lrwzW33rHYrB5yHbVBRUMTyLVKh7C/W54z6GGDbJR71jpkWmCCCErkO12burqmYIiNMfM87C3woWyQaYlMnWwxUQT0NbV2hXUjkG+dLFXGaibTD+iPjgZhvteRbaxSj2GrLvagX8MRGGG1lv7xvE8EKrTFX4iCle4Ai7TDR4YYrAt+bygCz/lMpgojrQL3uw/FIYHTSkMiXDLGVIsVSnc+0VGfLIFRPtXcRcOVWmgEhoJNIqL42m36gsMGKPatl3DUE/Y2BIEJlkl3wZMO2GKywtDvMnt1k40iraRhoz7uUqo3tuhteyLVyRCY5GPNnDXUEcXuxUFp8lAkCAO/yRHPeFmBcb7UFgs8riyx8sT7wDRzcNIwh+0NP7civbVBUZiKww5gjWtH7UXjLU8qtgkjUGA2ygy2Q6fQfGBt6HeRDIOwKTa/I5idrPnEBMaLOCXPHuwywjTTFNgpin2OyJUVRuIpW40xQxmmeSBZAolS0BLn5LgHXLDDQb/KkhuajeKKzSZaJOJRA71ovdut0F95chQCgVk1nvF49brLxCWd5QsEhqNEoFTEsfDX37T2rkAQ3i1uhFkCwbVnohQsttCVOEkLLURRqVhrvVGkm/b4Hp0tMkMJpuiajP+JCFzxmrv1Cds6lNkvihLnPCQNxeGm9IJ1GGmM0YgoSIZAMsfxKafC3kG0sVwPbMDf4A0P4qD9xtqlowXW4up1JwnUvgbi0d3FMNentAdbYmtjPMhTHo6Pa3sTLXVaA/HYI982JxUZ4g/wtKVOOGCSJeAb+bb50xeiTjRUCmqi2IC48UnjjIuTbLa5Lgr/96I0RSBFIP4ryInVdQ2Fy7arRLpH7FKpne7hP3Ix1NyIGqMtBIUCC2U5EZNftxH90qiRDmLOXkWsVK1OQa5e0hrc8CUlYIqlflKpq+4iquy8NiHiqA62m/mfQ7c2VPnRmRvI79SzDi40845+jrGgHnm9ca3/cz00zSfLynq8eH2x0a0eWlbIunqHzdYl6eC1sVyas3aqqiFN00srVUbFaofEidzneNIJi8P0m3o0ve7KIvWiEDU6vAFU46hlvqqfRymkkMKtjX8BU3kXUDClbEwAAAAldEVYdGRhdGU6Y3JlYXRlADIwMTktMTAtMDJUMDg6NDQ6MTgrMDA6MDAqoU1GAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE5LTEwLTAyVDA4OjQ0OjE4KzAwOjAwW/z1+gAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAAASUVORK5CYII=
@@ -20,6 +20,7 @@
 // ==/UserScript==
 
 // Historique
+// 2019.10.5.0 : EgoQuote.
 // 2019.10.4.2 : Choix des couleurs des favoris simples.
 // 2019.10.4.1 : Clic-droit onglet MP.
 // 2019.10.4.0 : Init bêta. Fix sur lecture des paramètres d'URL.
@@ -37,7 +38,7 @@
 // 2019.9.30.1 : Fix pour que ça fonctionne aussi dans les drapals de catégories
 // 2019.9.30.0 : Premier jet
 
-const version = '2019.10.4.2';
+const version = '2019.10.5.0';
 
 //**********************************************************************//
 //************************* GM/VM/TM/FDP SHIT **************************//
@@ -181,6 +182,9 @@ var HFRGMUtils = {
         if (!LocalMPStorage.datas.hfr4k){
             LocalMPStorage.datas.hfr4k = { lastVersion : '2000.1.1.0'};
         }
+        if (!LocalMPStorage.datas.egoQuote){
+            LocalMPStorage.datas.egoQuote = { active : false, color: '#DCF3F2'};
+        }
     },
     isNewVersion: function(){
         // **********
@@ -263,6 +267,13 @@ var HFRGMUtils = {
         isReplyingTopic: function(){
             return document.location.href.indexOf('hardware.fr/message.php') > -1 && HFRGMUtils.pageCheck.pageParams.get('cat') && parseInt(HFRGMUtils.pageCheck.pageParams.get('cat')) > 0 && HFRGMUtils.pageCheck.pageParams.get('post') && parseInt(HFRGMUtils.pageCheck.pageParams.get('post')) > 0;
         }
+    },
+    getSimplePseudo: function(pseudo){
+        // **********
+        // HFR4K_GM
+        // Clean nickname to simplify comparisons
+        // **********
+        return pseudo.replace(/\u200b/g, '').toLowerCase().trim();
     }
 };
 
@@ -279,6 +290,7 @@ var LocalMPStorage = {
     /* Scope of datas */
     domains: {
         superFavs : 'SuperFavs',
+        egoQuote : 'EgoQuote',
         hfr4k : 'HFR4K'
     },
     /* Methods */
@@ -343,6 +355,10 @@ var LocalMPStorage = {
                 LocalMPStorage.datas.superFavs.sourceName = LocalMPStorage.toolName;
                 LocalMPStorage.datas.superFavs.lastUpdate = Date.now();
                 break;
+            case LocalMPStorage.domains.egoQuote:
+                LocalMPStorage.datas.egoQuote.sourceName = LocalMPStorage.toolName;
+                LocalMPStorage.datas.egoQuote.lastUpdate = Date.now();
+                break;
             case LocalMPStorage.domains.hfr4k:
                 LocalMPStorage.datas.hfr4k.sourceName = LocalMPStorage.toolName;
                 LocalMPStorage.datas.hfr4k.lastUpdate = Date.now();
@@ -402,6 +418,7 @@ var HFR4K = {
         style.appendChild(document.createTextNode('.hfr4kLabelSettingItem { padding-left: 5rem;}'));
         style.appendChild(document.createTextNode('.hfr4kColorBox { width: 1rem; height: 1rem; display: inline-block; background-color: #D2B2FF;}'));
         style.appendChild(document.createTextNode('.hfr4kUpdateBox { background-color: #FF464B;} .hfr4kUpdateBox:hover { font-weight : bold;  cursor: pointer; }'));
+        style.appendChild(document.createTextNode('.hfr4kEgoQuote { background-color: '+LocalMPStorage.datas.egoQuote.color+' !important;}'));
         document.head.appendChild(style);
 
 
@@ -456,6 +473,9 @@ var HFR4K = {
                 }
             });
         }
+
+        // EgoQuote
+        HFR4K.renderEgoQuotes();
 
         // Rest of the rendering
         HFR4K.simpleRender();
@@ -552,7 +572,7 @@ var HFR4K = {
         favColorInput.value = LocalMPStorage.datas.superFavs.settings.superFavColor ? LocalMPStorage.datas.superFavs.settings.superFavColor : '#D2B2FF';
         favColorInput.onchange = function(){
             if(favColorInput.value){
-                var favColor = favColorInput.value.replace('#', '');
+                var favColor = favColorInput.value.replace('#', '').trim();
                 if(favColor.length === 6 && favColor.match(/^[0-9a-fA-F]+$/)){
                     colorBoxFavColor.style = 'background-color : #'+favColor+';';
                     LocalMPStorage.datas.superFavs.settings.superFavColor = '#'+favColor;
@@ -586,7 +606,7 @@ var HFR4K = {
         favColorHoverInput.value = LocalMPStorage.datas.superFavs.settings.superFavColorHover ? LocalMPStorage.datas.superFavs.settings.superFavColorHover : '#B580FF';
         favColorHoverInput.onchange = function(){
             if(favColorHoverInput.value){
-                var favColorHover = favColorHoverInput.value.replace('#', '');
+                var favColorHover = favColorHoverInput.value.replace('#', '').trim();
                 if(favColorHover.length === 6 && favColorHover.match(/^[0-9a-fA-F]+$/)){
                     colorBoxFavColorHover.style = 'background-color : #'+favColorHover+';';
                     LocalMPStorage.datas.superFavs.settings.superFavColorHover = '#'+favColorHover;
@@ -621,7 +641,7 @@ var HFR4K = {
         sfavColorInput.onchange = function(){
             if(sfavColorInput.value){
                 var sfavColor = sfavColorInput.value.replace('#', '');
-                if(sfavColor.length === 6 && sfavColor.match(/^[0-9a-fA-F]+$/)){
+                if(sfavColor.length === 6 && sfavColor.match(/^[0-9a-fA-F]+$/).trim()){
                     colorBoxSFavColor.style = 'background-color : #'+sfavColor+';';
                     LocalMPStorage.datas.superFavs.settings.simpleFavColor = '#'+sfavColor;
                     LocalMPStorage.updateMPStorage(LocalMPStorage.domains.superFavs);
@@ -654,7 +674,7 @@ var HFR4K = {
         sfavColorHoverInput.value = LocalMPStorage.datas.superFavs.settings.simpleFavColorHover ? LocalMPStorage.datas.superFavs.settings.simpleFavColorHover : '#DEDFDF';
         sfavColorHoverInput.onchange = function(){
             if(sfavColorHoverInput.value){
-                var sfavColorHover = sfavColorHoverInput.value.replace('#', '');
+                var sfavColorHover = sfavColorHoverInput.value.replace('#', '').trim();
                 if(sfavColorHover.length === 6 && sfavColorHover.match(/^[0-9a-fA-F]+$/)){
                     colorBoxSFavColorHover.style = 'background-color : #'+sfavColorHover+';';
                     LocalMPStorage.datas.superFavs.settings.simpleFavColorHover = '#'+sfavColorHover;
@@ -667,6 +687,81 @@ var HFR4K = {
         colSFavColorHoverVal.appendChild(HFR4K.getLinkColorTable());
         rowSFavColorHover.appendChild(colSFavColorHoverVal);
         taBody.appendChild(rowSFavColorHover);
+
+
+
+        // *************************************************************************************** //
+        // *** EgoQuote *** //
+        // *************************************************************************************** //
+        var catEgoQuote = document.createElement('tr');
+        catEgoQuote.classList.add('cBackHeader', 'fondForum1fCat', 'hfr4kSettingRow');
+
+        var colEgQTitle = document.createElement('th');
+        colEgQTitle.setAttribute('colspan', 2);
+        colEgQTitle.setAttribute('scope', 'col');
+        colEgQTitle.innerHTML = 'EgoQuote';
+        catEgoQuote.appendChild(colEgQTitle);
+        taBody.appendChild(catEgoQuote);
+
+        // Setting EgoQuote Activation
+        var rowEgQStatus = document.createElement('tr');
+        rowEgQStatus.classList.add('sujet', 'ligne_booleen', 'cBackCouleurTab3', 'hfr4kSettingRow');
+        var colEgQStatusTitle = document.createElement('td');
+        colEgQStatusTitle.setAttribute('scope', 'row');
+        colEgQStatusTitle.classList.add('sujetCase3', 'hfr4kLabelSettingItem');
+        colEgQStatusTitle.innerHTML = '<span class="cCatTopic">Activer ?</span>';
+        rowEgQStatus.appendChild(colEgQStatusTitle);
+        var colEgQStatusCb = document.createElement('td');
+        colEgQStatusCb.setAttribute('scope', 'row');
+        colEgQStatusCb.classList.add('sujetCase3', 'hfr4kLabelSettingItem');
+        var cbEgQStatus = document.createElement('input');
+        cbEgQStatus.setAttribute('type', 'checkbox');
+        cbEgQStatus.checked = LocalMPStorage.datas.egoQuote.active;
+        cbEgQStatus.onclick = function(){
+            LocalMPStorage.datas.egoQuote.active = !LocalMPStorage.datas.egoQuote.active;
+            cbEgQStatus.checked = LocalMPStorage.datas.egoQuote.active;
+            LocalMPStorage.updateMPStorage(LocalMPStorage.domains.egoQuote);
+            // Render tabs
+            HFR4K.renderTabs();
+        };
+        colEgQStatusCb.appendChild(cbEgQStatus);
+        rowEgQStatus.appendChild(colEgQStatusCb);
+        taBody.appendChild(rowEgQStatus);
+
+        // Setting EgoQuote Color
+        var rowEgQColor = document.createElement('tr');
+        rowEgQColor.classList.add('sujet', 'ligne_booleen', 'cBackCouleurTab3', 'hfr4kSettingRow');
+        var colEgQColorTitle = document.createElement('td');
+        colEgQColorTitle.setAttribute('scope', 'row');
+        colEgQColorTitle.classList.add('sujetCase3', 'hfr4kLabelSettingItem');
+        colEgQColorTitle.innerHTML = '<span class="cCatTopic">Couleur</span>';
+        rowEgQColor.appendChild(colEgQColorTitle);
+        var colEgQColorVal = document.createElement('td');
+        colEgQColorVal.setAttribute('scope', 'row');
+        colEgQColorVal.classList.add('sujetCase3', 'hfr4kLabelSettingItem');
+        var colorBoxEgQColor = document.createElement('span');
+        colorBoxEgQColor.classList.add('hfr4kColorBox');
+        colorBoxEgQColor.style = 'background-color : '+(LocalMPStorage.datas.egoQuote.color ? LocalMPStorage.datas.egoQuote.color : '#DCF3F2')+ ';';
+        colEgQColorVal.appendChild(colorBoxEgQColor);
+        var egQColorInput = document.createElement('input');
+        egQColorInput.setAttribute('type', 'text');
+        egQColorInput.value = LocalMPStorage.datas.egoQuote.color ? LocalMPStorage.datas.egoQuote.color : '#DCF3F2';
+        egQColorInput.onchange = function(){
+            if(egQColorInput.value){
+                var egQColor = egQColorInput.value.replace('#', '').trim();
+                if(egQColor.length === 6 && egQColor.match(/^[0-9a-fA-F]+$/)){
+                    colorBoxEgQColor.style = 'background-color : #'+egQColor+';';
+                    LocalMPStorage.datas.egoQuote.color = '#'+egQColor;
+                    LocalMPStorage.updateMPStorage(LocalMPStorage.domains.egoQuote);
+                }
+            }
+        }
+        colEgQColorVal.appendChild(egQColorInput);
+        colEgQColorVal.appendChild(document.createTextNode('Valeur par défaut #DCF3F2 - '));
+        colEgQColorVal.appendChild(HFR4K.getLinkColorTable());
+        rowEgQColor.appendChild(colEgQColorVal);
+        taBody.appendChild(rowEgQColor);
+
 
         // FIRE IN THE HOLE !!!
         elementAfter.parentNode.insertBefore(table, elementAfter);
@@ -1025,6 +1120,20 @@ var HFR4K = {
                 }
 
             }
+        }
+    },
+    renderEgoQuotes: function(){
+        // **********
+        // HFR4K_GM
+        // Color user's quotes
+        // **********
+
+        if(LocalMPStorage.datas.egoQuote.active && (HFRGMUtils.pageCheck.isOnMP() || HFRGMUtils.pageCheck.isOnTopic() || HFRGMUtils.pageCheck.isOnTopicTxt() || HFRGMUtils.pageCheck.isReplyingMP() || HFRGMUtils.pageCheck.isReplyingTopic())){
+            document.querySelectorAll('a.Topic').forEach(function(quoteLink){
+                if(quoteLink.textContent.split(' a écrit').length === 2 && HFRGMUtils.getSimplePseudo(mpStorage.username) === HFRGMUtils.getSimplePseudo(quoteLink.textContent.split(' a écrit')[0]) && quoteLink.closest('table.citation')){
+                    quoteLink.closest('table.citation').classList.add('hfr4kEgoQuote');
+                }
+            });
         }
     }
 };

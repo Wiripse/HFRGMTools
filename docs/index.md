@@ -58,7 +58,22 @@ Lorsque l'option est activée, un onglet est ajouté afin de filtrer les favoris
 * Choisir la couleur d'un favori simple
 * Choisir la couleur d'un favori simple lorsque l'on passe dessus
 
+### EgoQuote
+
+Mettre en avant via une couleur spéciale les citations des posts de l'utilisateur. 
+
+Basé sur _[HFR] Ego Quote_ de [Roger21](http://roger21.free.fr/hfr/).
+
+#### Paramètres
+
+* Activer/désactiver l'option
+* Choisir la couleur des quotes
+
 ## Changelog
+
+### 2019.10.5.0
+
+EgoQuote.
 
 ### 2019.10.4.2
 
