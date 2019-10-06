@@ -106,11 +106,21 @@ Basé sur _[HFR] Drapal Easy Click_ de [Roger21](http://roger21.free.fr/hfr/).
 
 * Activer/désactiver l'option
 
+### Suppression rapide
+
+Ajoute un bouton à la toolbar des posts de l'utilisateur pour les supprimer en un clic.
+
+Basé sur _[HFR] Suppression rapide de posts_ de [Toyonos](http://toyonos.info).
+
+#### Paramètres
+
+* Activer/désactiver l'option
+
 ## Changelog
 
 ### 2019.10.6.1
 
-Ezzzi Draps.
+Ezzzi Draps. Suppression rapide.
 
 ### 2019.10.6.0
 
