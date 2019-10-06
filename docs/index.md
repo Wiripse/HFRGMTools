@@ -22,7 +22,11 @@ Pour connaître la version installée, chercher la phrase _Enhanced by HFR4K_ da
 
 ### Mise à jour
 
-Lorsque le script aura été mis à jour automatiquement par l'extension, un message s'affichera au dessus de la liste des drapeaux.
+Le script devrait être automatiquement mis à jour par l'extension.
+
+Pour forcer la mise à jour, passer par le menu contextuel :
+
+![force upgrade TM](https://www.pctr.fr/images/5qbV.png)
 
 ### Settings
 
@@ -117,6 +121,10 @@ Basé sur _[HFR] Suppression rapide de posts_ de [Toyonos](http://toyonos.info).
 * Activer/désactiver l'option
 
 ## Changelog
+
+### 2019.10.6.2
+
+Message lorsqu'il existe un décalage de versions entre les machines de l'utilisateur.
 
 ### 2019.10.6.1
 
