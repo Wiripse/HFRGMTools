@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          [BETA] HFR4K
 // @author        Wiripse
-// @version       2019.10.6.0
+// @version       2019.10.6.1
 // @description   HFR en mieux
 // @namespace     https://wiripse.github.io/HFRGMTools/
 // @icon          data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAQAAAAAYLlVAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAAHdElNRQfjCgIILBJ4Jlj4AAAEPUlEQVRo3u3YfWjVVRgH8M91c9MWmWYyNaVGFOZL+VLqRJl2TcawLCJJLDN8KSWEElKwtH/UIhPJZiJCIIlmIKJk6rImaa6maVqCqFmoufLdfNna/PWHP+92U3fvxrb+8H7PH79znnt+z/N9nuf8znnOJYUUUrjVEUFPr8gB33lb1BRzbUWeN6U3ou1DCu1msApBrLW1QeBzsLaGvHFahbx0czVXYZtKbHPCe8rNB+9Lb8QIpMuVYQ7lAvMaMdA3xzyBy+kycB6TjWhC46sVOo/M6hB/IKMJCQxUeLVTTSADhxxqAuM5cmReG8QvsmVmNQGBWWZWD5o1gcFakSKQIlCfrbaNYTrjgDUqQ1lrwzW33rHYrB5yHbVBRUMTyLVKh7C/W54z6GGDbJR71jpkWmCCCErkO12burqmYIiNMfM87C3woWyQaYlMnWwxUQT0NbV2hXUjkG+dLFXGaibTD+iPjgZhvteRbaxSj2GrLvagX8MRGGG1lv7xvE8EKrTFX4iCle4Ai7TDR4YYrAt+bygCz/lMpgojrQL3uw/FIYHTSkMiXDLGVIsVSnc+0VGfLIFRPtXcRcOVWmgEhoJNIqL42m36gsMGKPatl3DUE/Y2BIEJlkl3wZMO2GKywtDvMnt1k40iraRhoz7uUqo3tuhteyLVyRCY5GPNnDXUEcXuxUFp8lAkCAO/yRHPeFmBcb7UFgs8riyx8sT7wDRzcNIwh+0NP7civbVBUZiKww5gjWtH7UXjLU8qtgkjUGA2ygy2Q6fQfGBt6HeRDIOwKTa/I5idrPnEBMaLOCXPHuwywjTTFNgpin2OyJUVRuIpW40xQxmmeSBZAolS0BLn5LgHXLDDQb/KkhuajeKKzSZaJOJRA71ovdut0F95chQCgVk1nvF49brLxCWd5QsEhqNEoFTEsfDX37T2rkAQ3i1uhFkCwbVnohQsttCVOEkLLURRqVhrvVGkm/b4Hp0tMkMJpuiajP+JCFzxmrv1Cds6lNkvihLnPCQNxeGm9IJ1GGmM0YgoSIZAMsfxKafC3kG0sVwPbMDf4A0P4qD9xtqlowXW4up1JwnUvgbi0d3FMNentAdbYmtjPMhTHo6Pa3sTLXVaA/HYI982JxUZ4g/wtKVOOGCSJeAb+bb50xeiTjRUCmqi2IC48UnjjIuTbLa5Lgr/96I0RSBFIP4ryInVdQ2Fy7arRLpH7FKpne7hP3Ix1NyIGqMtBIUCC2U5EZNftxH90qiRDmLOXkWsVK1OQa5e0hrc8CUlYIqlflKpq+4iquy8NiHiqA62m/mfQ7c2VPnRmRvI79SzDi40845+jrGgHnm9ca3/cz00zSfLynq8eH2x0a0eWlbIunqHzdYl6eC1sVyas3aqqiFN00srVUbFaofEidzneNIJi8P0m3o0ve7KIvWiEDU6vAFU46hlvqqfRymkkMKtjX8BU3kXUDClbEwAAAAldEVYdGRhdGU6Y3JlYXRlADIwMTktMTAtMDJUMDg6NDQ6MTgrMDA6MDAqoU1GAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE5LTEwLTAyVDA4OjQ0OjE4KzAwOjAwW/z1+gAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAAASUVORK5CYII=
@@ -20,6 +20,7 @@
 // ==/UserScript==
 
 // Historique
+// 2019.10.6.1 : Ezzzi Draps.
 // 2019.10.6.0 : Last Read.
 // 2019.10.5.3 : EgoPost. Icône aide settings. Catégories compactes. Petits fixs.
 // 2019.10.5.2 : Mode lock des SuperFav. Fix EgoQuote citations trad oldschool.
@@ -42,7 +43,7 @@
 // 2019.9.30.1 : Fix pour que ça fonctionne aussi dans les drapals de catégories
 // 2019.9.30.0 : Premier jet
 
-const version = '2019.10.6.0';
+const version = '2019.10.6.1';
 
 //**********************************************************************//
 //************************* GM/VM/TM/FDP SHIT **************************//
@@ -197,6 +198,9 @@ var HFRGMUtils = {
         if(!LocalMPStorage.datas.lastRead){
             LocalMPStorage.datas.lastRead = { active : false, color : '#D4ADE5'};
         }
+        if(!LocalMPStorage.datas.ezzziDrap){
+            LocalMPStorage.datas.ezzziDrap = { active : false};
+        }
     },
     isNewVersion: function(){
         // **********
@@ -318,6 +322,7 @@ var LocalMPStorage = {
         egoQuote : 'EgoQuote',
         egoPost : 'EgoPost',
         lastRead : 'LastRead',
+        ezzziDrap : 'EzzziDrap',
         hfr4k : 'HFR4K'
     },
     /* Methods */
@@ -394,6 +399,10 @@ var LocalMPStorage = {
                 LocalMPStorage.datas.lastRead.sourceName = LocalMPStorage.toolName;
                 LocalMPStorage.datas.lastRead.lastUpdate = Date.now();
                 break;
+            case LocalMPStorage.domains.ezzziDrap:
+                LocalMPStorage.datas.ezzziDrap.sourceName = LocalMPStorage.toolName;
+                LocalMPStorage.datas.ezzziDrap.lastUpdate = Date.now();
+                break;
             case LocalMPStorage.domains.hfr4k:
                 LocalMPStorage.datas.hfr4k.sourceName = LocalMPStorage.toolName;
                 LocalMPStorage.datas.hfr4k.lastUpdate = Date.now();
@@ -457,6 +466,7 @@ var HFR4K = {
         style.appendChild(document.createTextNode('.hfr4kEgoPost { background-color: '+LocalMPStorage.datas.egoPost.color+' !important;}'));
         style.appendChild(document.createTextNode('.hfr4kHiddenCat { display : none; }'));
         style.appendChild(document.createTextNode('.hfr4kLastReadPost { border-bottom: dashed 0.5rem '+LocalMPStorage.datas.lastRead.color+'; }'));
+        style.appendChild(document.createTextNode('.hfr4kEzzziDrap { width: 5% !important; cursor: pointer; }'));
         document.head.appendChild(style);
 
 
@@ -539,6 +549,9 @@ var HFR4K = {
 
         // Render Last Unread
         HFR4K.renderLastUnread();
+
+        // Render Easy Flags
+        HFR4K.renderEasyFlags();
 
         // THEN Render Compact Cats
         HFR4K.renderCompactCats();
@@ -688,6 +701,17 @@ var HFR4K = {
             LocalMPStorage.updateMPStorage(LocalMPStorage.domains.lastRead);
         }));
 
+        // *************************************************************************************** //
+        // *** Ezzzi Draps *** //
+        // *************************************************************************************** //
+        taBody.appendChild(HFR4K.getCatSetting('Ezzzi Draps'));
+
+        // Setting LastRead Activation
+        taBody.appendChild(HFR4K.getCheckboxSetting('Activer ?', LocalMPStorage.datas.ezzziDrap.active, function(cb){
+            LocalMPStorage.datas.ezzziDrap.active = !LocalMPStorage.datas.ezzziDrap.active;
+            cb.checked = LocalMPStorage.datas.ezzziDrap.active;
+            LocalMPStorage.updateMPStorage(LocalMPStorage.domains.ezzziDrap);
+        }));
 
         // FIRE IN THE HOLE !!!
         elementAfter.parentNode.insertBefore(table, elementAfter);
@@ -1203,6 +1227,67 @@ var HFR4K = {
                     }
                 });
             }
+        }
+    },
+    renderEasyFlags: function(){
+        // **********
+        // HFR4K_GM
+        // Bigger flag cell, all clickable (CTRL+Click or mollette click to open in a new tab)
+        // Double click on topic's name open the drapal
+        // **********
+
+        // Reset
+        document.querySelectorAll('.hfr4kEzzziDrap').forEach(function(item){
+            HFRGMUtils.removeClassesFromElement(item, ['hfr4kEzzziDrap']);
+        });
+
+        if(LocalMPStorage.datas.ezzziDrap.active && (HFRGMUtils.pageCheck.isOnStars() || HFRGMUtils.pageCheck.isOnCyans() || HFRGMUtils.pageCheck.isOnRead() || HFRGMUtils.pageCheck.isOnCat())){
+            document.querySelectorAll('tr.sujet.ligne_booleen').forEach(function(topic){
+                // For each displayed topic row
+                if(!topic.classList.contains('hiddenFav')){
+                    let caseDrapal = topic.querySelector('td.sujetCase5');
+                    // Get the drapal cell and check it has a drapal
+                    if(caseDrapal && caseDrapal.querySelector('a')){
+                        // Get drapal's URL
+                        let drapURL = caseDrapal.querySelector('a').href;
+                        // Add special style
+                        caseDrapal.classList.add('hfr4kEzzziDrap');
+                        // Handle click
+                        caseDrapal.onclick = function(event){
+                            if(event.ctrlKey){
+                                // Ctrl + Click : Open in a new tab
+                                GM.openInTab(drapURL);
+                                // We do this but it's useless
+                                event.preventDefault();
+                                event.stopPropagation();
+                                return false;
+                            }else{
+                                // Click : Open in current tab
+                                document.location.href = drapURL;
+                                return false;
+                            }
+                        };
+                        // Handle "mollette" click
+                        caseDrapal.onauxclick = function(event){
+                            if(event.button === 1){
+                                GM.openInTab(drapURL);
+                                // We do this but it's useless
+                                event.preventDefault();
+                                event.stopPropagation();
+                                return false;
+                            }
+                        };
+                        // Handle double click on topic name
+                        let topicName = topic.querySelector('td.sujetCase3');
+                        if(topicName){
+                            topicName.removeAttribute('ondblclick');
+                            topicName.ondblclick = function(){
+                                document.location.href = drapURL;
+                            };
+                        }
+                    }
+                }
+            });
         }
     }
 };

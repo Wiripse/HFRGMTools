@@ -94,7 +94,23 @@ Basé sur _[HFR] Last Post Highlight_ de [Roger21](http://roger21.free.fr/hfr/).
 * Activer/désactiver l'option
 * Choisir la couleur de la ligne
 
+### Ezzzi Draps
+
+Affichage plus large des drapeaux pour un clic plus facile.
+
+Double-click sur le titre du topic ouvre aussi le drapeau.
+
+Basé sur _[HFR] Drapal Easy Click_ de [Roger21](http://roger21.free.fr/hfr/).
+
+#### Paramètres
+
+* Activer/désactiver l'option
+
 ## Changelog
+
+### 2019.10.6.1
+
+Ezzzi Draps.
 
 ### 2019.10.6.0
 
