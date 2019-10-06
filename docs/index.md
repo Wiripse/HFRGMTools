@@ -83,7 +83,22 @@ Basé sur _[HFR] Ego Posts_ de [n0m1s](https://github.com/TheMrNomis/HFR-scripts
 * Activer/désactiver l'option
 * Choisir la couleur des posts
 
+### Last Read
+
+Affichage d'un marqueur sous le dernier post lu d'un topic.
+
+Basé sur _[HFR] Last Post Highlight_ de [Roger21](http://roger21.free.fr/hfr/).
+
+#### Paramètres
+
+* Activer/désactiver l'option
+* Choisir la couleur de la ligne
+
 ## Changelog
+
+### 2019.10.6.0
+
+Last Read.
 
 ### 2019.10.5.3
 
