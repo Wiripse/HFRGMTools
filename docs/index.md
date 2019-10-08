@@ -22,7 +22,11 @@ Pour connaître la version installée, chercher la phrase _Enhanced by HFR4K_ da
 
 ### Mise à jour
 
-Lorsque le script aura été mis à jour automatiquement par l'extension, un message s'affichera au dessus de la liste des drapeaux.
+Le script devrait être automatiquement mis à jour par l'extension.
+
+Pour forcer la mise à jour, passer par le menu contextuel :
+
+![force upgrade TM](https://www.pctr.fr/images/5qbV.png)
 
 ### Settings
 
@@ -39,7 +43,7 @@ Il se présente sous la forme d'une enveloppe. Lorsqu'il existe un MP non lu, l'
 
 ### SuperFavoris
 
-Permet de gérer trois états distincts entre les topics favoris :
+Permet de gérer trois états distincts entre les topics favoris via leur icône :
 
 * Simple favori (par défaut/icône oeil)
 * Super favori (clic-droit/icône coeur et surlignage)
@@ -53,12 +57,98 @@ Lorsque l'option est activée, un onglet est ajouté afin de filtrer les favoris
 #### Paramètres
 
 * Activer/désactiver l'option
+* Verrouiller l'état des favoris (affichage des icônes standard et clics désactivés)
+* Afficher/Masquer les catégories vides (mode compact)
 * Choisir la couleur d'un super favori
 * Choisir la couleur d'un super favori lorsque l'on passe dessus
 * Choisir la couleur d'un favori simple
 * Choisir la couleur d'un favori simple lorsque l'on passe dessus
 
+### EgoQuote
+
+Mettre en avant via une couleur spéciale les citations des posts de l'utilisateur. 
+
+Basé sur _[HFR] Ego Quote_ de [Roger21](http://roger21.free.fr/hfr/).
+
+#### Paramètres
+
+* Activer/désactiver l'option
+* Choisir la couleur des quotes
+* Colorer uniquement les quotes/tout le post contenant le(s) quote(s)
+
+### EgoPost
+
+Mettre en avant via une couleur spéciale les posts de l'utilisateur. 
+
+Basé sur _[HFR] Ego Posts_ de [n0m1s](https://github.com/TheMrNomis/HFR-scripts/).
+
+#### Paramètres
+
+* Activer/désactiver l'option
+* Choisir la couleur des posts
+
+### Last Read
+
+Affichage d'un marqueur sous le dernier post lu d'un topic.
+
+Basé sur _[HFR] Last Post Highlight_ de [Roger21](http://roger21.free.fr/hfr/).
+
+#### Paramètres
+
+* Activer/désactiver l'option
+* Choisir la couleur de la ligne
+
+### Ezzzi Draps
+
+Affichage plus large des drapeaux pour un clic plus facile.
+
+Double-click sur le titre du topic ouvre aussi le drapeau.
+
+Basé sur _[HFR] Drapal Easy Click_ de [Roger21](http://roger21.free.fr/hfr/).
+
+#### Paramètres
+
+* Activer/désactiver l'option
+
+### Suppression rapide
+
+Ajoute un bouton à la toolbar des posts de l'utilisateur pour les supprimer en un clic.
+
+Basé sur _[HFR] Suppression rapide de posts_ de [Toyonos](http://toyonos.info).
+
+#### Paramètres
+
+* Activer/désactiver l'option
+
 ## Changelog
+
+### 2019.10.6.2
+
+Message lorsqu'il existe un décalage de versions entre les machines de l'utilisateur.
+
+### 2019.10.6.1
+
+Ezzzi Draps. Suppression rapide.
+
+### 2019.10.6.0
+
+Last Read.
+
+### 2019.10.5.3
+
+EgoPost. Icône aide settings. Catégories compactes. Petits fixs.
+
+### 2019.10.5.2
+
+Mode lock des SuperFav. Fix EgoQuote citations trad oldschool.
+
+### 2019.10.5.1
+
+Option EgoQuote post complet. Fix EgoQuote citations traditionnelles. Refacto table settings.
+
+### 2019.10.5.0
+
+EgoQuote.
 
 ### 2019.10.4.2
 
