@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          [HFR] DTCloud
 // @author        Wiripse, PetitJean, Rucous
-// @version       2019.10.3.0
+// @version       2019.10.8.0
 // @description   Gestion des DT dans le 'cloud' de chaque user via MPStorage
 // @icon          http://reho.st/self/40f387c9f48884a57e8bbe05e108ed4bd59b72ce.png
 // @downloadURL   https://github.com/Wiripse/HFRGMTools/raw/master/DTCloud.user.js
@@ -25,10 +25,11 @@
 // @grant         GM_xmlhttpRequest
 // @grant         GM_registerMenuCommand
 // @grant         GM_openInTab
-// @require https://raw.githubusercontent.com/Wiripse/HFRGMTools/master/MPStorage.user.js?v=2019.10.3.0
+// @require https://raw.githubusercontent.com/Wiripse/HFRGMTools/master/MPStorage.user.js?v=2019.10.8.0
 // ==/UserScript==
 
 // Historique
+// 2019.10.8.0 : Fix pour init le LocalMPStorage avec gestion des multi-comptes.
 // 2019.10.3.0 : Fix pour ne pas supprimer la zone de notif si utilise aussi HFR4K.
 // 2019.9.19.0 : Option pour afficher ou non les mp comme catégorie.
 // 2019.8.5.0 : Fork du script de PetitJean et ajout gestion MPStorage
@@ -62,10 +63,8 @@ var LocalMPStorage = {
         // Init MPStorage multiMP data
         // RETURN a promise
         // **********
-
         return new Promise((resolve, reject) => {
             try {
-
                 // We try to recover existing MPStorage conf locally
                 Promise.all([
                     GM.getValue('mpStorage_username', void 0),
@@ -76,38 +75,15 @@ var LocalMPStorage = {
                     mpStorage_mpId,
                     mpStorage_mpRepId
                 ]){
-
-                    // We have the conf locally
-                    if(!!mpStorage_username && !!mpStorage_mpId && !!mpStorage_mpRepId){
-
-                        // We init the mpStorage lib with those datas
-                        mpStorage.username = mpStorage_username;
-                        mpStorage.mpId = mpStorage_mpId;
-                        mpStorage.mpRepId = mpStorage_mpRepId;
-                        mpStorage.initiated = true;
-
-                        // And we retrieve the MPStorage datas
-                        LocalMPStorage.getData(function(res){
-                            resolve(res);
-                        });
-                    }else{
-
-                        // We don't have the conf locally
-                        // We use mpStorage lib to init those datas
-                        mpStorage.initStorage(function(res){
-                            if(res){
-                                // We store them locally
-                                GM.setValue('mpStorage_username', mpStorage.username);
-                                GM.setValue('mpStorage_mpId', mpStorage.mpId);
-                                GM.setValue('mpStorage_mpRepId', mpStorage.mpRepId);
-
-                                // And we retrieve the MPStorage datas
-                                LocalMPStorage.getData(function(res){
-                                    resolve(res);
-                                });
-                            }
-                        });
-                    }
+                    // Init of localStorage from MPStorage
+                    mpStorage.initLocalStorage(mpStorage_username, mpStorage_mpId, mpStorage_mpRepId, function(dataz){
+                        // We save the result locally
+                        LocalMPStorage.flags = dataz.data.filter(function(d){return LocalMPStorage.version === d.version;})[0].mpFlags;
+                        GM.setValue('mpStorage_username', mpStorage.username);
+                        GM.setValue('mpStorage_mpId', mpStorage.mpId);
+                        GM.setValue('mpStorage_mpRepId', mpStorage.mpRepId);
+                        resolve();
+                    });
                 });
             } catch (e) {
                 reject(e);
@@ -166,207 +142,207 @@ var LocalMPStorage = {
 }
 
 if (!String.prototype.format) {
-  String.prototype.format = function() {
-    var args = arguments;
-    return this.replace(/{(\d+)}/g, function(match, number) {
-      return typeof args[number] != 'undefined'
-        ? args[number]
-        : match
-      ;
-    });
-  };
+    String.prototype.format = function() {
+        var args = arguments;
+        return this.replace(/{(\d+)}/g, function(match, number) {
+            return typeof args[number] != 'undefined'
+                ? args[number]
+            : match
+            ;
+        });
+    };
 }
 
 HTMLElement.prototype.incrementColspan = function() {
-	this.setAttribute ("colspan", (1 + parseInt (this.getAttribute ("colspan"))).toString());
+    this.setAttribute ("colspan", (1 + parseInt (this.getAttribute ("colspan"))).toString());
 };
 
 if (typeof GM_registerMenuCommand == 'undefined') {
-  GM_registerMenuCommand = (caption, commandFunc, accessKey) => {
-    if (!document.body) {
-      if (document.readyState === 'loading'
-        && document.documentElement && document.documentElement.localName === 'html') {
-        new MutationObserver((mutations, observer) => {
-          if (document.body) {
-            observer.disconnect();
-            GM_registerMenuCommand(caption, commandFunc, accessKey);
-          }
-        }).observe(document.documentElement, {childList: true});
-      } else {
-        console.error('GM_registerMenuCommand got no body.');
-      }
-      return;
-    }
-    let contextMenu = document.body.getAttribute('contextmenu');
-    let menu = (contextMenu ? document.querySelector('menu#' + contextMenu) : null);
-    if (!menu) {
-      menu = document.createElement('menu');
-      menu.setAttribute('id', 'gm-registered-menu');
-      menu.setAttribute('type', 'context');
-      document.body.appendChild(menu);
-      document.body.setAttribute('contextmenu', 'gm-registered-menu');
-    }
-    let menuItem = document.createElement('menuitem');
-    menuItem.textContent = caption;
-    menuItem.addEventListener('click', commandFunc, true);
-    menu.appendChild(menuItem);
-  };
+    GM_registerMenuCommand = (caption, commandFunc, accessKey) => {
+        if (!document.body) {
+            if (document.readyState === 'loading'
+                && document.documentElement && document.documentElement.localName === 'html') {
+                new MutationObserver((mutations, observer) => {
+                    if (document.body) {
+                        observer.disconnect();
+                        GM_registerMenuCommand(caption, commandFunc, accessKey);
+                    }
+                }).observe(document.documentElement, {childList: true});
+            } else {
+                console.error('GM_registerMenuCommand got no body.');
+            }
+            return;
+        }
+        let contextMenu = document.body.getAttribute('contextmenu');
+        let menu = (contextMenu ? document.querySelector('menu#' + contextMenu) : null);
+        if (!menu) {
+            menu = document.createElement('menu');
+            menu.setAttribute('id', 'gm-registered-menu');
+            menu.setAttribute('type', 'context');
+            document.body.appendChild(menu);
+            document.body.setAttribute('contextmenu', 'gm-registered-menu');
+        }
+        let menuItem = document.createElement('menuitem');
+        menuItem.textContent = caption;
+        menuItem.addEventListener('click', commandFunc, true);
+        menu.appendChild(menuItem);
+    };
 }
 
 function isGM4() {
-	if (typeof (GM) !== "object")
-		return false;
-	if (typeof (GM.info) !== "object")
-		return false;
-	return GM.info.scriptHandler == "Greasemonkey" && parseFloat(GM.info.version) >= 4;
+    if (typeof (GM) !== "object")
+        return false;
+    if (typeof (GM.info) !== "object")
+        return false;
+    return GM.info.scriptHandler == "Greasemonkey" && parseFloat(GM.info.version) >= 4;
 }
 
 function checkImage (uri, handler) {
-	var image = new Image();
-	image.onload = function() {
-		handler (true);
-	};
-	image.onerror = function() {
-		handler (false);
-	};
-	image.src = uri;
+    var image = new Image();
+    image.onload = function() {
+        handler (true);
+    };
+    image.onerror = function() {
+        handler (false);
+    };
+    image.src = uri;
 }
 
 var HFR = {
-	openInTab : function (href, background) {
-		if (isGM4())
-			GM.openInTab (href, background);
-		else
-			GM_openInTab (href, background);
-	},
-	request : function (object) {
-		if (isGM4())
-			GM.xmlHttpRequest (object);
-		else
-			GM_xmlhttpRequest (object);
-	},
-	setCookie : function (key, val) {
-		document.cookie = key + "=" + val;
-	},
-	getCookie : function (key) {
-		var array = document.cookie.split (";");
-		for (var i = 0; i < array.length; i++) {
-			var k = array[i].substring (0, array[i].indexOf ("=")).trim();
-			var v = array[i].substring (1 + array[i].indexOf ("="));
-			if (key == k)
-				return v;
-		}
-		return "";
-	},
-	setLocalValue : function (key, val) {
-		localStorage.setItem (key, val);
-	},
-	Uri : function (data) {
-		var link = document.createElement ("a");
-		link.href = data;
+    openInTab : function (href, background) {
+        if (isGM4())
+            GM.openInTab (href, background);
+        else
+            GM_openInTab (href, background);
+    },
+    request : function (object) {
+        if (isGM4())
+            GM.xmlHttpRequest (object);
+        else
+            GM_xmlhttpRequest (object);
+    },
+    setCookie : function (key, val) {
+        document.cookie = key + "=" + val;
+    },
+    getCookie : function (key) {
+        var array = document.cookie.split (";");
+        for (var i = 0; i < array.length; i++) {
+            var k = array[i].substring (0, array[i].indexOf ("=")).trim();
+            var v = array[i].substring (1 + array[i].indexOf ("="));
+            if (key == k)
+                return v;
+        }
+        return "";
+    },
+    setLocalValue : function (key, val) {
+        localStorage.setItem (key, val);
+    },
+    Uri : function (data) {
+        var link = document.createElement ("a");
+        link.href = data;
 
-		this.scheme = link.protocol;
-		this.host = link.hostname;
-		this.port = 0;
-		if (link.port.length > 0)
-			this.port = parseInt(link.port);
-		if (this.scheme == "http:"  && this.port == 0)
-			this.port = 80;
-		if (this.scheme == "https:"  && this.port == 0)
-			this.port = 443;
-		this.username = link.username;
-		this.password = link.password;
-		this.path = link.pathname;
-		this.parameters = {};
-		if (link.search !== null && link.search.length > 0) {
-			var q = link.search.substring(1);
-			var p = q.split('&');
-			for (var i = 0; i < p.length; i++) {
-				var k = p[i].split('=')[0];
-				if (p[i].indexOf('=') > 0)
-					this.parameters[k] = p[i].split('=')[1];
-				else
-					this.parameters[k] = null;
-			}
-		}
-		if (link.hash !== null)
-			this.fragment = link.hash.substring(1);
+        this.scheme = link.protocol;
+        this.host = link.hostname;
+        this.port = 0;
+        if (link.port.length > 0)
+            this.port = parseInt(link.port);
+        if (this.scheme == "http:"  && this.port == 0)
+            this.port = 80;
+        if (this.scheme == "https:"  && this.port == 0)
+            this.port = 443;
+        this.username = link.username;
+        this.password = link.password;
+        this.path = link.pathname;
+        this.parameters = {};
+        if (link.search !== null && link.search.length > 0) {
+            var q = link.search.substring(1);
+            var p = q.split('&');
+            for (var i = 0; i < p.length; i++) {
+                var k = p[i].split('=')[0];
+                if (p[i].indexOf('=') > 0)
+                    this.parameters[k] = p[i].split('=')[1];
+                else
+                    this.parameters[k] = null;
+            }
+        }
+        if (link.hash !== null)
+            this.fragment = link.hash.substring(1);
 
-		this.toString = function (b) {
-			var result = this.scheme + "//";
-			if (this.username != null && this.username.length > 0) {
-				result += this.username;
-				if (this.password != null && this.password.length > 0)
-					result += (":" + this.password);
-				result += "@";
-			}
-			result += this.host;
-			if (!(this.scheme == "http:" && this.port == 80 || this.scheme == "https:" && this.port == 443))
-				result += (":" + this.port);
-			if (this.path != "/")
-				result += this.path;
-			if (b == false)
-				return result;
-			var search = [];
-			for (var key in this.parameters) {
-				search.push (key + "=" + this.parameters[key]);
-			}
-			if (search.length > 0)
-				result += ("?" + search.join ("&"));
-			if (this.fragment != null && this.fragment.toString().length > 0)
-				result += ("#" + this.fragment);
-			return result;
-		}
-	},
-	setValue : function (key, data) {
-		if (!isGM4()) {
-			GM_setValue (key, data);
-			return;
-		}
-		if (typeof (data) === "object")
-			localStorage.setItem (GM.info.script.name + " :: " + key, JSON.stringify (data));
-		else
-			localStorage.setItem (GM.info.script.name + " :: " + key, data);
-	},
-	getValue : function (key) {
-		if (!isGM4())
-			return GM_getValue (key);
-		var rk = GM.info.script.name + " :: " + key;
-		var data = localStorage.getItem (rk);
-		try {
-			var obj = JSON.parse (data);
-			return obj;
-		}
-		catch(e) {}
-		return data;
-	},
-	getProfile : function (html) {
-		var profile = {};
-		var doc = new DOMParser().parseFromString (html, "text/html");
-		for (var i = 0; i < doc.querySelectorAll (".profilCase2").length; i++) {
-			var case2 = doc.querySelectorAll (".profilCase2").item (i);
-			var c2 = case2.textContent.trim();
-			var c3 = case2.nextElementSibling.textContent.trim();
-			var c3_html = case2.nextElementSibling.innerHTML.trim();
-			if (c2.startsWith ("Citation personnelle") && c3 != "Vous n'avez pas accès à cette information" && c3.trim().length > 0)
-				profile.quote = c3_html;
-			if (c2.startsWith ("Signature des messages") && c3 != "Vous n'avez pas accès à cette information" && c3.trim().length > 0)
-				profile.signature = c3_html;
-		}
-		return profile;
-	},
-	findProfile : function (pseudo, user_data, callback) {
-		HFR.request ({
-			method : "GET",
-			url : "https://forum.hardware.fr/profilebdd.php?config=hfr.inc&pseudo=" + encodeURIComponent (pseudo),
-			context : user_data,
-			onload : function (response) {
-				if (this.context != null)
-					user_data = this.context;
-				callback (user_data, HFR.getProfile (response.responseText));
-			}
-		});
-	}
+        this.toString = function (b) {
+            var result = this.scheme + "//";
+            if (this.username != null && this.username.length > 0) {
+                result += this.username;
+                if (this.password != null && this.password.length > 0)
+                    result += (":" + this.password);
+                result += "@";
+            }
+            result += this.host;
+            if (!(this.scheme == "http:" && this.port == 80 || this.scheme == "https:" && this.port == 443))
+                result += (":" + this.port);
+            if (this.path != "/")
+                result += this.path;
+            if (b == false)
+                return result;
+            var search = [];
+            for (var key in this.parameters) {
+                search.push (key + "=" + this.parameters[key]);
+            }
+            if (search.length > 0)
+                result += ("?" + search.join ("&"));
+            if (this.fragment != null && this.fragment.toString().length > 0)
+                result += ("#" + this.fragment);
+            return result;
+        }
+    },
+    setValue : function (key, data) {
+        if (!isGM4()) {
+            GM_setValue (key, data);
+            return;
+        }
+        if (typeof (data) === "object")
+            localStorage.setItem (GM.info.script.name + " :: " + key, JSON.stringify (data));
+        else
+            localStorage.setItem (GM.info.script.name + " :: " + key, data);
+    },
+    getValue : function (key) {
+        if (!isGM4())
+            return GM_getValue (key);
+        var rk = GM.info.script.name + " :: " + key;
+        var data = localStorage.getItem (rk);
+        try {
+            var obj = JSON.parse (data);
+            return obj;
+        }
+        catch(e) {}
+        return data;
+    },
+    getProfile : function (html) {
+        var profile = {};
+        var doc = new DOMParser().parseFromString (html, "text/html");
+        for (var i = 0; i < doc.querySelectorAll (".profilCase2").length; i++) {
+            var case2 = doc.querySelectorAll (".profilCase2").item (i);
+            var c2 = case2.textContent.trim();
+            var c3 = case2.nextElementSibling.textContent.trim();
+            var c3_html = case2.nextElementSibling.innerHTML.trim();
+            if (c2.startsWith ("Citation personnelle") && c3 != "Vous n'avez pas accès à cette information" && c3.trim().length > 0)
+                profile.quote = c3_html;
+            if (c2.startsWith ("Signature des messages") && c3 != "Vous n'avez pas accès à cette information" && c3.trim().length > 0)
+                profile.signature = c3_html;
+        }
+        return profile;
+    },
+    findProfile : function (pseudo, user_data, callback) {
+        HFR.request ({
+            method : "GET",
+            url : "https://forum.hardware.fr/profilebdd.php?config=hfr.inc&pseudo=" + encodeURIComponent (pseudo),
+            context : user_data,
+            onload : function (response) {
+                if (this.context != null)
+                    user_data = this.context;
+                callback (user_data, HFR.getProfile (response.responseText));
+            }
+        });
+    }
 };
 
 LocalMPStorage.initMultiMPStorage().then(function(){
@@ -390,7 +366,7 @@ LocalMPStorage.initMultiMPStorage().then(function(){
         HFR.setValue ("hfr-multimp-notification-text", "");
     }
     if (typeof HFR.getValue ("hfr-multimp-affichage-cat") != "string")
-		HFR.setValue ("hfr-multimp-affichage-cat", "oui");
+        HFR.setValue ("hfr-multimp-affichage-cat", "oui");
 
     GM_registerMenuCommand("[HFR] Multi MP -> Affichage des signatures & statuts", function() {
         var param = prompt ("Afficher les signatures et les statuts ? (tapez \"non\" ou \"oui\")", HFR.getValue ("hfr-multimp-affichage-signatures", "non"));
@@ -430,13 +406,13 @@ LocalMPStorage.initMultiMPStorage().then(function(){
                 mp_notif.textContent = text.format (nb);
         }
     });
-    
+
     GM_registerMenuCommand("[HFR] Multi MP -> Affichage de la catégorie", function() {
-      var param = prompt ("Afficher la catégorie MP ? (tapez \"non\" ou \"oui\")", HFR.getValue ("hfr-multimp-affichage-cat", "oui"));
-      var force = "non";
-      if (param == "oui")
-        force = "oui";
-      HFR.setValue ("hfr-multimp-affichage-cat", force);
+        var param = prompt ("Afficher la catégorie MP ? (tapez \"non\" ou \"oui\")", HFR.getValue ("hfr-multimp-affichage-cat", "oui"));
+        var force = "non";
+        if (param == "oui")
+            force = "oui";
+        HFR.setValue ("hfr-multimp-affichage-cat", force);
     });
 
     document.icons_theme = document.querySelector("#md_arbo_tree_1 > img:nth-child(1)").getAttribute("src").split("/")[5];
@@ -472,8 +448,8 @@ LocalMPStorage.initMultiMPStorage().then(function(){
     }
 
     function fill_table(category, mode, fp) {
-		if (HFR.getValue ("hfr-multimp-affichage-cat") != "oui")
-			return;
+        if (HFR.getValue ("hfr-multimp-affichage-cat") != "oui")
+            return;
         if (fp != true && !mpStorage.storageData.data.filter(function(d){return LocalMPStorage.version === d.version;})[0].hfr4k) {
             // Dirty tmp fix to avoid fucking with HFR4K notification system
             var tr = document.querySelector (".none tr");
