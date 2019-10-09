@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          [HFR] ListeNoire LaMer
-// @version       2019.8.5.0
+// @version       2019.10.9.0
 // @namespace     forum.hardware.fr
 // @description   Permet de filtrer les posts des utilisateurs avec stockage en MPStorage
 // @icon          https://reho.st/self/40f387c9f48884a57e8bbe05e108ed4bd59b72ce.png
@@ -18,7 +18,7 @@
 // @grant         GM_getValue
 // @grant         GM.setValue
 // @grant         GM_setValue
-// @require https://raw.githubusercontent.com/Wiripse/HFRGMTools/master/MPStorage.user.js
+// @require https://raw.githubusercontent.com/Wiripse/HFRGMTools/master/MPStorage.user.js?v=2019.10.9.0
 // ==/UserScript==
 
 /*
@@ -27,6 +27,7 @@ Si c'est gratuit, c'est toi le produit ?
 
 
 // Historique :
+// 2019.10.9.0 : Fix init MPStorage gestion multi-comptes
 // 2019.8.5.0 :
 // - Fork et ajout de la gestion du MPStorage
 
@@ -63,7 +64,6 @@ var LocalMPStorage = {
 
         return new Promise((resolve, reject) => {
             try {
-
                 // We try to recover existing MPStorage conf locally
                 Promise.all([
                     GM.getValue('mpStorage_username', void 0),
@@ -74,40 +74,15 @@ var LocalMPStorage = {
                     mpStorage_mpId,
                     mpStorage_mpRepId
                 ]){
-
-                    // We have the conf locally
-                    if(!!mpStorage_username && !!mpStorage_mpId && !!mpStorage_mpRepId){
-
-                        // We init the mpStorage lib with those datas
-                        mpStorage.username = mpStorage_username;
-                        mpStorage.mpId = mpStorage_mpId;
-                        mpStorage.mpRepId = mpStorage_mpRepId;
-                        mpStorage.initiated = true;
-
-                        // And we retrieve the MPStorage datas
-                        LocalMPStorage.getData(function(res){
-                            resolve(res);
-                        });
-
-                        // TODO Wiripse Gestion cache local ?
-                    }else{
-
-                        // We don't have the conf locally
-                        // We use mpStorage lib to init those datas
-                        mpStorage.initStorage(function(res){
-                            if(res){
-                                // We store them locally
-                                GM.setValue('mpStorage_username', mpStorage.username);
-                                GM.setValue('mpStorage_mpId', mpStorage.mpId);
-                                GM.setValue('mpStorage_mpRepId', mpStorage.mpRepId);
-
-                                // And we retrieve the MPStorage datas
-                                LocalMPStorage.getData(function(res){
-                                    resolve(res);
-                                });
-                            }
-                        });
-                    }
+                    // Init of localStorage from MPStorage
+                    mpStorage.initLocalStorage(mpStorage_username, mpStorage_mpId, mpStorage_mpRepId, function(dataz){
+                        // We save the result locally
+                        LocalMPStorage.blacklist = dataz.data.filter(function(d){return LocalMPStorage.version === d.version;})[0].blacklist;
+                        GM.setValue('mpStorage_username', mpStorage.username);
+                        GM.setValue('mpStorage_mpId', mpStorage.mpId);
+                        GM.setValue('mpStorage_mpRepId', mpStorage.mpRepId);
+                        resolve();
+                    });
                 });
             } catch (e) {
                 reject(e);
