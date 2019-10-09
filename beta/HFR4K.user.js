@@ -334,6 +334,13 @@ var HFRGMUtils = {
         catch(error) {
             return -1;
         }
+    },
+    isPseudoBlacklisted: function(pseudo){
+        // **********
+        // HFR4K_GM
+        // Check if user is blacklisted (based en MPStorage datas)
+        // **********
+        return LocalMPStorage.datas.blacklist.list.filter(function(d){ return pseudo === HFRGMUtils.getSimplePseudo(d.username);}).length > 0;
     }
 };
 
@@ -583,6 +590,9 @@ var HFR4K = {
 
         // EgoPosts
         HFR4K.renderEgoPosts();
+
+        // ListeNoire
+        // HFR4K.renderListeNoire();
 
         // FastDelete
         HFR4K.functionRenderFastDelete();
@@ -1407,6 +1417,121 @@ var HFR4K = {
                 });
             }
         }
+    },
+    renderListeNoire: function(){
+
+        // TODO CONDITION ACTIVATION/CHECK PAGE
+
+        // Clean
+        document.querySelectorAll('hfr4kHiddenPost').forEach(function(hiddenPost){
+            hiddenPost.classList.remove('hfr4kHiddenPost');
+        });
+
+
+        // Hide messages
+        document.querySelectorAll('tr.message').forEach(function(post){
+            let pseudo = HFRGMUtils.getSimplePseudo(post.querySelector('b.s2').textContent);
+            if(HFRGMUtils.isPseudoBlacklisted(pseudo)){
+                // Hide the post
+                post.classList.add('hfr4kHiddenPost');
+                // TODO : Add a special class when displaying a hidden post ?
+
+                // Create an empty row to replace the hidden message
+                let emptyRow = document.createElement('tr');
+                let colERow = document.createElement('td');
+                let pERow = this.document.createElement('p');
+                pERow.setAttribute('style', 'font-size:8pt');
+                pERow.appendChild(document.createTextNode(pseudo + ' a été bloqué - '));
+                let aERow = this.document.createElement('a');
+                aERow.setAttribute('href', 'javascript:void(null);');
+                aERow.appendChild(this.document.createTextNode('Afficher le message'));
+                aERow.onclick = function(event) {
+                    event.preventDefault();
+                    // Show the message
+                    post.classList.remove('hfr4kHiddenPost');
+                    // Hide the empty row
+                    emptyRow.classList.add('hfr4kHiddenPost');
+                };
+                pERow.appendChild(aERow);
+                colERow.appendChild(pERow);
+                emptyRow.appendChild(colERow);
+                post.parentElement.insertBefore(emptyRow, post);
+            }
+        });
+
+        // Hide quotes
+        document.querySelectorAll('a.Topic').forEach(function(quoteLink){
+            let pseudo = HFRGMUtils.getSimplePseudo(quoteLink.textContent.split(' a écrit')[0]);
+            if(quoteLink.textContent.split(' a écrit').length === 2 && HFRGMUtils.isPseudoBlacklisted(pseudo) &&
+               (quoteLink.closest('table.citation') || quoteLink.closest('table.oldcitation'))){
+
+                let quote = quoteLink.closest('table.citation') || quoteLink.closest('table.oldcitation');
+                // Hide quote
+                quote.classList.add('hfr4kHiddenPost');
+                // TODO : Add a special class when displaying a hidden quote ?
+
+                // Create empty quote
+                let emptyQuote = document.createElement('table');
+                emptyQuote.classList.add(quote.classList.contains('citation') ? 'citation' : 'oldcitation');
+                let rowEQ = document.createElement('tr');
+                rowEQ.setAttribute('class', 'none');
+                let colEQ = document.createElement('td');
+                let pEQ = document.createElement('p');
+                pEQ.setAttribute('class', 's1');
+                pEQ.appendChild(document.createTextNode(pseudo + ' a été bloqué '));
+                let aEQ = document.createElement('a');
+                aEQ.setAttribute('href', 'javascript:void(null);');
+                aEQ.appendChild(document.createTextNode('Afficher la citation'));
+                aEQ.onclick = function(event) {
+                    event.preventDefault();
+                    // Show quote
+                    quote.classList.remove('hfr4kHiddenPost');
+                    // Hide empty quote
+                    emptyQuote.classList.add('hfr4kHiddenPost');
+                };
+                pEQ.appendChild(aEQ);
+                colEQ.appendChild(pEQ);
+                rowEQ.appendChild(colEQ);
+                emptyQuote.appendChild(rowEQ);
+                quote.parentElement.insertBefore(emptyQuote, quote);
+            }
+        });
+        // Hide weird quotes
+        document.querySelectorAll('b.s1').forEach(function(quoteLink){
+            let pseudo = HFRGMUtils.getSimplePseudo(quoteLink.textContent.split(' a écrit')[0]);
+            if(quoteLink.textContent.split(' a écrit').length === 2 && HFRGMUtils.isPseudoBlacklisted(pseudo) && quoteLink.closest('table.oldcitation')){
+                let quote = quoteLink.closest('table.oldcitation');
+                // Hide quote
+                quote.classList.add('hfr4kHiddenPost');
+                // TODO : Add a special class when displaying a hidden quote ?
+
+                // Create empty quote
+                let emptyQuote = document.createElement('table');
+                emptyQuote.classList.add('oldcitation');
+                let rowEQ = document.createElement('tr');
+                rowEQ.setAttribute('class', 'none');
+                let colEQ = document.createElement('td');
+                let pEQ = document.createElement('p');
+                pEQ.setAttribute('class', 's1');
+                pEQ.appendChild(document.createTextNode(pseudo + ' a été bloqué '));
+                let aEQ = document.createElement('a');
+                aEQ.setAttribute('href', 'javascript:void(null);');
+                aEQ.appendChild(document.createTextNode('Afficher la citation'));
+                aEQ.onclick = function(event) {
+                    event.preventDefault();
+                    // Show quote
+                    quote.classList.remove('hfr4kHiddenPost');
+                    // Hide empty quote
+                    emptyQuote.classList.add('hfr4kHiddenPost');
+                };
+                pEQ.appendChild(aEQ);
+                colEQ.appendChild(pEQ);
+                rowEQ.appendChild(colEQ);
+                emptyQuote.appendChild(rowEQ);
+                quote.parentElement.insertBefore(emptyQuote, quote);
+            }
+        });
+
     }
 };
 
