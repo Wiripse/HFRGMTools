@@ -120,7 +120,24 @@ Basé sur _[HFR] Suppression rapide de posts_ de [Toyonos](http://toyonos.info).
 
 * Activer/désactiver l'option
 
+### Liste Noire
+
+Masquer les posts d'utilisateurs nuisibles.
+
+Une icône permettant d'ajouter/supprimer un utilisateur à la liste est inséré à chaque post à côté du pseudo de l'auteur.
+
+Basé sur _[HFR] Black List mod_r21_ de [Roger21](http://roger21.free.fr/hfr/).
+
+#### Paramètres
+
+* Activer/désactiver l'option
+* Gérer la liste
+
 ## Changelog
+
+### 2019.10.12.0
+
+Liste Noire V1.
 
 ### 2019.10.6.2
 

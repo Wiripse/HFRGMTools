@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          [BETA] HFR4K
 // @author        Wiripse
-// @version       2019.10.6.2
+// @version       2019.10.12.0
 // @description   HFR en mieux
 // @namespace     https://wiripse.github.io/HFRGMTools/
 // @icon          data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAQAAAAAYLlVAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAAHdElNRQfjCgIILBJ4Jlj4AAAEPUlEQVRo3u3YfWjVVRgH8M91c9MWmWYyNaVGFOZL+VLqRJl2TcawLCJJLDN8KSWEElKwtH/UIhPJZiJCIIlmIKJk6rImaa6maVqCqFmoufLdfNna/PWHP+92U3fvxrb+8H7PH79znnt+z/N9nuf8znnOJYUUUrjVEUFPr8gB33lb1BRzbUWeN6U3ou1DCu1msApBrLW1QeBzsLaGvHFahbx0czVXYZtKbHPCe8rNB+9Lb8QIpMuVYQ7lAvMaMdA3xzyBy+kycB6TjWhC46sVOo/M6hB/IKMJCQxUeLVTTSADhxxqAuM5cmReG8QvsmVmNQGBWWZWD5o1gcFakSKQIlCfrbaNYTrjgDUqQ1lrwzW33rHYrB5yHbVBRUMTyLVKh7C/W54z6GGDbJR71jpkWmCCCErkO12burqmYIiNMfM87C3woWyQaYlMnWwxUQT0NbV2hXUjkG+dLFXGaibTD+iPjgZhvteRbaxSj2GrLvagX8MRGGG1lv7xvE8EKrTFX4iCle4Ai7TDR4YYrAt+bygCz/lMpgojrQL3uw/FIYHTSkMiXDLGVIsVSnc+0VGfLIFRPtXcRcOVWmgEhoJNIqL42m36gsMGKPatl3DUE/Y2BIEJlkl3wZMO2GKywtDvMnt1k40iraRhoz7uUqo3tuhteyLVyRCY5GPNnDXUEcXuxUFp8lAkCAO/yRHPeFmBcb7UFgs8riyx8sT7wDRzcNIwh+0NP7civbVBUZiKww5gjWtH7UXjLU8qtgkjUGA2ygy2Q6fQfGBt6HeRDIOwKTa/I5idrPnEBMaLOCXPHuwywjTTFNgpin2OyJUVRuIpW40xQxmmeSBZAolS0BLn5LgHXLDDQb/KkhuajeKKzSZaJOJRA71ovdut0F95chQCgVk1nvF49brLxCWd5QsEhqNEoFTEsfDX37T2rkAQ3i1uhFkCwbVnohQsttCVOEkLLURRqVhrvVGkm/b4Hp0tMkMJpuiajP+JCFzxmrv1Cds6lNkvihLnPCQNxeGm9IJ1GGmM0YgoSIZAMsfxKafC3kG0sVwPbMDf4A0P4qD9xtqlowXW4up1JwnUvgbi0d3FMNentAdbYmtjPMhTHo6Pa3sTLXVaA/HYI982JxUZ4g/wtKVOOGCSJeAb+bb50xeiTjRUCmqi2IC48UnjjIuTbLa5Lgr/96I0RSBFIP4ryInVdQ2Fy7arRLpH7FKpne7hP3Ix1NyIGqMtBIUCC2U5EZNftxH90qiRDmLOXkWsVK1OQa5e0hrc8CUlYIqlflKpq+4iquy8NiHiqA62m/mfQ7c2VPnRmRvI79SzDi40845+jrGgHnm9ca3/cz00zSfLynq8eH2x0a0eWlbIunqHzdYl6eC1sVyas3aqqiFN00srVUbFaofEidzneNIJi8P0m3o0ve7KIvWiEDU6vAFU46hlvqqfRymkkMKtjX8BU3kXUDClbEwAAAAldEVYdGRhdGU6Y3JlYXRlADIwMTktMTAtMDJUMDg6NDQ6MTgrMDA6MDAqoU1GAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE5LTEwLTAyVDA4OjQ0OjE4KzAwOjAwW/z1+gAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAAASUVORK5CYII=
@@ -20,6 +20,7 @@
 // ==/UserScript==
 
 // Historique
+// 2019.10.12.0 : Liste Noire V1.
 // 2019.10.6.2 : Message lorsqu'il existe un décalage de versions entre les machines de l'utilisateur.
 // 2019.10.6.1 : Ezzzi Draps. Suppression Rapide.
 // 2019.10.6.0 : Last Read.
@@ -44,7 +45,7 @@
 // 2019.9.30.1 : Fix pour que ça fonctionne aussi dans les drapals de catégories
 // 2019.9.30.0 : Premier jet
 
-const version = '2019.10.6.2';
+const version = '2019.10.12.0';
 
 //**********************************************************************//
 //************************* GM/VM/TM/FDP SHIT **************************//
@@ -206,6 +207,9 @@ var HFRGMUtils = {
         }
         if(!LocalMPStorage.datas.fastDelete){
             LocalMPStorage.datas.fastDelete = { active : false};
+        }
+        if(!LocalMPStorage.datas.blacklist){
+            LocalMPStorage.datas.blacklist = { active : false, list: []};
         }
     },
     isNewVersion: function(){
@@ -561,7 +565,7 @@ var HFR4K = {
         style.appendChild(document.createTextNode('.hfr4kLastReadPost { border-bottom: dashed 0.5rem '+LocalMPStorage.datas.lastRead.color+'; }'));
         style.appendChild(document.createTextNode('.hfr4kEzzziDrap { width: 5% !important; cursor: pointer; }'));
         style.appendChild(document.createTextNode('.hfr4kHiddenPost { display : none; }'));
-        style.appendChild(document.createTextNode('.hfr4kModal { display : none; position: fixed; z-index: 1; padding-top: 100px; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.4);}'));
+        style.appendChild(document.createTextNode('.hfr4kModal { display : none; position: fixed; z-index: 1; padding-top: 100px; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);}'));
         style.appendChild(document.createTextNode('.hfr4kModalContent { background-color: #fefefe; margin: auto; padding: 20px; border: 1px solid #888;  width: 50%;}'));
         document.head.appendChild(style);
 
@@ -598,7 +602,6 @@ var HFR4K = {
                 modal.style.display = 'none';
             }
         }
-
 
         // Check version to display a message if necessary
         if(HFRGMUtils.isNewVersion()){
@@ -874,6 +877,14 @@ var HFR4K = {
             LocalMPStorage.updateMPStorage(LocalMPStorage.domains.blacklist);
         }));
 
+        // Manage Liste Noire content
+        let linkBLTable = document.createElement('p');
+        linkBLTable.appendChild(document.createTextNode('Gérer la Liste Noire'));
+        linkBLTable.style.cursor = 'pointer';
+        linkBLTable.onclick = function(){
+            HFR4K.renderBlacklistTable();
+        };
+        taBody.appendChild(HFR4K.getCustomSetting('Gestion Liste Noire', linkBLTable));
 
         // FIRE IN THE HOLE !!!
         elementAfter.parentNode.insertBefore(table, elementAfter);
@@ -962,6 +973,27 @@ var HFR4K = {
         colVal.appendChild(HFR4K.getLinkColorTable());
         rowColor.appendChild(colVal);
         return rowColor;
+    },
+    getCustomSetting: function(label, content){
+        // **********
+        // HFR4K_GM
+        // Create a custom setting row
+        // label : Label at the left
+        // content : Element of content
+        // **********
+        var rowCustom = document.createElement('tr');
+        rowCustom.classList.add('sujet', 'ligne_booleen', 'cBackCouleurTab3', 'hfr4kSettingRow');
+        var colTitle = document.createElement('td');
+        colTitle.setAttribute('scope', 'row');
+        colTitle.classList.add('sujetCase3', 'hfr4kLabelSettingItem');
+        colTitle.innerHTML = '<span class="cCatTopic">'+label+'</span>';
+        rowCustom.appendChild(colTitle);
+        var colVal = document.createElement('td');
+        colVal.setAttribute('scope', 'row');
+        colVal.classList.add('sujetCase3', 'hfr4kLabelSettingItem');
+        colVal.appendChild(content);
+        rowCustom.appendChild(colVal);
+        return rowCustom;
     },
     getLinkColorTable: function(){
         // **********
@@ -1716,6 +1748,60 @@ var HFR4K = {
             });
 
         }
+    },
+    renderBlacklistTable: function(){
+        // **********
+        // HFR4K_GM
+        // Render BL Table to manage content in a modal
+        // **********
+
+        // Main div
+        let cont = document.createElement('div');
+
+        // Title
+        let pTitle = document.createElement('p');
+        pTitle.appendChild(document.createTextNode('Gestion Liste Noire'));
+        cont.appendChild(pTitle);
+
+        // Sort the blacklist content on username
+        let sortedBList = LocalMPStorage.datas.blacklist.list.sort(function(a, b){
+            return HFRGMUtils.getSimplePseudo(a.username) > HFRGMUtils.getSimplePseudo(b.username) ? 1 : (HFRGMUtils.getSimplePseudo(a.username) < HFRGMUtils.getSimplePseudo(b.username) ? -1 : 0);
+        });
+
+        // Table with usernames
+        let tableCont = document.createElement('table');
+        // Fill table with usernames
+        for(let user of sortedBList) {
+            let rowPseudo = document.createElement('tr');
+            rowPseudo.setAttribute('title', 'Retirer ' + user.username + ' de la Liste Noire');
+            // Username
+            let colPseudo = document.createElement('td');
+            colPseudo.style.verticalAlign ='bottom';
+            colPseudo.appendChild(document.createTextNode(user.username));
+            colPseudo.style.cursor = 'default';
+            rowPseudo.appendChild(colPseudo);
+
+            // Icon to remove user from BL
+            let tdIcon = document.createElement('td');
+            tdIcon.style.textAlign = 'right';
+            let iconDelete = document.createElement('img');
+            iconDelete.setAttribute('src', HFRGMUtils.icons.uncheck);
+            iconDelete.style.cursor = 'pointer';
+            iconDelete.style.marginLeft = '8px';
+            iconDelete.onclick = function() {
+                // Remove from BL
+                HFRGMUtils.removeFromBlacklist(user.username);
+                // Remove from the current table
+                rowPseudo.parentNode.removeChild(rowPseudo);
+            };
+            tdIcon.appendChild(iconDelete);
+            rowPseudo.appendChild(tdIcon);
+            tableCont.appendChild(rowPseudo);
+        }
+        cont.appendChild(tableCont);
+
+        // Open modal with the content
+        HFR4K.renderModal(cont);
     }
 };
 
