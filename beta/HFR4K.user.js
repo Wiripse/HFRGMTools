@@ -1492,7 +1492,7 @@ var HFR4K = {
                         caseDrapal.classList.add('hfr4kEzzziDrap');
                         // Handle click
                         caseDrapal.onclick = function(event){
-                            if(event.ctrlKey){
+                            if(event.ctrlKey || event.metaKey){
                                 // Ctrl + Click : Open in a new tab
                                 GM.openInTab(drapURL);
                                 // We do this but it's useless
