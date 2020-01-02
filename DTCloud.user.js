@@ -693,7 +693,12 @@ LocalMPStorage.initMultiMPStorage().then(function(){
     if (document.location.href.indexOf("https://forum.hardware.fr/forum2.php") === 0) {
         if (document.uri.parameters.cat != "prive")
             return;
-
+        var pseudos = {};
+        document.querySelectorAll (".messCase1 > div > .s2").forEach (e => {
+            pseudos[e.textContent] = e.textContent;
+        });
+        if (Object.keys(pseudos).length < 3)
+            return;
         var hop = document.forms.hop;
         document.uri.parameters.post = parseInt(hop.querySelector ("[name='post']").value);
         document.uri.parameters.page = parseInt(hop.querySelector ("[name='page']").value);
