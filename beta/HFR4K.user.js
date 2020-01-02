@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          [BETA] HFR4K
 // @author        Wiripse
-// @version       2019.10.12.0
+// @version       2020.01.02.0
 // @description   HFR en mieux
 // @namespace     https://wiripse.github.io/HFRGMTools/
 // @icon          data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAQAAAAAYLlVAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAAHdElNRQfjCgIILBJ4Jlj4AAAEPUlEQVRo3u3YfWjVVRgH8M91c9MWmWYyNaVGFOZL+VLqRJl2TcawLCJJLDN8KSWEElKwtH/UIhPJZiJCIIlmIKJk6rImaa6maVqCqFmoufLdfNna/PWHP+92U3fvxrb+8H7PH79znnt+z/N9nuf8znnOJYUUUrjVEUFPr8gB33lb1BRzbUWeN6U3ou1DCu1msApBrLW1QeBzsLaGvHFahbx0czVXYZtKbHPCe8rNB+9Lb8QIpMuVYQ7lAvMaMdA3xzyBy+kycB6TjWhC46sVOo/M6hB/IKMJCQxUeLVTTSADhxxqAuM5cmReG8QvsmVmNQGBWWZWD5o1gcFakSKQIlCfrbaNYTrjgDUqQ1lrwzW33rHYrB5yHbVBRUMTyLVKh7C/W54z6GGDbJR71jpkWmCCCErkO12burqmYIiNMfM87C3woWyQaYlMnWwxUQT0NbV2hXUjkG+dLFXGaibTD+iPjgZhvteRbaxSj2GrLvagX8MRGGG1lv7xvE8EKrTFX4iCle4Ai7TDR4YYrAt+bygCz/lMpgojrQL3uw/FIYHTSkMiXDLGVIsVSnc+0VGfLIFRPtXcRcOVWmgEhoJNIqL42m36gsMGKPatl3DUE/Y2BIEJlkl3wZMO2GKywtDvMnt1k40iraRhoz7uUqo3tuhteyLVyRCY5GPNnDXUEcXuxUFp8lAkCAO/yRHPeFmBcb7UFgs8riyx8sT7wDRzcNIwh+0NP7civbVBUZiKww5gjWtH7UXjLU8qtgkjUGA2ygy2Q6fQfGBt6HeRDIOwKTa/I5idrPnEBMaLOCXPHuwywjTTFNgpin2OyJUVRuIpW40xQxmmeSBZAolS0BLn5LgHXLDDQb/KkhuajeKKzSZaJOJRA71ovdut0F95chQCgVk1nvF49brLxCWd5QsEhqNEoFTEsfDX37T2rkAQ3i1uhFkCwbVnohQsttCVOEkLLURRqVhrvVGkm/b4Hp0tMkMJpuiajP+JCFzxmrv1Cds6lNkvihLnPCQNxeGm9IJ1GGmM0YgoSIZAMsfxKafC3kG0sVwPbMDf4A0P4qD9xtqlowXW4up1JwnUvgbi0d3FMNentAdbYmtjPMhTHo6Pa3sTLXVaA/HYI982JxUZ4g/wtKVOOGCSJeAb+bb50xeiTjRUCmqi2IC48UnjjIuTbLa5Lgr/96I0RSBFIP4ryInVdQ2Fy7arRLpH7FKpne7hP3Ix1NyIGqMtBIUCC2U5EZNftxH90qiRDmLOXkWsVK1OQa5e0hrc8CUlYIqlflKpq+4iquy8NiHiqA62m/mfQ7c2VPnRmRvI79SzDi40845+jrGgHnm9ca3/cz00zSfLynq8eH2x0a0eWlbIunqHzdYl6eC1sVyas3aqqiFN00srVUbFaofEidzneNIJi8P0m3o0ve7KIvWiEDU6vAFU46hlvqqfRymkkMKtjX8BU3kXUDClbEwAAAAldEVYdGRhdGU6Y3JlYXRlADIwMTktMTAtMDJUMDg6NDQ6MTgrMDA6MDAqoU1GAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE5LTEwLTAyVDA4OjQ0OjE4KzAwOjAwW/z1+gAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAAASUVORK5CYII=
@@ -16,10 +16,11 @@
 // @grant         GM_setValue
 // @grant         GM.openInTab
 // @grant         GM_openInTab
-// @require       https://raw.githubusercontent.com/Wiripse/HFRGMTools/master/MPStorage.user.js?v=2019.10.3.3
+// @require       https://raw.githubusercontent.com/Wiripse/HFRGMTools/master/MPStorage.user.js?v=2020.01.02.0
 // ==/UserScript==
 
 // Historique
+// 2020.01.02.0 : Validation rapide d'un post avec CTRL+ENTER. Petits fixs.
 // 2019.10.12.0 : Liste Noire V1.
 // 2019.10.6.2 : Message lorsqu'il existe un décalage de versions entre les machines de l'utilisateur.
 // 2019.10.6.1 : Ezzzi Draps. Suppression Rapide.
@@ -45,7 +46,7 @@
 // 2019.9.30.1 : Fix pour que ça fonctionne aussi dans les drapals de catégories
 // 2019.9.30.0 : Premier jet
 
-const version = '2019.10.12.0';
+const version = '2020.01.02.0';
 
 //**********************************************************************//
 //************************* GM/VM/TM/FDP SHIT **************************//
@@ -210,6 +211,9 @@ var HFRGMUtils = {
         }
         if(!LocalMPStorage.datas.blacklist){
             LocalMPStorage.datas.blacklist = { active : false, list: []};
+        }
+        if(!LocalMPStorage.datas.fastValid){
+            LocalMPStorage.datas.fastValid = { active : false};
         }
     },
     isNewVersion: function(){
@@ -412,6 +416,7 @@ var LocalMPStorage = {
         ezzziDrap : 'EzzziDrap',
         fastDelete : 'FastDelete',
         blacklist : 'ListeNoire',
+        fastValid : 'FastValid',
         hfr4k : 'HFR4K'
     },
     /* Methods */
@@ -499,6 +504,10 @@ var LocalMPStorage = {
             case LocalMPStorage.domains.blacklist:
                 LocalMPStorage.datas.blacklist.sourceName = LocalMPStorage.toolName;
                 LocalMPStorage.datas.blacklist.lastUpdate = Date.now();
+                break;
+            case LocalMPStorage.domains.fastValid:
+                LocalMPStorage.datas.fastValid.sourceName = LocalMPStorage.toolName;
+                LocalMPStorage.datas.fastValid.lastUpdate = Date.now();
                 break;
             case LocalMPStorage.domains.hfr4k:
                 LocalMPStorage.datas.hfr4k.sourceName = LocalMPStorage.toolName;
@@ -666,7 +675,10 @@ var HFR4K = {
         HFR4K.renderListeNoire();
 
         // FastDelete
-        HFR4K.functionRenderFastDelete();
+        HFR4K.renderFastDelete();
+
+        // FastValid
+        HFR4K.renderFastValid();
 
         // Rest of the rendering
         HFR4K.simpleRender(true);
@@ -885,6 +897,18 @@ var HFR4K = {
             HFR4K.renderBlacklistTable();
         };
         taBody.appendChild(HFR4K.getCustomSetting('Gestion Liste Noire', linkBLTable));
+
+        // *************************************************************************************** //
+        // *** Fast Validation *** //
+        // *************************************************************************************** //
+        taBody.appendChild(HFR4K.getCatSetting('Validation rapide d\'un post(CTRL+ENTER)'));
+
+        // Setting Fast Delete Activation
+        taBody.appendChild(HFR4K.getCheckboxSetting('Activer ?', LocalMPStorage.datas.fastValid.active, function(cb){
+            LocalMPStorage.datas.fastValid.active = !LocalMPStorage.datas.fastValid.active;
+            cb.checked = LocalMPStorage.datas.fastValid.active;
+            LocalMPStorage.updateMPStorage(LocalMPStorage.domains.fastValid);
+        }));
 
         // FIRE IN THE HOLE !!!
         elementAfter.parentNode.insertBefore(table, elementAfter);
@@ -1528,7 +1552,7 @@ var HFR4K = {
             });
         }
     },
-    functionRenderFastDelete: function(){
+    renderFastDelete: function(){
         // **********
         // HFR4K_GM
         // Add a button to user's posts' toolbar to delete it with one click
@@ -1642,7 +1666,7 @@ var HFR4K = {
                                                      HFRGMUtils.pageCheck.isReplyingMP() || HFRGMUtils.pageCheck.isReplyingTopic())){
             // Hide messages
             document.querySelectorAll('tr.message').forEach(function(post){
-                let pseudo = HFRGMUtils.getSimplePseudo(post.querySelector('b.s2').textContent);
+                let pseudo = post.querySelector('b.s2') ? HFRGMUtils.getSimplePseudo(post.querySelector('b.s2').textContent) : void 0;
                 if(HFRGMUtils.isPseudoBlacklisted(pseudo)){
                     // Hide the post
                     post.classList.add('hfr4kHiddenPost');
@@ -1746,7 +1770,6 @@ var HFR4K = {
                     quote.parentElement.insertBefore(emptyQuote, quote);
                 }
             });
-
         }
     },
     renderBlacklistTable: function(){
@@ -1802,6 +1825,37 @@ var HFR4K = {
 
         // Open modal with the content
         HFR4K.renderModal(cont);
+    },
+    renderFastValid: function(){
+        // **********
+        // HFR4K_GM
+        // Handle CTRL+Backspace to quickly validate a post
+        // **********
+
+        if(LocalMPStorage.datas.fastValid.active && (HFRGMUtils.pageCheck.isOnMP() || HFRGMUtils.pageCheck.isOnTopic() || HFRGMUtils.pageCheck.isOnTopicTxt() ||
+                                                     HFRGMUtils.pageCheck.isReplyingMP() || HFRGMUtils.pageCheck.isReplyingTopic())){
+
+            // Add a keydown listener on the whole page
+            document.addEventListener('keydown', function(event){
+                // CTRL and BACKSPACE pressed
+                if(event.keyCode == 13 && (event.ctrlKey || event.altKey)) {
+
+                    // Quick response form
+                    var quickResp = document.getElementsByName('hop').length === 1 && document.getElementsByName('hop')[0].action.endsWith('hardware.fr/bddpost.php');
+                    if(quickResp){
+                        // Submit the form
+                        document.getElementById('submitreprap').click();
+                    }
+
+                    // Full response form
+                    var bigResp = document.getElementsByName('hop').length === 1 && document.getElementsByName('hop')[0].action.endsWith('hardware.fr/bddpost.php?config=hfr.inc');
+                    if(bigResp){
+                        // Submit the form
+                        document.getElementsByName('submit')[0].click();
+                    }
+                }
+            }, false);
+        }
     }
 };
 

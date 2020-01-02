@@ -133,7 +133,19 @@ Basé sur _[HFR] Black List mod_r21_ de [Roger21](http://roger21.free.fr/hfr/).
 * Activer/désactiver l'option
 * Gérer la liste
 
+### Validation rapide
+
+Soumettre rapidement un post via CTRL+ENTER. 
+
+#### Paramètres
+
+* Activer/désactiver l'option
+
 ## Changelog
+
+### 2020.01.02.0
+
+Validation rapide d'un post avec CTRL+ENTER. Petits fixs.
 
 ### 2019.10.12.0
 
