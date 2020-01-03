@@ -143,6 +143,10 @@ Soumettre rapidement un post via CTRL+ENTER.
 
 ## Changelog
 
+### 2020.01.03.0
+
+Fix contrôles versions.
+
 ### 2020.01.02.0
 
 Validation rapide d'un post avec CTRL+ENTER. Petits fixs.
