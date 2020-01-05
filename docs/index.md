@@ -153,6 +153,10 @@ Une icône permettant d'accéder au dernier message lu est insérée à gauche d
 
 ## Changelog
 
+### 2020.01.05.1
+
+Fix issue #17 pour compatibilité [HFR] New Page Number.
+
 ### 2020.01.05.0
 
 DTCloud KISS.
