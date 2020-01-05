@@ -124,7 +124,7 @@ Basé sur _[HFR] Suppression rapide de posts_ de [Toyonos](http://toyonos.info).
 
 Masquer les posts d'utilisateurs nuisibles.
 
-Une icône permettant d'ajouter/supprimer un utilisateur à la liste est inséré à chaque post à côté du pseudo de l'auteur.
+Une icône permettant d'ajouter/supprimer un utilisateur à la liste est insérée à chaque post à côté du pseudo de l'auteur.
 
 Basé sur _[HFR] Black List mod_r21_ de [Roger21](http://roger21.free.fr/hfr/).
 
@@ -141,7 +141,21 @@ Soumettre rapidement un post via CTRL+ENTER.
 
 * Activer/désactiver l'option
 
+### Drapeaux multi-MP (Dark Topics)
+
+Gestion de drapeau (dernier message lu) dans les multi-MP.
+
+Une icône permettant d'accéder au dernier message lu est insérée à gauche du titre du MP.
+
+#### Paramètres
+
+* Activer/désactiver l'option
+
 ## Changelog
+
+### 2020.01.05.0
+
+DTCloud KISS.
 
 ### 2020.01.03.0
 

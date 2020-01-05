@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          [BETA] HFR4K
 // @author        Wiripse
-// @version       2020.01.03.0
+// @version       2020.01.05.0
 // @description   HFR en mieux
 // @namespace     https://wiripse.github.io/HFRGMTools/
 // @icon          data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAQAAAAAYLlVAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAAHdElNRQfjCgIILBJ4Jlj4AAAEPUlEQVRo3u3YfWjVVRgH8M91c9MWmWYyNaVGFOZL+VLqRJl2TcawLCJJLDN8KSWEElKwtH/UIhPJZiJCIIlmIKJk6rImaa6maVqCqFmoufLdfNna/PWHP+92U3fvxrb+8H7PH79znnt+z/N9nuf8znnOJYUUUrjVEUFPr8gB33lb1BRzbUWeN6U3ou1DCu1msApBrLW1QeBzsLaGvHFahbx0czVXYZtKbHPCe8rNB+9Lb8QIpMuVYQ7lAvMaMdA3xzyBy+kycB6TjWhC46sVOo/M6hB/IKMJCQxUeLVTTSADhxxqAuM5cmReG8QvsmVmNQGBWWZWD5o1gcFakSKQIlCfrbaNYTrjgDUqQ1lrwzW33rHYrB5yHbVBRUMTyLVKh7C/W54z6GGDbJR71jpkWmCCCErkO12burqmYIiNMfM87C3woWyQaYlMnWwxUQT0NbV2hXUjkG+dLFXGaibTD+iPjgZhvteRbaxSj2GrLvagX8MRGGG1lv7xvE8EKrTFX4iCle4Ai7TDR4YYrAt+bygCz/lMpgojrQL3uw/FIYHTSkMiXDLGVIsVSnc+0VGfLIFRPtXcRcOVWmgEhoJNIqL42m36gsMGKPatl3DUE/Y2BIEJlkl3wZMO2GKywtDvMnt1k40iraRhoz7uUqo3tuhteyLVyRCY5GPNnDXUEcXuxUFp8lAkCAO/yRHPeFmBcb7UFgs8riyx8sT7wDRzcNIwh+0NP7civbVBUZiKww5gjWtH7UXjLU8qtgkjUGA2ygy2Q6fQfGBt6HeRDIOwKTa/I5idrPnEBMaLOCXPHuwywjTTFNgpin2OyJUVRuIpW40xQxmmeSBZAolS0BLn5LgHXLDDQb/KkhuajeKKzSZaJOJRA71ovdut0F95chQCgVk1nvF49brLxCWd5QsEhqNEoFTEsfDX37T2rkAQ3i1uhFkCwbVnohQsttCVOEkLLURRqVhrvVGkm/b4Hp0tMkMJpuiajP+JCFzxmrv1Cds6lNkvihLnPCQNxeGm9IJ1GGmM0YgoSIZAMsfxKafC3kG0sVwPbMDf4A0P4qD9xtqlowXW4up1JwnUvgbi0d3FMNentAdbYmtjPMhTHo6Pa3sTLXVaA/HYI982JxUZ4g/wtKVOOGCSJeAb+bb50xeiTjRUCmqi2IC48UnjjIuTbLa5Lgr/96I0RSBFIP4ryInVdQ2Fy7arRLpH7FKpne7hP3Ix1NyIGqMtBIUCC2U5EZNftxH90qiRDmLOXkWsVK1OQa5e0hrc8CUlYIqlflKpq+4iquy8NiHiqA62m/mfQ7c2VPnRmRvI79SzDi40845+jrGgHnm9ca3/cz00zSfLynq8eH2x0a0eWlbIunqHzdYl6eC1sVyas3aqqiFN00srVUbFaofEidzneNIJi8P0m3o0ve7KIvWiEDU6vAFU46hlvqqfRymkkMKtjX8BU3kXUDClbEwAAAAldEVYdGRhdGU6Y3JlYXRlADIwMTktMTAtMDJUMDg6NDQ6MTgrMDA6MDAqoU1GAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE5LTEwLTAyVDA4OjQ0OjE4KzAwOjAwW/z1+gAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAAASUVORK5CYII=
@@ -20,6 +20,7 @@
 // ==/UserScript==
 
 // Historique
+// 2020.01.05.0 : DTCloud KISS.
 // 2020.01.03.0 : Fix contrôles versions.
 // 2020.01.02.0 : Validation rapide d'un post avec CTRL+ENTER. Petits fixs.
 // 2019.10.12.0 : Liste Noire V1.
@@ -47,7 +48,7 @@
 // 2019.9.30.1 : Fix pour que ça fonctionne aussi dans les drapals de catégories
 // 2019.9.30.0 : Premier jet
 
-const version = '2020.01.03.0';
+const version = '2020.01.05.0';
 
 //**********************************************************************//
 //************************* GM/VM/TM/FDP SHIT **************************//
@@ -114,6 +115,7 @@ var HFRGMUtils = {
         help24 : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAAqwAAAKsB1E2SqwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAPmSURBVEiJpZRriJRVGMd/z3nfd2bn4s5gboRF5VZrKlQuSkJ4oUXskxEiC2FGSqlYaVFmJEZKtSCVWn4QhajQ7EPU1wWTNbvousoWXmojE8uy1HXvs/NeztOHdcZZZ0aN/nC+POd9/r/nfzjvEVWlmkQkCcwCpgPTHMODAJHlENABHAa+VtWhqh7VACIy0xg+tpY7455EU+5y7dSJngdw9KcgOHEqNPlAHWM4bS2LVfXADQFEJAG8KbB6cr0btTxb6z7Q4OGY0Y2Rhc6ugFc+6AtPngodhc3Aa6qaqwoQEXEcvlJlzguPp2VVcwrXqRZ+RGEEW/YM8t6nAypCWxTRpCWmVwOeA7Z+uD7LvBnxaztfpdaDeZ7a0APwvKq+X6gXg4tIgzFsap6b0GrmZ89HnD0fVdybNyNO89yEGsMmEWkoS+C60jouYx7ev32cW5uSUc1nzkUsb+mlsysAoPFej10bs9SPdwhCCCIIQqW7V5m97EJ4odfuC0OdV0wgIgZl5pL5yTJzgBc393H+kmXnugw712X4p9uyoqWXmCekEkI2LdRlDbffYlj6aNJFmSkipvSIGiJL4v57vDLzwWHLdz/6rH0yxdL5SZbOT7JmcYq2Iz6X+u2obxNxYXZjjMiSABpKAY0A993tjmrwXKgf77L91QzLF6SK9YEhJTvGkKopTzttUnHIxlLAlJsyJsiOuXLZRSCTNhgDzzyWxHVgaFjZsHOATZ8MsrCphphXDhhba6jLmgCYBFAYube7z3oDOSWdGGlKJQRvdCBWtPSyuzXHS4vSvP50uswcIJdXuvusC/xamuB3Vej8OShOn06WT/d3t6Vpepy3V46hJla+D/DDLyGRRYCjpYD9IujhkyMAz4VK7anEyK25ljpO+BiDD5woAlT1T9eRbw90+nYEUNlk25oM29ZkqppbC7tac5FjOKqqYWkCglBfbj/u644vh8rOvqC97Xn2tuerArbsGeTQsUCCkFWFWhGgqgetZfUbO/q17Yhf0WDyBJfJEyrTu86ErN3WH6nylqq2F+plz3XMlc9q4rKgc1edU3/rdZ7Sy/qm02fR+p7gr4u2yw90qqoGZQkKCiKWBOr0vLt74LrGQ8PK6nf6mLXsop69ELX6gTaVmsOV/6AoVR2siZlobO0V9hdtw/T0W2672WEgp3ScDDh8PLAHj/k2l9e8KiuDQD+qNEQZQETSQN3EO1zOnItYsrEn2tfhGyMEkSUmgq2Jy2++r99Hlg7gc1X9o2pMVR21gGmArlyY1FRCwpgnp4GHLu+NBZJX91xrVQI8AShgjWHrfzW8EcAjrssRYM7/MS6sfwE3nU0+nUFD+AAAAABJRU5ErkJggg==',
         delete: ' data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAAWQAAAFkBqp2phgAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAADjSURBVDiNY2TAAZIaev4j8+c1lDDiUkvQAHTDkAHc1PKp844yMDBYEWn+kc7sJFsGBgYGJiRBYjUzMDAw2MAYTPhUEQNQAuZ5XghOvyIDyUlr4PoodgHtDBCpmsDApqLNwMQvyCBS2c/AIiaJVR0LLgM+rZrNIJBQyPD/1w+Gb0d3Mfx59Zw0F/x5/Yzh/68fDEzcfAy/H94l3QtCWXUM347uYng/u5NBIKGQgVlYjDQvfJjbBXf22/4qhn8f3pFmALKf/759hUsZhhd+4VSJAD9xGvD/P0MPAUN+MTL870EWAABwKEcWX3lmOwAAAABJRU5ErkJggg==',
         blacklist: ' data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAAHdElNRQfjCgwGHAnHRP3eAAAA3klEQVQoz3XQvy5EYRQE8N+1EqETWwmFbqNCPIFeoiASKsptNh5B4QFsp6DxArSi2dBokFBJRLIqBRH/woYchS833LvmFOebzCQz56v4wbw1NWc+dUVDCOHAP7hMhjBWlHrAW2KRvwqY1RFCsyxladfMuHJYNlTyqFfXXroHDNv3JYRTU5i061xLQx9U3eQ3PBu1kPqEcKSfzZyGpqqnXzxsZG6N5GFzhmw79p74uE6v9fQXcGIVy9qJ71gqFl4UHj2k+XBRNAxo/+lQLx897S6Xt2RZ2WHQign39rT4Blf2WVLRC41JAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDE5LTEwLTEyVDA2OjI4OjA5KzAwOjAwz7WrUgAAACV0RVh0ZGF0ZTptb2RpZnkAMjAxOS0xMC0xMlQwNjoyODowOSswMDowML7oE+4AAAAZdEVYdFNvZnR3YXJlAHd3dy5pbmtzY2FwZS5vcmeb7jwaAAAAAElFTkSuQmCC',
+        darktopic: ' data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAAHdElNRQfkAQUDOTP4rXhDAAAA9UlEQVQoz43RvyvEcRgH8Ne5u0GSO50yXfk1SG5Bl8H/gWQwsZiYjAb/gMGk7mRhpmSilIwy6OqURVJnkFsoH8N9v193pnue5Xk/vd/PT7qykoqK6TZcVVWK4ZB3QdBQAAWNP5xBWR4MmvGiXzrBZWcw5lsQnNsXBDd2BcGXkbjJspq6JSHydY9qFiEjZcOKNHLJkL2y2JR3wHaiO3UkCO7tJLmttONI2XTiTp83hz5NRYNOSLhrnpL4w2q0aogJV1H52Ov2WlGPS008KHfcdtQrflxD1qRxzx0VglnzBto1/wnFVjqVEIoWzBmW01Bz4ba7P/sF4pVuTiJ2duUAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjAtMDEtMDVUMDM6NTc6NTErMDA6MDBh8eWZAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIwLTAxLTA1VDAzOjU3OjUxKzAwOjAwEKxdJQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAAASUVORK5CYII=',
     },
     createOnglet: function(icon, title, onClickMethod, rightClickMethod){
         // **********
@@ -215,6 +217,9 @@ var HFRGMUtils = {
         }
         if(!LocalMPStorage.datas.fastValid){
             LocalMPStorage.datas.fastValid = { active : false};
+        }
+        if(!LocalMPStorage.datas.mpFlags){
+            LocalMPStorage.datas.mpFlags = { active : false, list : []};
         }
     },
     isNewVersion: function(){
@@ -377,6 +382,109 @@ var HFRGMUtils = {
             // Update MPStorage
             LocalMPStorage.updateMPStorage(LocalMPStorage.domains.blacklist);
         }
+    },
+    hasFlagDT: function(postId){
+        // **********
+        // HFR4K_GM
+        // Indicate if MPStorage has a saved flag for the given postId
+        // **********
+
+        return LocalMPStorage.datas.mpFlags.list.filter(function(item){ return parseInt(postId) === item.post; }).length > 0
+    },
+    getFlagDT: function(postId){
+        // **********
+        // HFR4K_GM
+        // Return, if possible, the flag of the given DT
+        // **********
+
+        return HFRGMUtils.hasFlagDT(postId) ? LocalMPStorage.datas.mpFlags.list.filter(function(item){ return parseInt(postId) === item.post; })[0] : void 0;
+    },
+    popFlagDT: function(postId){
+        // **********
+        // HFR4K_GM
+        // Pop (if possible) the flag associated to the given postId
+        // **********
+
+        if (HFRGMUtils.hasFlagDT(postId)){
+            // Get flags' ID in localstorage
+            let i = LocalMPStorage.datas.mpFlags.list.findIndex(function(item){ return postId === item.post; });
+
+            if(0<=i){
+                // Make a copy
+                var result = LocalMPStorage.datas.mpFlags.list[i];;
+
+                // Remove it from the localStorage
+                LocalMPStorage.datas.mpFlags.list.splice(i, 1);
+
+                // Set other relevant datas
+                LocalMPStorage.datas.mpFlags.sourceName = LocalMPStorage.toolName;
+                LocalMPStorage.datas.mpFlags.lastUpdate = Date.now();
+
+                // Return the item
+                return result;
+            }
+        }
+        return void 0;
+    },
+    saveFlagDT: function(flagEntry){
+        // **********
+        // HFR4K_GM
+        // Save the DT flag in MPStorage
+        // **********
+
+        if(flagEntry && flagEntry.post){
+            // Add the new entry to the list and sort it
+            LocalMPStorage.datas.mpFlags.list.push(flagEntry);
+            LocalMPStorage.datas.mpFlags.list.sort();
+
+            // Update MPStorage
+            LocalMPStorage.updateMPStorage(LocalMPStorage.domains.dtCloud);
+
+        }
+    },
+    handleDTReading: function(){
+        // **********
+        // HFR4K_GM
+        // Managing the flag of the DT that the user is currently reading
+        // **********
+
+        var lastReadMsgId = void 0;
+        // Last msg of the current page = last read msg
+        var lastMsg = [].slice.call(document.querySelectorAll('tr.message')).slice(-1)[0];
+        if(lastMsg){
+            let leftCol = lastMsg.querySelector('td.messCase1');
+            // For each post of the page, we look for the post id
+            if(leftCol && leftCol.firstElementChild.name && leftCol.firstElementChild.name.indexOf('t') === 0 && HFRGMUtils.safeInt(leftCol.firstElementChild.name.substring(1)) > -1){
+                lastReadMsgId = leftCol.firstElementChild.name;
+                var mpPostID = parseInt(HFRGMUtils.pageCheck.pageParams.get('post'));
+                var mpPage = parseInt(HFRGMUtils.pageCheck.pageParams.get('page'));
+
+                var mpFlag = {};
+                var doUpdate = true;
+
+                // Try retrieving an existing flag for this post
+                if (HFRGMUtils.hasFlagDT(mpPostID)){
+                    mpFlag = HFRGMUtils.popFlagDT(mpPostID);
+                    // Only update if the last read post is newer than the one previously saved
+                    doUpdate = parseInt(mpFlag.href.substr(1)) < parseInt(lastReadMsgId.substr(1));
+                    // #4 : UNCOMMENT TO REMOVE URI
+                    // mpFlag.uri = void 0;
+                }
+
+                // Put datas in the entry
+                mpFlag.href = lastReadMsgId;
+                mpFlag.post = mpPostID;
+                mpFlag.page = mpPage;
+                // #4 TODO : Remove ASAP !
+                mpFlag.uri = 'https://forum.hardware.fr/forum2.php?config=hfr.inc&cat=prive&post='+mpPostID+'&page='+mpPage+'&p=1&sondage=0&owntopic=0&trash=0&trash_post=0&print=0&numreponse=0&quote_only=0&new=0&nojs=0#'+lastReadMsgId;
+
+                console.warn('DoUpdate flag ?', doUpdate);
+                if(doUpdate){
+                    // Save/update if necessary
+                    HFRGMUtils.saveFlagDT(mpFlag);
+                }
+            }
+        }
     }
 };
 
@@ -400,6 +508,7 @@ var LocalMPStorage = {
         fastDelete : 'FastDelete',
         blacklist : 'ListeNoire',
         fastValid : 'FastValid',
+        dtCloud: 'DTCloud',
         hfr4k : 'HFR4K'
     },
     /* Methods */
@@ -492,6 +601,10 @@ var LocalMPStorage = {
                 LocalMPStorage.datas.fastValid.sourceName = LocalMPStorage.toolName;
                 LocalMPStorage.datas.fastValid.lastUpdate = Date.now();
                 break;
+            case LocalMPStorage.domains.dtCloud:
+                LocalMPStorage.datas.mpFlags.sourceName = LocalMPStorage.toolName;
+                LocalMPStorage.datas.mpFlags.lastUpdate = Date.now();
+                break;
             case LocalMPStorage.domains.hfr4k:
                 LocalMPStorage.datas.hfr4k.sourceName = LocalMPStorage.toolName;
                 LocalMPStorage.datas.hfr4k.lastUpdate = Date.now();
@@ -502,7 +615,7 @@ var LocalMPStorage = {
                 break;
         }
 
-        // Add the new SuperFav datas to the global datas
+        // Add the new datas to the global datas
         mpStorage.storageData.data.filter(function(d){return LocalMPStorage.version === d.version;})[0] = LocalMPStorage.datas;
 
         // And store the result with MPStorage
@@ -662,6 +775,9 @@ var HFR4K = {
 
         // FastValid
         HFR4K.renderFastValid();
+
+        // DTCloud
+        HFR4K.renderDTCloud();
 
         // Rest of the rendering
         HFR4K.simpleRender(true);
@@ -884,13 +1000,25 @@ var HFR4K = {
         // *************************************************************************************** //
         // *** Fast Validation *** //
         // *************************************************************************************** //
-        taBody.appendChild(HFR4K.getCatSetting('Validation rapide d\'un post(CTRL+ENTER)'));
+        taBody.appendChild(HFR4K.getCatSetting('Validation rapide d\'un post (CTRL+ENTER)'));
 
         // Setting Fast Delete Activation
         taBody.appendChild(HFR4K.getCheckboxSetting('Activer ?', LocalMPStorage.datas.fastValid.active, function(cb){
             LocalMPStorage.datas.fastValid.active = !LocalMPStorage.datas.fastValid.active;
             cb.checked = LocalMPStorage.datas.fastValid.active;
             LocalMPStorage.updateMPStorage(LocalMPStorage.domains.fastValid);
+        }));
+
+        // *************************************************************************************** //
+        // *** Dark Topics *** //
+        // *************************************************************************************** //
+        taBody.appendChild(HFR4K.getCatSetting('Drapeaux multi-MP (Dark Topics)'));
+
+        // Setting DTCloud Activation
+        taBody.appendChild(HFR4K.getCheckboxSetting('Activer ?', LocalMPStorage.datas.mpFlags.active, function(cb){
+            LocalMPStorage.datas.mpFlags.active = !LocalMPStorage.datas.mpFlags.active;
+            cb.checked = LocalMPStorage.datas.mpFlags.active;
+            LocalMPStorage.updateMPStorage(LocalMPStorage.domains.dtCloud);
         }));
 
         // FIRE IN THE HOLE !!!
@@ -1838,6 +1966,60 @@ var HFR4K = {
                     }
                 }
             }, false);
+        }
+    },
+    renderDTCloud: function(){
+        // **********
+        // HFR4K_GM
+        // Managing drapals for multi-MP posts
+        // **********
+
+        if (LocalMPStorage.datas.mpFlags.active){
+            if (HFRGMUtils.pageCheck.isOnMP()){
+                // Reading an MP, we handle the flag if necessary
+                var mpPostID = parseInt(HFRGMUtils.pageCheck.pageParams.get('post'));
+
+                if(HFRGMUtils.hasFlagDT(mpPostID)){
+                    // Already know the post so it's a dark topic !
+                    HFRGMUtils.handleDTReading();
+                }else{
+                    // We don't have a flag for this MP yet so we check if its a dark topic and handle the flag if so
+                    // We simulate a reply to see if there is one or multiple recipients
+                    var url = 'https://forum.hardware.fr/message.php?ref=0&numrep=0&config=hfr.inc&cat=prive&post=' + mpPostID + '&page=1&p=1&subcat=0&sondage=0&owntopic=0&new=0';
+
+                    // Post request
+                    mpStorage.loadPage(url, 'post', void 0, function (resp) {
+                        // No easy way to find the right header so we do it the hard way...
+                        resp.querySelectorAll('.repCase1').forEach(function(it){
+                            // If one recipient 'Destinataire', if multiple, 'Destinataires'. Easy.
+                            if (it.innerHTML === 'Destinataires'){
+                                HFRGMUtils.handleDTReading();
+                            }
+                        });
+                    });
+                }
+            }else if (HFRGMUtils.pageCheck.isOnMPList()){
+                // Listing MPs, we display the flags
+
+                // Browse all mps to find the DT
+                document.querySelectorAll('.sujet').forEach(function(topicRow){
+                    const params = new URLSearchParams(topicRow.querySelector('.sujetCase3 > a').href);
+                    if (HFRGMUtils.hasFlagDT(params.get('post'))){
+                        // It's a known DT so we get the flag
+                        var flag = HFRGMUtils.getFlagDT(params.get('post'));
+                        // Create icon to open the flag
+                        var imgBlocDT = topicRow.querySelector('.sujetCase3').previousSibling;
+                        var linkFlagDT = document.createElement('a');
+                        // Build the URL
+                        linkFlagDT.href = 'https://forum.hardware.fr/forum2.php?config=hfr.inc&cat=prive&post='+flag.post+'&page='+flag.page+'&p=1&sondage=0&owntopic=0&trash=0&trash_post=0&print=0&numreponse=0&quote_only=0&new=0&nojs=0#'+flag.href;
+                        var imgFlagDT = document.createElement('img');
+                        imgFlagDT.setAttribute('title', 'Aller au dernier message lu');
+                        imgFlagDT.setAttribute('src', HFRGMUtils.icons.darktopic);
+                        linkFlagDT.appendChild(imgFlagDT);
+                        imgBlocDT.appendChild(linkFlagDT);
+                    }
+                });
+            }
         }
     }
 };
