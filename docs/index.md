@@ -100,9 +100,9 @@ Basé sur _[HFR] Last Post Highlight_ de [Roger21](http://roger21.free.fr/hfr/).
 
 ### Ezzzi Draps
 
-Affichage plus large des drapeaux pour un clic plus facile.
+Affichage plus large des drapeaux pour un clic plus facile. Faire un click droit, CTRL+Click ou click molette sur la case d'un drapeau l'ouvre dans un nouvel onglet.
 
-Double-click sur le titre du topic ouvre aussi le drapeau.
+Double-click sur le titre du topic ouvre aussi le drapeau dans l'onglet courant.
 
 Basé sur _[HFR] Drapal Easy Click_ de [Roger21](http://roger21.free.fr/hfr/).
 
