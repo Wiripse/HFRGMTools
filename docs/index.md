@@ -153,7 +153,11 @@ Une icône permettant d'accéder au dernier message lu est insérée à gauche d
 
 ## Changelog
 
-### 2020.01.07.1
+### 2020.01.08.0
+
+Différenciation des flags MPs créés par DTCloud/HFR+ et des flags DT.
+
+### 2020.01.07.0
 
 Ezzzi Draps; le click droit ouvre dans un nouvel onglet.
 
