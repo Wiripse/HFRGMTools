@@ -4,6 +4,16 @@
 
 La documentation technique sur MPStorage est [ici](./mpstorage). Il n'est pas nécessaire de la lire pour utiliser HFR4K.
 
+## Avertissement vie privée
+
+Pour fonctionner, HFR4K va créer un MP dans lequel il stockera les paramètres du script. Ce MP est envoyé à **l'utilisateur MultiMP** qui est un compte créé uniquement dans ce but par Marc.
+
+En dehors de l'utilisateur, personne d'autre que l'administration d'HFR ne pourra accéder à ce MP.
+
+Les données qui y sont stockées ne sont à aucun moment partagées avec les développeurs du script ou une autre personne.
+
+Les échanges de données se font uniquement entre la machine de l'utilisateur et les serveurs d'HFR.
+
 ## C'est quoi ?
 
 HFR4K est un userscript destiné à améliorer l'utilisation de la version Web d'HFR.
