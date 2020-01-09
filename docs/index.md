@@ -153,6 +153,10 @@ Une icône permettant d'accéder au dernier message lu est insérée à gauche d
 
 ## Changelog
 
+### 2020.01.09.0
+
+Correction de l'affichage des catégories.
+
 ### 2020.01.08.0
 
 Différenciation des flags MPs créés par DTCloud/HFR+ et des flags DT.
