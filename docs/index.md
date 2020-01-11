@@ -163,6 +163,10 @@ Une icône permettant d'accéder au dernier message lu est insérée à gauche d
 
 ## Changelog
 
+### 2020.01.11.0
+
+Encore un correctif sur le contrôle de version...
+
 ### 2020.01.09.0
 
 Correction de l'affichage des catégories.
