@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          [BETA] HFR4K
 // @author        Wiripse
-// @version       2020.01.11.0
+// @version       2020.01.11.1
 // @description   HFR en mieux
 // @namespace     https://wiripse.github.io/HFRGMTools/
 // @icon          data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAQAAAAAYLlVAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAAHdElNRQfjCgIILBJ4Jlj4AAAEPUlEQVRo3u3YfWjVVRgH8M91c9MWmWYyNaVGFOZL+VLqRJl2TcawLCJJLDN8KSWEElKwtH/UIhPJZiJCIIlmIKJk6rImaa6maVqCqFmoufLdfNna/PWHP+92U3fvxrb+8H7PH79znnt+z/N9nuf8znnOJYUUUrjVEUFPr8gB33lb1BRzbUWeN6U3ou1DCu1msApBrLW1QeBzsLaGvHFahbx0czVXYZtKbHPCe8rNB+9Lb8QIpMuVYQ7lAvMaMdA3xzyBy+kycB6TjWhC46sVOo/M6hB/IKMJCQxUeLVTTSADhxxqAuM5cmReG8QvsmVmNQGBWWZWD5o1gcFakSKQIlCfrbaNYTrjgDUqQ1lrwzW33rHYrB5yHbVBRUMTyLVKh7C/W54z6GGDbJR71jpkWmCCCErkO12burqmYIiNMfM87C3woWyQaYlMnWwxUQT0NbV2hXUjkG+dLFXGaibTD+iPjgZhvteRbaxSj2GrLvagX8MRGGG1lv7xvE8EKrTFX4iCle4Ai7TDR4YYrAt+bygCz/lMpgojrQL3uw/FIYHTSkMiXDLGVIsVSnc+0VGfLIFRPtXcRcOVWmgEhoJNIqL42m36gsMGKPatl3DUE/Y2BIEJlkl3wZMO2GKywtDvMnt1k40iraRhoz7uUqo3tuhteyLVyRCY5GPNnDXUEcXuxUFp8lAkCAO/yRHPeFmBcb7UFgs8riyx8sT7wDRzcNIwh+0NP7civbVBUZiKww5gjWtH7UXjLU8qtgkjUGA2ygy2Q6fQfGBt6HeRDIOwKTa/I5idrPnEBMaLOCXPHuwywjTTFNgpin2OyJUVRuIpW40xQxmmeSBZAolS0BLn5LgHXLDDQb/KkhuajeKKzSZaJOJRA71ovdut0F95chQCgVk1nvF49brLxCWd5QsEhqNEoFTEsfDX37T2rkAQ3i1uhFkCwbVnohQsttCVOEkLLURRqVhrvVGkm/b4Hp0tMkMJpuiajP+JCFzxmrv1Cds6lNkvihLnPCQNxeGm9IJ1GGmM0YgoSIZAMsfxKafC3kG0sVwPbMDf4A0P4qD9xtqlowXW4up1JwnUvgbi0d3FMNentAdbYmtjPMhTHo6Pa3sTLXVaA/HYI982JxUZ4g/wtKVOOGCSJeAb+bb50xeiTjRUCmqi2IC48UnjjIuTbLa5Lgr/96I0RSBFIP4ryInVdQ2Fy7arRLpH7FKpne7hP3Ix1NyIGqMtBIUCC2U5EZNftxH90qiRDmLOXkWsVK1OQa5e0hrc8CUlYIqlflKpq+4iquy8NiHiqA62m/mfQ7c2VPnRmRvI79SzDi40845+jrGgHnm9ca3/cz00zSfLynq8eH2x0a0eWlbIunqHzdYl6eC1sVyas3aqqiFN00srVUbFaofEidzneNIJi8P0m3o0ve7KIvWiEDU6vAFU46hlvqqfRymkkMKtjX8BU3kXUDClbEwAAAAldEVYdGRhdGU6Y3JlYXRlADIwMTktMTAtMDJUMDg6NDQ6MTgrMDA6MDAqoU1GAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE5LTEwLTAyVDA4OjQ0OjE4KzAwOjAwW/z1+gAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAAASUVORK5CYII=
@@ -20,6 +20,7 @@
 // ==/UserScript==
 
 // Historique
+// 2020.01.11.1 : Catégorie MPs dans les drapeaux. Petit fix sur la gestion des DTs.
 // 2020.01.11.0 : Encore un correctif sur le contrôle de version...
 // 2020.01.09.0 : Correction de l'affichage des catégories.
 // 2020.01.08.0 : Différenciation des flags MPs créés par DTCloud/HFR+ et des flags DT.
@@ -53,7 +54,7 @@
 // 2019.9.30.1 : Fix pour que ça fonctionne aussi dans les drapals de catégories
 // 2019.9.30.0 : Premier jet
 
-const version = '2020.01.11.0';
+const version = '2020.01.11.1';
 
 //**********************************************************************//
 //************************* GM/VM/TM/FDP SHIT **************************//
@@ -121,6 +122,7 @@ var HFRGMUtils = {
         delete: ' data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAAWQAAAFkBqp2phgAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAADjSURBVDiNY2TAAZIaev4j8+c1lDDiUkvQAHTDkAHc1PKp844yMDBYEWn+kc7sJFsGBgYGJiRBYjUzMDAw2MAYTPhUEQNQAuZ5XghOvyIDyUlr4PoodgHtDBCpmsDApqLNwMQvyCBS2c/AIiaJVR0LLgM+rZrNIJBQyPD/1w+Gb0d3Mfx59Zw0F/x5/Yzh/68fDEzcfAy/H94l3QtCWXUM347uYng/u5NBIKGQgVlYjDQvfJjbBXf22/4qhn8f3pFmALKf/759hUsZhhd+4VSJAD9xGvD/P0MPAUN+MTL870EWAABwKEcWX3lmOwAAAABJRU5ErkJggg==',
         blacklist: ' data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAAHdElNRQfjCgwGHAnHRP3eAAAA3klEQVQoz3XQvy5EYRQE8N+1EqETWwmFbqNCPIFeoiASKsptNh5B4QFsp6DxArSi2dBokFBJRLIqBRH/woYchS833LvmFOebzCQz56v4wbw1NWc+dUVDCOHAP7hMhjBWlHrAW2KRvwqY1RFCsyxladfMuHJYNlTyqFfXXroHDNv3JYRTU5i061xLQx9U3eQ3PBu1kPqEcKSfzZyGpqqnXzxsZG6N5GFzhmw79p74uE6v9fQXcGIVy9qJ71gqFl4UHj2k+XBRNAxo/+lQLx897S6Xt2RZ2WHQign39rT4Blf2WVLRC41JAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDE5LTEwLTEyVDA2OjI4OjA5KzAwOjAwz7WrUgAAACV0RVh0ZGF0ZTptb2RpZnkAMjAxOS0xMC0xMlQwNjoyODowOSswMDowML7oE+4AAAAZdEVYdFNvZnR3YXJlAHd3dy5pbmtzY2FwZS5vcmeb7jwaAAAAAElFTkSuQmCC',
         darktopic: ' data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAAHdElNRQfkAQUDOTP4rXhDAAAA9UlEQVQoz43RvyvEcRgH8Ne5u0GSO50yXfk1SG5Bl8H/gWQwsZiYjAb/gMGk7mRhpmSilIwy6OqURVJnkFsoH8N9v193pnue5Xk/vd/PT7qykoqK6TZcVVWK4ZB3QdBQAAWNP5xBWR4MmvGiXzrBZWcw5lsQnNsXBDd2BcGXkbjJspq6JSHydY9qFiEjZcOKNHLJkL2y2JR3wHaiO3UkCO7tJLmttONI2XTiTp83hz5NRYNOSLhrnpL4w2q0aogJV1H52Ov2WlGPS008KHfcdtQrflxD1qRxzx0VglnzBto1/wnFVjqVEIoWzBmW01Bz4ba7P/sF4pVuTiJ2duUAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjAtMDEtMDVUMDM6NTc6NTErMDA6MDBh8eWZAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIwLTAxLTA1VDAzOjU3OjUxKzAwOjAwEKxdJQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAAASUVORK5CYII=',
+        simpleMP: ' data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAAHdElNRQfkAQsKMhRRXVhfAAAAuUlEQVQoz3WQMQrCQBBF3yakVTtNLaLXsLBT22DpqexyAAVbQyA2YptDiGCEgBbaxJC12JhNyPqnWXYef2Y+aI0IefMiYIhRZ2RZJ1PbrdqSgv7v26qAQQ0WuG3g2fB7tEcIrtWIC8K0xYqi3MDjj5YciVg0jZV6eMz44CNY4xCyrW81IakdqerGWAP7Vlsi2WngbgQSnUVuBHIsFVQX23iTTUc9HAKjwwFHHzvHJyYlIyMlZsNURfAFPVViyYcxkzUAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjAtMDEtMTFUMTA6NTA6MjArMDA6MDBczfYxAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIwLTAxLTExVDEwOjUwOjIwKzAwOjAwLZBOjQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAAASUVORK5CYII=',
     },
     createOnglet: function(icon, title, onClickMethod, rightClickMethod){
         // **********
@@ -200,7 +202,7 @@ var HFRGMUtils = {
             LocalMPStorage.datas.superFavs.settings.simpleFavColorHover = '#DEDFDF';
         }
         if (!LocalMPStorage.datas.hfr4k){
-            LocalMPStorage.datas.hfr4k = { lastVersion : '2000.1.1.0'};
+            LocalMPStorage.datas.hfr4k = { lastVersion : '2000.01.01.0'};
         }
         if (!LocalMPStorage.datas.egoQuote){
             LocalMPStorage.datas.egoQuote = { active : false, color: '#DCF3F2'};
@@ -225,6 +227,9 @@ var HFRGMUtils = {
         }
         if(!LocalMPStorage.datas.mpFlags){
             LocalMPStorage.datas.mpFlags = { active : false, list : []};
+        }
+        if(!LocalMPStorage.datas.catMP){
+            LocalMPStorage.datas.catMP = { active : false};
         }
     },
     isNewVersion: function(){
@@ -515,6 +520,48 @@ var HFRGMUtils = {
                 }
             }
         }
+    },
+    getUnreadMPs: function(){
+        // **********
+        // HFR4K_GM
+        // Return list of unread MPs
+        // **********
+
+        return new Promise((resolve, reject) => {
+            try {
+                var result = [];
+                var url = 'https://forum.hardware.fr/forum1.php?config=hfr.inc&cat=prive&page=1&subcat=&sondage=0&owntopic=0&trash=0&trash_post=0&moderation=0&new=0&nojs=0&subcatgroup=0';
+
+                // Get the first MP page
+                mpStorage.loadPage(url, 'get', void 0, function (resp) {
+
+                    resp.querySelectorAll('.sujet').forEach(function(it){
+                        // For each unread MP
+                        if (it.querySelector('.sujetCase1').querySelector('img').getAttribute('alt') === 'On'){
+
+                            // Create an object with infos
+                            const params = new URLSearchParams(it.querySelector('.sujetCase3 > a').href);
+                            var curMP = {
+                                colTitreMP : it.querySelector('.sujetCase3').innerHTML,
+                                colPageNumber : it.querySelector('.sujetCase4').innerHTML,
+                                colAuthor : it.querySelector('.sujetCase6').innerHTML,
+                                colNBReply : it.querySelector('.sujetCase7').innerHTML,
+                                colNBRead : it.querySelector('.sujetCase8').innerHTML,
+                                colLastPostInfos : it.querySelector('.sujetCase9').innerHTML,
+                                isDT : HFRGMUtils.hasFlagAndIsDT(params.get('post')), // #4 TODO Use hasFlag
+                                topicID : params.get('post')
+
+                            };
+                            result.push(curMP);
+                        }
+                    });
+                    // We're done
+                    resolve(result);
+                });
+            } catch (e) {
+                reject(e);
+            }
+        });
     }
 };
 
@@ -539,6 +586,7 @@ var LocalMPStorage = {
         blacklist : 'ListeNoire',
         fastValid : 'FastValid',
         dtCloud: 'DTCloud',
+        catMP: 'CatMP',
         hfr4k : 'HFR4K'
     },
     /* Methods */
@@ -635,6 +683,10 @@ var LocalMPStorage = {
                 LocalMPStorage.datas.mpFlags.sourceName = LocalMPStorage.toolName;
                 LocalMPStorage.datas.mpFlags.lastUpdate = Date.now();
                 break;
+            case LocalMPStorage.domains.catMP:
+                LocalMPStorage.datas.catMP.sourceName = LocalMPStorage.toolName;
+                LocalMPStorage.datas.catMP.lastUpdate = Date.now();
+                break;
             case LocalMPStorage.domains.hfr4k:
                 LocalMPStorage.datas.hfr4k.sourceName = LocalMPStorage.toolName;
                 LocalMPStorage.datas.hfr4k.lastUpdate = Date.now();
@@ -661,8 +713,6 @@ var HFR4K = {
     showSettings : false,
     /* Element of the main tab */
     mainTab: void 0,
-    /* Image MP Tab*/
-    imageMP : 'https://forum-images.hardware.fr/themes_static/images_forum/1/pv.gif',
     /* Functions */
     initPromise: function(){
         // **********
@@ -708,7 +758,6 @@ var HFR4K = {
         // Remove MP Link
         var mpHead = document.querySelector('table.none > tbody > tr > td > div.left');
         if(mpHead != null) {
-            HFR4K.imageMP = 'https://forum-images.hardware.fr/themes_static/images_forum/1/newmp.gif' === mpHead.querySelectorAll('img')[0].src ? HFRGMUtils.icons.newMP : 'https://forum-images.hardware.fr/themes_static/images_forum/1/pv.gif';
             mpHead.innerHTML = '';
         }
 
@@ -833,6 +882,9 @@ var HFR4K = {
 
         // Render Easy Flags
         HFR4K.renderEasyFlags();
+
+        // MPs Cat
+        HFR4K.renderMPCat();
 
         // THEN Render Compact Cats
         HFR4K.renderCompactCats();
@@ -1051,6 +1103,19 @@ var HFR4K = {
             LocalMPStorage.updateMPStorage(LocalMPStorage.domains.dtCloud);
         }));
 
+        // *************************************************************************************** //
+        // *** MP Cat *** //
+        // *************************************************************************************** //
+        taBody.appendChild(HFR4K.getCatSetting('Catégorie MP dans les drapeaux'));
+
+        // Setting catMP Activation
+        taBody.appendChild(HFR4K.getCheckboxSetting('Activer ?', LocalMPStorage.datas.catMP.active, function(cb){
+            LocalMPStorage.datas.catMP.active = !LocalMPStorage.datas.catMP.active;
+            cb.checked = LocalMPStorage.datas.catMP.active;
+            LocalMPStorage.updateMPStorage(LocalMPStorage.domains.catMP);
+        }));
+
+
         // FIRE IN THE HOLE !!!
         elementAfter.parentNode.insertBefore(table, elementAfter);
     },
@@ -1171,6 +1236,97 @@ var HFR4K = {
         linkColorTable.innerHTML = 'Palette de couleurs';
         return linkColorTable;
     },
+    createUnreadMPRow: function(rowContent){
+        // **********
+        // HFR4K_GM
+        // Create a row for the given MP
+        // **********
+
+        // The row...
+        var rowMP = document.createElement('tr');
+        rowMP.setAttribute('class', 'sujet ligne_booleen cBackCouleurTab1');
+
+        // Icon col Unread MSG
+        var colMPIcon = document.createElement('td');
+        colMPIcon.setAttribute('class', 'sujetCase1 cBackCouleurTab2');
+        colMPIcon.innerHTML = '<img src="https://forum-images.hardware.fr/themes_static/images_forum/1/closedbp.gif" title="Nouveau message privé" alt="On">';
+        rowMP.appendChild(colMPIcon);
+
+        // Icon col MP/DT
+        var colDT = document.createElement('td');
+        colDT.setAttribute('class', 'sujetCase2');
+        var imgMPType = document.createElement('img');
+        imgMPType.setAttribute('title', rowContent.isDT ? 'Dark Topic' : 'MP');
+        imgMPType.setAttribute('src', rowContent.isDT ? HFRGMUtils.icons.darktopic : HFRGMUtils.icons.simpleMP);
+        colDT.appendChild(imgMPType);
+        rowMP.appendChild(colDT);
+
+        // Title col
+        var colTitreMP = document.createElement('td');
+        colTitreMP.setAttribute('class', 'sujetCase3');
+        colTitreMP.innerHTML = rowContent.colTitreMP;
+        rowMP.appendChild(colTitreMP);
+
+        // Page number col
+        var colPageNumber = document.createElement('td');
+        colPageNumber.setAttribute('class', 'sujetCase4');
+        colPageNumber.innerHTML = rowContent.colPageNumber;
+        rowMP.appendChild(colPageNumber);
+
+        // Flag col
+        var colFlag = document.createElement('td');
+        colFlag.setAttribute('class', 'sujetCase5');
+        // It's a DT
+        if (rowContent.isDT && LocalMPStorage.datas.mpFlags.active){
+            // Retrieve the flag
+            var flag = HFRGMUtils.getFlagDT(rowContent.topicID);
+            // Create flag link
+            var linkFlagDT = document.createElement('a');
+            // Build the URL
+            linkFlagDT.href = 'https://forum.hardware.fr/forum2.php?config=hfr.inc&cat=prive&post='+flag.post+'&page='+flag.page+'&p=1&sondage=0&owntopic=0&trash=0&trash_post=0&print=0&numreponse=0&quote_only=0&new=0&nojs=0#'+flag.href;
+            var imgFlagDT = document.createElement('img');
+            imgFlagDT.setAttribute('title', 'Aller au dernier message lu');
+            imgFlagDT.setAttribute('src', 'https://forum-images.hardware.fr/themes_static/images_forum/1/flag1.gif');
+            linkFlagDT.appendChild(imgFlagDT);
+            colFlag.appendChild(linkFlagDT);
+        }else {
+            // Simple MP
+            colFlag.innerHTML = '&nbsp;';
+        }
+        rowMP.appendChild(colFlag);
+
+        // Author col
+        var colAuthor = document.createElement('td');
+        colAuthor.setAttribute('class', 'sujetCase6 cBackCouleurTab2');
+        colAuthor.innerHTML = rowContent.colAuthor;
+        rowMP.appendChild(colAuthor);
+
+        // NB Replies col
+        var colNBReply = document.createElement('td');
+        colNBReply.setAttribute('class', 'sujetCase7');
+        colNBReply.innerHTML = rowContent.colNBReply;
+        rowMP.appendChild(colNBReply);
+
+        // NB Read col
+        var colNBRead = document.createElement('td');
+        colNBRead.setAttribute('class', 'sujetCase8');
+        colNBRead.innerHTML = rowContent.colNBRead;
+        rowMP.appendChild(colNBRead);
+
+        // Last post infos col
+        var colLastPostInfos = document.createElement('td');
+        colLastPostInfos.setAttribute('class', 'sujetCase9 cBackCouleurTab2');
+        colLastPostInfos.innerHTML = rowContent.colLastPostInfos;
+        rowMP.appendChild(colLastPostInfos);
+
+        // Useless col to fill the void
+        var colMP10 = document.createElement('td');
+        colMP10.setAttribute('class', 'sujetCase10');
+        rowMP.appendChild(colMP10);
+
+        // We're done
+        return rowMP;
+    },
     renderModal: function(content, onConfirm){
         // **********
         // HFR4K_GM
@@ -1228,10 +1384,12 @@ var HFR4K = {
 
         // Tab for MPs
         if(!HFRGMUtils.pageCheck.isOnMP()){
-            HFRGMUtils.createOnglet(HFR4K.imageMP ,'Ouvrir les MPs', function(tab){
-                window.location = 'https://forum.hardware.fr/forum1.php?config=hfr.inc&cat=prive&page=1&subcat=&sondage=0&owntopic=0&trash=0&trash_post=0&moderation=0&new=0&nojs=0&subcatgroup=0';
-            }, function(tab){
-                GM.openInTab('https://forum.hardware.fr/forum1.php?config=hfr.inc&cat=prive&page=1&subcat=&sondage=0&owntopic=0&trash=0&trash_post=0&moderation=0&new=0&nojs=0&subcatgroup=0');
+            HFRGMUtils.getUnreadMPs().then(function(unreads){
+                HFRGMUtils.createOnglet(unreads.length > 0 ? HFRGMUtils.icons.newMP : 'https://forum-images.hardware.fr/themes_static/images_forum/1/pv.gif' ,'Ouvrir les MPs', function(tab){
+                    window.location = 'https://forum.hardware.fr/forum1.php?config=hfr.inc&cat=prive&page=1&subcat=&sondage=0&owntopic=0&trash=0&trash_post=0&moderation=0&new=0&nojs=0&subcatgroup=0';
+                }, function(tab){
+                    GM.openInTab('https://forum.hardware.fr/forum1.php?config=hfr.inc&cat=prive&page=1&subcat=&sondage=0&owntopic=0&trash=0&trash_post=0&moderation=0&new=0&nojs=0&subcatgroup=0');
+                });
             });
         }
 
@@ -1562,7 +1720,7 @@ var HFR4K = {
 
         if (HFRGMUtils.pageCheck.isOnStars() || HFRGMUtils.pageCheck.isOnCyans() || HFRGMUtils.pageCheck.isOnRead()) {
             if(document.querySelector('table.hfr4kMainTab')){
-                document.querySelector('table.hfr4kMainTab').querySelectorAll('tr.cBackHeader.fondForum1fCat').forEach(function(cat){
+                document.querySelector('table.hfr4kMainTab').querySelectorAll('tr.cBackHeader.fondForum1fCat:not(.hfr4kMPCat)').forEach(function(cat){
                     // Scan the content of the cat
                     var hasTopics = false;
                     var nextCat = false;
@@ -2043,26 +2201,68 @@ var HFR4K = {
             }else if (HFRGMUtils.pageCheck.isOnMPList()){
                 // Listing MPs, we display the flags
 
-                // Browse all mps to find the DT
+                // Browse all mps to find the DTs
                 document.querySelectorAll('.sujet').forEach(function(topicRow){
                     const params = new URLSearchParams(topicRow.querySelector('.sujetCase3 > a').href);
                     if (HFRGMUtils.hasFlagAndIsDT(params.get('post'))){
                         // #4 TODO Use hasFlagDT when https://github.com/Aynolor/SuperHFRplus/issues/62 is fixed
                         // It's a known DT so we get the flag
                         var flag = HFRGMUtils.getFlagDT(params.get('post'));
-                        // Create icon to open the flag
+                        // Create icon to show it's a DT
                         var imgBlocDT = topicRow.querySelector('.sujetCase3').previousSibling;
+                        var imgDT = document.createElement('img');
+                        imgDT.setAttribute('title', 'Dark Topic');
+                        imgDT.setAttribute('src', HFRGMUtils.icons.darktopic);
+                        imgBlocDT.appendChild(imgDT);
+
+                        // Create flag link
                         var linkFlagDT = document.createElement('a');
                         // Build the URL
                         linkFlagDT.href = 'https://forum.hardware.fr/forum2.php?config=hfr.inc&cat=prive&post='+flag.post+'&page='+flag.page+'&p=1&sondage=0&owntopic=0&trash=0&trash_post=0&print=0&numreponse=0&quote_only=0&new=0&nojs=0#'+flag.href;
                         var imgFlagDT = document.createElement('img');
                         imgFlagDT.setAttribute('title', 'Aller au dernier message lu');
-                        imgFlagDT.setAttribute('src', HFRGMUtils.icons.darktopic);
+                        imgFlagDT.setAttribute('src', 'https://forum-images.hardware.fr/themes_static/images_forum/1/flag1.gif');
                         linkFlagDT.appendChild(imgFlagDT);
-                        imgBlocDT.appendChild(linkFlagDT);
+                        topicRow.querySelector('.sujetCase5').appendChild(linkFlagDT);
+
                     }
                 });
             }
+        }
+    },
+    renderMPCat: function(){
+        // **********
+        // HFR4K_GM
+        // Add a MP category on the flags page
+        // **********
+
+        if (LocalMPStorage.datas.catMP.active && (HFRGMUtils.pageCheck.isOnStars() || HFRGMUtils.pageCheck.isOnCyans() || HFRGMUtils.pageCheck.isOnRead())) {
+            var catClass = 'fondForum1fCat';
+
+            // Get the first current category to insert the MP cat before
+            var curFirstCat = document.querySelector('.fondForum1fCat');
+
+            var mpCat = document.createElement('tr');
+            mpCat.setAttribute('class', 'hfr4kMPCat cBackHeader fondForum1fCat');
+
+            var mpCatHeader = document.createElement('th');
+            mpCatHeader.setAttribute('class', 'padding');
+            mpCatHeader.setAttribute('colspan', '10');
+
+            var mpCatLink = document.createElement('a');
+            mpCatLink.setAttribute('class', 'cHeader');
+            mpCatLink.setAttribute('href', 'https://forum.hardware.fr/forum1.php?config=hfr.inc&cat=prive&page=1&subcat=&sondage=0&owntopic=0&trash=0&trash_post=0&moderation=0&new=0&nojs=0&subcatgroup=0');
+            mpCatLink.textContent = 'Messages privés';
+            mpCatHeader.appendChild(mpCatLink);
+            mpCat.appendChild(mpCatHeader);
+            curFirstCat.parentNode.insertBefore(mpCat, curFirstCat);
+
+            // Fill the category
+            HFRGMUtils.getUnreadMPs().then(function(unreads){
+                unreads.forEach(function(mp){
+                    curFirstCat.parentNode.insertBefore(HFR4K.createUnreadMPRow(mp), curFirstCat);
+                });
+            });
         }
     }
 };
