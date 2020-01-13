@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          [BETA] HFR4K
 // @author        Wiripse
-// @version       2020.01.13.1
+// @version       2020.01.13.2
 // @description   HFR en mieux
 // @namespace     https://wiripse.github.io/HFRGMTools/
 // @icon          data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAQAAAAAYLlVAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAAHdElNRQfjCgIILBJ4Jlj4AAAEPUlEQVRo3u3YfWjVVRgH8M91c9MWmWYyNaVGFOZL+VLqRJl2TcawLCJJLDN8KSWEElKwtH/UIhPJZiJCIIlmIKJk6rImaa6maVqCqFmoufLdfNna/PWHP+92U3fvxrb+8H7PH79znnt+z/N9nuf8znnOJYUUUrjVEUFPr8gB33lb1BRzbUWeN6U3ou1DCu1msApBrLW1QeBzsLaGvHFahbx0czVXYZtKbHPCe8rNB+9Lb8QIpMuVYQ7lAvMaMdA3xzyBy+kycB6TjWhC46sVOo/M6hB/IKMJCQxUeLVTTSADhxxqAuM5cmReG8QvsmVmNQGBWWZWD5o1gcFakSKQIlCfrbaNYTrjgDUqQ1lrwzW33rHYrB5yHbVBRUMTyLVKh7C/W54z6GGDbJR71jpkWmCCCErkO12burqmYIiNMfM87C3woWyQaYlMnWwxUQT0NbV2hXUjkG+dLFXGaibTD+iPjgZhvteRbaxSj2GrLvagX8MRGGG1lv7xvE8EKrTFX4iCle4Ai7TDR4YYrAt+bygCz/lMpgojrQL3uw/FIYHTSkMiXDLGVIsVSnc+0VGfLIFRPtXcRcOVWmgEhoJNIqL42m36gsMGKPatl3DUE/Y2BIEJlkl3wZMO2GKywtDvMnt1k40iraRhoz7uUqo3tuhteyLVyRCY5GPNnDXUEcXuxUFp8lAkCAO/yRHPeFmBcb7UFgs8riyx8sT7wDRzcNIwh+0NP7civbVBUZiKww5gjWtH7UXjLU8qtgkjUGA2ygy2Q6fQfGBt6HeRDIOwKTa/I5idrPnEBMaLOCXPHuwywjTTFNgpin2OyJUVRuIpW40xQxmmeSBZAolS0BLn5LgHXLDDQb/KkhuajeKKzSZaJOJRA71ovdut0F95chQCgVk1nvF49brLxCWd5QsEhqNEoFTEsfDX37T2rkAQ3i1uhFkCwbVnohQsttCVOEkLLURRqVhrvVGkm/b4Hp0tMkMJpuiajP+JCFzxmrv1Cds6lNkvihLnPCQNxeGm9IJ1GGmM0YgoSIZAMsfxKafC3kG0sVwPbMDf4A0P4qD9xtqlowXW4up1JwnUvgbi0d3FMNentAdbYmtjPMhTHo6Pa3sTLXVaA/HYI982JxUZ4g/wtKVOOGCSJeAb+bb50xeiTjRUCmqi2IC48UnjjIuTbLa5Lgr/96I0RSBFIP4ryInVdQ2Fy7arRLpH7FKpne7hP3Ix1NyIGqMtBIUCC2U5EZNftxH90qiRDmLOXkWsVK1OQa5e0hrc8CUlYIqlflKpq+4iquy8NiHiqA62m/mfQ7c2VPnRmRvI79SzDi40845+jrGgHnm9ca3/cz00zSfLynq8eH2x0a0eWlbIunqHzdYl6eC1sVyas3aqqiFN00srVUbFaofEidzneNIJi8P0m3o0ve7KIvWiEDU6vAFU46hlvqqfRymkkMKtjX8BU3kXUDClbEwAAAAldEVYdGRhdGU6Y3JlYXRlADIwMTktMTAtMDJUMDg6NDQ6MTgrMDA6MDAqoU1GAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE5LTEwLTAyVDA4OjQ0OjE4KzAwOjAwW/z1+gAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAAASUVORK5CYII=
@@ -20,6 +20,7 @@
 // ==/UserScript==
 
 // Historique
+// 2020.01.13.2 : Fix Ezzzi Draps cat MP. Mutualisation du code.
 // 2020.01.13.1 : Ezzzi Draps pour les DT.
 // 2020.01.13.0 : Flag DT que si message(s) non lu(s).
 // 2020.01.11.1 : Catégorie MPs dans les drapeaux. Petit fix sur la gestion des DTs.
@@ -56,7 +57,7 @@
 // 2019.9.30.1 : Fix pour que ça fonctionne aussi dans les drapals de catégories
 // 2019.9.30.0 : Premier jet
 
-const version = '2020.01.13.1';
+const version = '2020.01.13.2';
 
 //**********************************************************************//
 //************************* GM/VM/TM/FDP SHIT **************************//
@@ -564,6 +565,47 @@ var HFRGMUtils = {
                 reject(e);
             }
         });
+    },
+    addEzzziDrapHandling: function(caseElement, linkUrl){
+        // **********
+        // HFR4K_GM
+        // Add function for EzzziDrap on the given element
+        // **********
+
+        // Handle rightClick
+        caseElement.oncontextmenu = function () {
+            // Right click : Open in new tab
+            GM.openInTab(linkUrl);
+            // Block contextmenu
+            return false;
+        };
+
+        // Handle click
+        caseElement.onclick = function(event){
+            if(event.ctrlKey || event.metaKey){
+                // Ctrl + Click : Open in a new tab
+                GM.openInTab(linkUrl);
+                // We do this but it's useless
+                event.preventDefault();
+                event.stopPropagation();
+                return false;
+            }else{
+                // Click : Open in current tab
+                document.location.href = linkUrl;
+                return false;
+            }
+        };
+
+        // Handle "mollette" click
+        caseElement.onauxclick = function(event){
+            if(event.button === 1){
+                GM.openInTab(linkUrl);
+                // We do this but it's useless
+                event.preventDefault();
+                event.stopPropagation();
+                return false;
+            }
+        };
     }
 };
 
@@ -1283,14 +1325,18 @@ var HFR4K = {
             // Retrieve the flag
             var flag = HFRGMUtils.getFlagDT(rowContent.topicID);
             // Create flag link
+            var urlFlag = 'https://forum.hardware.fr/forum2.php?config=hfr.inc&cat=prive&post='+flag.post+'&page='+flag.page+'&p=1&sondage=0&owntopic=0&trash=0&trash_post=0&print=0&numreponse=0&quote_only=0&new=0&nojs=0#'+flag.href;
             var linkFlagDT = document.createElement('a');
             // Build the URL
-            linkFlagDT.href = 'https://forum.hardware.fr/forum2.php?config=hfr.inc&cat=prive&post='+flag.post+'&page='+flag.page+'&p=1&sondage=0&owntopic=0&trash=0&trash_post=0&print=0&numreponse=0&quote_only=0&new=0&nojs=0#'+flag.href;
+            linkFlagDT.href = urlFlag;
             var imgFlagDT = document.createElement('img');
             imgFlagDT.setAttribute('title', 'Aller au dernier message lu');
             imgFlagDT.setAttribute('src', 'https://forum-images.hardware.fr/themes_static/images_forum/1/flag1.gif');
             linkFlagDT.appendChild(imgFlagDT);
             colFlag.appendChild(linkFlagDT);
+
+            // Add global Ezzzi Flag
+            HFRGMUtils.addEzzziDrapHandling(colFlag, urlFlag);
         }else {
             // Simple MP
             colFlag.innerHTML = '&nbsp;';
@@ -1816,40 +1862,8 @@ var HFR4K = {
                         // Add special style
                         caseDrapal.classList.add('hfr4kEzzziDrap');
 
-                        // Handle rightClick
-                        caseDrapal.oncontextmenu = function () {
-                            // Right click : Open in new tab
-                            GM.openInTab(drapURL);
-                            // Block contextmenu
-                            return false;
-                        };
-
-                        // Handle click
-                        caseDrapal.onclick = function(event){
-                            if(event.ctrlKey || event.metaKey){
-                                // Ctrl + Click : Open in a new tab
-                                GM.openInTab(drapURL);
-                                // We do this but it's useless
-                                event.preventDefault();
-                                event.stopPropagation();
-                                return false;
-                            }else{
-                                // Click : Open in current tab
-                                document.location.href = drapURL;
-                                return false;
-                            }
-                        };
-
-                        // Handle "mollette" click
-                        caseDrapal.onauxclick = function(event){
-                            if(event.button === 1){
-                                GM.openInTab(drapURL);
-                                // We do this but it's useless
-                                event.preventDefault();
-                                event.stopPropagation();
-                                return false;
-                            }
-                        };
+                        // Add global Ezzzi Flag
+                        HFRGMUtils.addEzzziDrapHandling(caseDrapal, drapURL);
 
                         // Handle double click on topic name
                         let topicName = topic.querySelector('td.sujetCase3');
@@ -2242,40 +2256,8 @@ var HFR4K = {
                                 // Safety so the special style won't be removed elsewhere
                                 caseDrapal.classList.add('hfr4kFixedClass');
 
-                                // Handle rightClick
-                                caseDrapal.oncontextmenu = function () {
-                                    // Right click : Open in new tab
-                                    GM.openInTab(urlFlag);
-                                    // Block contextmenu
-                                    return false;
-                                };
-
-                                // Handle click
-                                caseDrapal.onclick = function(event){
-                                    if(event.ctrlKey || event.metaKey){
-                                        // Ctrl + Click : Open in a new tab
-                                        GM.openInTab(urlFlag);
-                                        // We do this but it's useless
-                                        event.preventDefault();
-                                        event.stopPropagation();
-                                        return false;
-                                    }else{
-                                        // Click : Open in current tab
-                                        document.location.href = urlFlag;
-                                        return false;
-                                    }
-                                };
-
-                                // Handle "mollette" click
-                                caseDrapal.onauxclick = function(event){
-                                    if(event.button === 1){
-                                        GM.openInTab(urlFlag);
-                                        // We do this but it's useless
-                                        event.preventDefault();
-                                        event.stopPropagation();
-                                        return false;
-                                    }
-                                };
+                                // Add global Ezzzi Flag
+                                HFRGMUtils.addEzzziDrapHandling(caseDrapal, urlFlag);
                             }
                         }
                     }

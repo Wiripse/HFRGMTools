@@ -171,6 +171,10 @@ Ajoute une catégorie pour les MP non lus (de la première page) sur les pages d
 
 ## Changelog
 
+### 2020.01.13.2
+
+Fix Ezzzi Draps cat MP. Mutualisation du code.
+
 ### 2020.01.13.1
 
 Ezzzi Draps pour les DT.
