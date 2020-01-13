@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          [BETA] HFR4K
 // @author        Wiripse
-// @version       2020.01.13.0
+// @version       2020.01.13.1
 // @description   HFR en mieux
 // @namespace     https://wiripse.github.io/HFRGMTools/
 // @icon          data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAQAAAAAYLlVAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAAHdElNRQfjCgIILBJ4Jlj4AAAEPUlEQVRo3u3YfWjVVRgH8M91c9MWmWYyNaVGFOZL+VLqRJl2TcawLCJJLDN8KSWEElKwtH/UIhPJZiJCIIlmIKJk6rImaa6maVqCqFmoufLdfNna/PWHP+92U3fvxrb+8H7PH79znnt+z/N9nuf8znnOJYUUUrjVEUFPr8gB33lb1BRzbUWeN6U3ou1DCu1msApBrLW1QeBzsLaGvHFahbx0czVXYZtKbHPCe8rNB+9Lb8QIpMuVYQ7lAvMaMdA3xzyBy+kycB6TjWhC46sVOo/M6hB/IKMJCQxUeLVTTSADhxxqAuM5cmReG8QvsmVmNQGBWWZWD5o1gcFakSKQIlCfrbaNYTrjgDUqQ1lrwzW33rHYrB5yHbVBRUMTyLVKh7C/W54z6GGDbJR71jpkWmCCCErkO12burqmYIiNMfM87C3woWyQaYlMnWwxUQT0NbV2hXUjkG+dLFXGaibTD+iPjgZhvteRbaxSj2GrLvagX8MRGGG1lv7xvE8EKrTFX4iCle4Ai7TDR4YYrAt+bygCz/lMpgojrQL3uw/FIYHTSkMiXDLGVIsVSnc+0VGfLIFRPtXcRcOVWmgEhoJNIqL42m36gsMGKPatl3DUE/Y2BIEJlkl3wZMO2GKywtDvMnt1k40iraRhoz7uUqo3tuhteyLVyRCY5GPNnDXUEcXuxUFp8lAkCAO/yRHPeFmBcb7UFgs8riyx8sT7wDRzcNIwh+0NP7civbVBUZiKww5gjWtH7UXjLU8qtgkjUGA2ygy2Q6fQfGBt6HeRDIOwKTa/I5idrPnEBMaLOCXPHuwywjTTFNgpin2OyJUVRuIpW40xQxmmeSBZAolS0BLn5LgHXLDDQb/KkhuajeKKzSZaJOJRA71ovdut0F95chQCgVk1nvF49brLxCWd5QsEhqNEoFTEsfDX37T2rkAQ3i1uhFkCwbVnohQsttCVOEkLLURRqVhrvVGkm/b4Hp0tMkMJpuiajP+JCFzxmrv1Cds6lNkvihLnPCQNxeGm9IJ1GGmM0YgoSIZAMsfxKafC3kG0sVwPbMDf4A0P4qD9xtqlowXW4up1JwnUvgbi0d3FMNentAdbYmtjPMhTHo6Pa3sTLXVaA/HYI982JxUZ4g/wtKVOOGCSJeAb+bb50xeiTjRUCmqi2IC48UnjjIuTbLa5Lgr/96I0RSBFIP4ryInVdQ2Fy7arRLpH7FKpne7hP3Ix1NyIGqMtBIUCC2U5EZNftxH90qiRDmLOXkWsVK1OQa5e0hrc8CUlYIqlflKpq+4iquy8NiHiqA62m/mfQ7c2VPnRmRvI79SzDi40845+jrGgHnm9ca3/cz00zSfLynq8eH2x0a0eWlbIunqHzdYl6eC1sVyas3aqqiFN00srVUbFaofEidzneNIJi8P0m3o0ve7KIvWiEDU6vAFU46hlvqqfRymkkMKtjX8BU3kXUDClbEwAAAAldEVYdGRhdGU6Y3JlYXRlADIwMTktMTAtMDJUMDg6NDQ6MTgrMDA6MDAqoU1GAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE5LTEwLTAyVDA4OjQ0OjE4KzAwOjAwW/z1+gAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAAASUVORK5CYII=
@@ -20,6 +20,7 @@
 // ==/UserScript==
 
 // Historique
+// 2020.01.13.1 : Ezzzi Draps pour les DT.
 // 2020.01.13.0 : Flag DT que si message(s) non lu(s).
 // 2020.01.11.1 : Catégorie MPs dans les drapeaux. Petit fix sur la gestion des DTs.
 // 2020.01.11.0 : Encore un correctif sur le contrôle de version...
@@ -55,7 +56,7 @@
 // 2019.9.30.1 : Fix pour que ça fonctionne aussi dans les drapals de catégories
 // 2019.9.30.0 : Premier jet
 
-const version = '2020.01.13.0';
+const version = '2020.01.13.1';
 
 //**********************************************************************//
 //************************* GM/VM/TM/FDP SHIT **************************//
@@ -1276,7 +1277,7 @@ var HFR4K = {
 
         // Flag col
         var colFlag = document.createElement('td');
-        colFlag.setAttribute('class', 'sujetCase5');
+        colFlag.setAttribute('class', LocalMPStorage.datas.ezzziDrap.active ? 'sujetCase5 hfr4kEzzziDrap' : 'sujetCase5');
         // It's a DT
         if (rowContent.isDT && LocalMPStorage.datas.mpFlags.active){
             // Retrieve the flag
@@ -1799,7 +1800,7 @@ var HFR4K = {
         // **********
 
         // Reset
-        document.querySelectorAll('.hfr4kEzzziDrap').forEach(function(item){
+        document.querySelectorAll('.hfr4kEzzziDrap:not(.hfr4kFixedClass)').forEach(function(item){
             HFRGMUtils.removeClassesFromElement(item, ['hfr4kEzzziDrap']);
         });
 
@@ -2216,16 +2217,66 @@ var HFR4K = {
                         imgDT.setAttribute('src', HFRGMUtils.icons.darktopic);
                         imgBlocDT.appendChild(imgDT);
 
+                        // Create flag link if unread
                         if (topicRow.querySelector('.sujetCase1').querySelector('img').getAttribute('alt') === 'On'){
-                            // Create flag link
-                            var linkFlagDT = document.createElement('a');
                             // Build the URL
-                            linkFlagDT.href = 'https://forum.hardware.fr/forum2.php?config=hfr.inc&cat=prive&post='+flag.post+'&page='+flag.page+'&p=1&sondage=0&owntopic=0&trash=0&trash_post=0&print=0&numreponse=0&quote_only=0&new=0&nojs=0#'+flag.href;
+                            var urlFlag = 'https://forum.hardware.fr/forum2.php?config=hfr.inc&cat=prive&post='+flag.post+'&page='+flag.page+'&p=1&sondage=0&owntopic=0&trash=0&trash_post=0&print=0&numreponse=0&quote_only=0&new=0&nojs=0#'+flag.href;
+
+                            // Link
+                            var linkFlagDT = document.createElement('a');
+                            linkFlagDT.href = urlFlag;
+                            // Flag icon
                             var imgFlagDT = document.createElement('img');
                             imgFlagDT.setAttribute('title', 'Aller au dernier message lu');
                             imgFlagDT.setAttribute('src', 'https://forum-images.hardware.fr/themes_static/images_forum/1/flag1.gif');
                             linkFlagDT.appendChild(imgFlagDT);
                             topicRow.querySelector('.sujetCase5').appendChild(linkFlagDT);
+
+
+                            // Ezzzi drap if necessary
+                            if(LocalMPStorage.datas.ezzziDrap.active){
+                                var caseDrapal = topicRow.querySelector('.sujetCase5');
+
+                                // Add special style
+                                caseDrapal.classList.add('hfr4kEzzziDrap');
+                                // Safety so the special style won't be removed elsewhere
+                                caseDrapal.classList.add('hfr4kFixedClass');
+
+                                // Handle rightClick
+                                caseDrapal.oncontextmenu = function () {
+                                    // Right click : Open in new tab
+                                    GM.openInTab(urlFlag);
+                                    // Block contextmenu
+                                    return false;
+                                };
+
+                                // Handle click
+                                caseDrapal.onclick = function(event){
+                                    if(event.ctrlKey || event.metaKey){
+                                        // Ctrl + Click : Open in a new tab
+                                        GM.openInTab(urlFlag);
+                                        // We do this but it's useless
+                                        event.preventDefault();
+                                        event.stopPropagation();
+                                        return false;
+                                    }else{
+                                        // Click : Open in current tab
+                                        document.location.href = urlFlag;
+                                        return false;
+                                    }
+                                };
+
+                                // Handle "mollette" click
+                                caseDrapal.onauxclick = function(event){
+                                    if(event.button === 1){
+                                        GM.openInTab(urlFlag);
+                                        // We do this but it's useless
+                                        event.preventDefault();
+                                        event.stopPropagation();
+                                        return false;
+                                    }
+                                };
+                            }
                         }
                     }
                 });
