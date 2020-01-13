@@ -171,6 +171,10 @@ Ajoute une catégorie pour les MP non lus (de la première page) sur les pages d
 
 ## Changelog
 
+### 2020.01.13.0
+
+Flag DT que si message(s) non lu(s).
+
 ### 2020.01.11.1
 
 Catégorie MPs dans les drapeaux. Petit fix sur la gestion des DTs.
