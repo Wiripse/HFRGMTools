@@ -171,6 +171,10 @@ Ajoute une catégorie pour les MP non lus (de la première page) sur les pages d
 
 ## Changelog
 
+### 2020.04.21.0
+
+Correction Flag DT pour ne plus utiliser les URLs et la donnée isDT maintenant que HFR+ est corrigé de son côté.
+
 ### 2020.01.13.2
 
 Fix Ezzzi Draps cat MP. Mutualisation du code.
