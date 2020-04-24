@@ -11,6 +11,8 @@ var mpStorage = {
     mpName: 'a2bcc09b796b8c6fab77058ff8446c34',
     /* Recipient of the MPStorage since we can't send MP to ourself */
     mpRecipient: 'MultiMP',
+    /* Toolname */
+    toolName: 'HFRGMTools',
     /* Is the MPStorage's context initiated ? */
     /* When it is, username, mpId & mpRedId are set */
     initiated: false,
@@ -19,6 +21,32 @@ var mpStorage = {
     /* Local copy of the data stored in MPStorage */
     storageData: {},
     /* Methods */
+    getDefaultData: function(){
+        // **********
+        // HFRGMTools
+        // Return the default JSON datas used to create a MPStorage or reset it
+        // **********
+        return {
+            data: [
+                {
+                    version: '0.1',
+                    sourceName: mpStorage.toolName,
+                    lastUpdate: Date.now()
+                }
+            ],
+            sourceName: mpStorage.toolName,
+            lastUpdate: Date.now()
+        };
+    },
+
+    isValidContent: function(jsonContent){
+        // **********
+        // HFRGMTools
+        // Tell is the JSON stored in MPStorage is valid or not
+        // **********
+        return jsonContent && !!jsonContent.lastUpdate && !!jsonContent.data;
+    },
+
     initLocalStorage: function(username, mpId, mpRepId, callback){
         // **********
         // HFRGMTools
@@ -38,12 +66,17 @@ var mpStorage = {
             var dataz;
 
             // Try to read MPStorage
-            mpStorage.loadPage(url, 'get', args, function (resp) {
+            mpStorage.makeWebRequest(url, 'get', args, function (resp) {
 
                 // Try if content of the MP is OK
                 if (resp.getElementById('content_form')){
-                    dataz = JSON.parse(resp.getElementById('content_form').value);
-                    initOk = !!dataz.lastUpdate;
+                    try {
+                        dataz = JSON.parse(resp.getElementById('content_form').value);
+                        initOk = mpStorage.isValidContent(dataz);
+                    }catch(e){
+                        initOk = false;
+                        console.warn('Invalid MPStorage content', resp.getElementById('content_form').value);
+                    }
                 }
 
                 if(initOk){
@@ -101,18 +134,30 @@ var mpStorage = {
         // CALLBACK is called with the JSON retrieved
         // **********
         if (mpStorage.initiated){
+            var validContent = true;
             var url = 'https://forum.hardware.fr/message.php?config=hfr.inc';
             var args = '&cat=prive&post=' + mpStorage.mpId + '&numreponse=' + mpStorage.mpRepId + '&page=1&p=1&subcat=0&sondage=0&owntopic=0';
 
             // Get request
-            mpStorage.loadPage(url, 'get', args, function (resp) {
+            mpStorage.makeWebRequest(url, 'get', args, function (resp) {
                 try {
+                    // Check the content
                     mpStorage.storageData = JSON.parse(resp.getElementById('content_form').value);
-                    callback(mpStorage.storageData);
+                    validContent = mpStorage.isValidContent(mpStorage.storageData);
                 }
-                catch(error) {
-                    alert('Erreur lors de la récupération du MPStorage...');
-                    console.error(error);
+                catch(e) {
+                    validContent = false;
+                    console.warn('Invalid MPStorage content', resp.getElementById('content_form').value);
+                }
+
+                if(!validContent){
+                    // Content of the MPStorage is invalid, we reset it
+                    mpStorage.setStorageData(mpStorage.getDefaultData());
+                    mpStorage.storageData = mpStorage.getDefaultData();
+                }
+
+                if(mpStorage.storageData){
+                    callback(mpStorage.storageData);
                 }
             });
         }
@@ -132,12 +177,12 @@ var mpStorage = {
             var url = 'https://forum.hardware.fr/bdd.php?config=hfr.inc';
             var args = 'content_form=' + encodeURIComponent(JSON.stringify(data));
             args += '&post=' + mpStorage.mpId + '&numreponse=' + mpStorage.mpRepId;
-            args += '&pseudo=' + encodeURIComponent(mpStorage.username) + '&cat=prive&verifrequet=1100&sujet=' + encodeURIComponent(mpStorage.mpName);
-            args += '&hash_check=' + mpStorage.getElementByXpath('//input[@name="hash_check"]', document).pop().value;
+            args += '&pseudo=' + mpStorage.username + '&cat=prive&verifrequet=1100&sujet=' + encodeURIComponent(mpStorage.mpName);
+            args += '&hash_check=' + mpStorage.getHashCheck();
 
             // Post request
-            mpStorage.loadPage(url, 'post', args, function () {
-                // console.warn('Data updated');
+            mpStorage.makeWebRequest(url, 'post', args, function () {
+                console.info('MPStorage updated');
             });
         }
     },
@@ -153,7 +198,7 @@ var mpStorage = {
         var args = '&cat=prive&page=' + pageId + '&subcat=&sondage=0&owntopic=0&trash=0&trash_post=0&moderation=0&new=0&nojs=0&subcatgroup=0';
 
         // Get request
-        mpStorage.loadPage(url, 'get', args, function (resp) {
+        mpStorage.makeWebRequest(url, 'get', args, function (resp) {
             // TODO Wiripse : La structure de la pagination n'est pas la même sur la première page et les suivantes (lolwat).
             // TODO Wiripse : Alors on récupère la page max sur la première page uniquement.
             // TODO Wiripse : Traiter les pages suivantes pour gérer le cas où une nouvelle page apparaît pendant qu'on pagine...
@@ -191,6 +236,8 @@ var mpStorage = {
                         // we have to start again the search process from page one...
                         // Fortunately it's on the first page so it won't be long !
                         mpStorage.findStorageMPOnPage(1, callback);
+                    }, function(){
+                        console.error('Unable to create the MPStorage');
                     });
                 }
             }
@@ -208,7 +255,7 @@ var mpStorage = {
         var args = '&cat=prive&post=' + mpStorage.mpId + '&page=1&p=1&sondage=0&owntopic=0&trash=0&trash_post=0&print=0&numreponse=0&quote_only=0&new=0&nojs=0';
 
         // Get request
-        mpStorage.loadPage(url, 'get', args, function (resp) {
+        mpStorage.makeWebRequest(url, 'get', args, function (resp) {
             // Nice HTML parsing bro !
             // We save the response's ID
             mpStorage.mpRepId = parseInt(resp.getElementsByClassName('messagetable')[0].getElementsByClassName('messCase1')[0].getElementsByTagName('a')[0].name.split('t')[1]);
@@ -217,69 +264,35 @@ var mpStorage = {
         });
     },
 
-    createStorageMP: function (callback) {
+    createStorageMP: function (callback, failed) {
         // **********
         // HFRGMTools
         // Method to create the MPStorage for the user
         // CALLBACK is called with a boolean giving the result status (true : ok; false : fail)
         // **********
 
-        // Default JSON...
-        var defaultData = {
-            data: [
-                {
-                    version: '0.1',
-                    mpFlags: {
-                        list: [
-                            {
-                                'uri': 'https://forum.hardware.fr/forum2.php?config=hfr.inc&cat=prive&post=123456&page=1&p=1&sondage=0&owntopic=0&trash=0&trash_post=0&print=0&numreponse=0&quote_only=0&new=0&nojs=0#t789987',
-                                'post': 123456,
-                                'page': 1,
-                                'href': 't789987',
-                                'p': '1'
-                            }
-                        ],
-                        sourceName: 'HFRGMTools',
-                        lastUpdate: Date.now()
-                    },
-                    blacklist: {
-                        list : [
-                            {
-                                username : 'MultiMP',
-                                createDate : Date.now()
-                            },
-                            {
-                                username : 'MultiMP2',
-                                createDate : Date.now()
-                            }
-                        ],
-                        sourceName : 'HFRGMTools',
-                        lastUpdate : Date.now()
-                    },
-                    sourceName: 'HFRGMTools',
-                    lastUpdate: Date.now()
-                }
-            ],
-            sourceName: 'HFRGMTools',
-            lastUpdate: Date.now()
-        };
-
         var url = 'https://forum.hardware.fr/bddpost.php?config=hfr.inc';
-        var args = 'content_form=' + encodeURIComponent(JSON.stringify(defaultData));
-        args += '&pseudo=' + encodeURIComponent(mpStorage.username) + '&cat=prive&verifrequet=1100&sujet=' + encodeURIComponent(mpStorage.mpName);
+        var args = 'content_form=' + encodeURIComponent(JSON.stringify(mpStorage.getDefaultData()));
+        args += '&pseudo=' + mpStorage.username + '&cat=prive&verifrequet=1100&sujet=' + encodeURIComponent(mpStorage.mpName);
         args += '&dest=' + encodeURIComponent(mpStorage.mpRecipient);
-        args += '&hash_check=' + mpStorage.getElementByXpath('//input[@name="hash_check"]', document).pop().value;
+        args += '&hash_check=' + mpStorage.getHashCheck();
 
         // Post request
-        mpStorage.loadPage(url, 'post', args, function () {
-            callback(true);
+        mpStorage.makeWebRequest(url, 'post', args, function (resp) {
+            if(resp.getElementsByClassName('hop').length > 0 && resp.getElementsByClassName('hop')[0].getElementsByTagName('input').length === 0){
+                // MP created, nice
+                callback(true);
+            }else{
+                // MP not created, no nice
+                failed();
+            }
         });
     },
 
     getUsername: function (callback) {
         // **********
         // HFRGMTools
-        // Method to find the username
+        // Method to find the encoded username
         // CALLBACK is called with a boolean giving the result status (true : ok; false : fail)
         // **********
 
@@ -290,73 +303,49 @@ var mpStorage = {
         callback(mpStorage.username);
     },
 
-    getElementByXpath: function (path, element, doc) {
+    getHashCheck: function(){
         // **********
-        // ToyoLib
-        // Tool method to extract element on document by its Xpath (used for hash_check)
+        // HFRGMTools
+        // Returns the hash_check input value; undefined if not found
         // **********
-
-        if (doc == null) doc = document;
-        var arr = Array(), xpr = doc.evaluate(path, element, null, XPathResult.UNORDERED_NODE_ITERATOR_TYPE, null);
-        for (; item = xpr.iterateNext();) arr.push(item);
-        return arr;
+        return document.querySelector('input[name="hash_check"]') ? document.querySelector('input[name="hash_check"]').value : void 0;
     },
 
-    loadPage: function (url, method, arguments, responseHandler) {
+    makeWebRequest: function(url, method, arguments, callback){
         // **********
-        // ToyoAjaxLib
-        // Tool method to make an Ajax request
+        // HFRGMTools
+        // Make a request for the given parameters
+        // Callback called with response body as HTMLElement in parameter
         // **********
 
-        var req;
+        // Make sure we speak the same language
         method = method.toUpperCase();
-        if (method == 'GET' && arguments != null) url += '?' + arguments;
-        // branch for native XMLHttpRequest object
-        if (window.XMLHttpRequest) {
-            req = new XMLHttpRequest();
-            req.responseType = 'document';
-            req.onreadystatechange = mpStorage.processReqChange(req, responseHandler);
-            req.open(method, url, true);
-            if (method == 'POST') req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            arguments = method == 'POST' ? arguments : null;
-            req.send(arguments);
-        }
-        else if (window.ActiveXObject) {
-            // branch for IE/Windows ActiveX version
-            req = new ActiveXObject('Microsoft.XMLHTTP');
-            if (req) {
-                req.onreadystatechange = mpStorage.processReqChange(req, responseHandler);
-                req.open(method, url, true);
-                if (method == 'POST') req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                if (method == 'POST') req.send(arguments);
-                else req.send();
-            }
-        }
-    },
 
-    processReqChange: function(req, responseHandler) {
-        // **********
-        // ToyoAjaxLib
-        // Tool method used by loadPage
-        // **********
-
-        return function () {
-            try {
-                // only if req shows "loaded"
-                if (req.readyState == 4) {
-                    // only if "OK"
-                    if (req.status == 200) {
-                        var content = req.responseXML != null && req.responseXML.documentElement != null ? req.responseXML : req.responseText;
-                        if (responseHandler != null) responseHandler(content);
-                    }
-                    else {
-                        //alert("There was a problem retrieving the XML data:\n" +
-                        //req.statusText);
-                    }
-                }
-            }
-            catch (e) {}
+        // Manage the headers if necessary
+        var myHeaders = new Headers();
+        if('POST'=== method){
+            myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
         }
+
+        // Manage the parameters
+        var parameters = {
+            method: method,
+            headers: myHeaders,
+            body : 'POST'=== method ? arguments : void 0
+        };
+
+        // Make the request
+        fetch(url+('GET' === method && arguments ? '&'+arguments : ''), parameters).then(function(response) {
+            if(200 == response.status){
+                // Response ok
+                return response.text();
+            }
+        }).then(function(html) {
+            // Parse the response to an HTMLElement
+            callback(new DOMParser().parseFromString(html, 'text/html'));
+        }).catch(function(e){
+            console.error('Error while making web request', url, method, arguments, e);
+        });
     },
 
     getJsonFromUrl: function(url) {
