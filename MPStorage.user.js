@@ -204,7 +204,7 @@ var mpStorage = {
             // TODO Wiripse : Traiter les pages suivantes pour gérer le cas où une nouvelle page apparaît pendant qu'on pagine...
             if (mpStorage.pageMax <= 1) {
                 // Save the number of MPs page the user have
-                mpStorage.pageMax = resp.getElementsByClassName('fondForum1PagesHaut')[0].getElementsByClassName('cHeader').length + 1;
+                mpStorage.pageMax = resp.getElementsByClassName('fondForum1PagesHaut').length > 0 ? resp.getElementsByClassName('fondForum1PagesHaut')[0].getElementsByClassName('cHeader').length + 1 : 1;
             }
             // Loop on list of MPs
             [...resp.getElementsByClassName('cCatTopic')].forEach(function (topicRow) {
