@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          [BETA] HFR4K
 // @author        Wiripse
-// @version       2020.04.24.0
+// @version       2020.04.25.0
 // @description   HFR en mieux
 // @namespace     https://wiripse.github.io/HFRGMTools/
 // @icon          data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAQAAAAAYLlVAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAAHdElNRQfjCgIILBJ4Jlj4AAAEPUlEQVRo3u3YfWjVVRgH8M91c9MWmWYyNaVGFOZL+VLqRJl2TcawLCJJLDN8KSWEElKwtH/UIhPJZiJCIIlmIKJk6rImaa6maVqCqFmoufLdfNna/PWHP+92U3fvxrb+8H7PH79znnt+z/N9nuf8znnOJYUUUrjVEUFPr8gB33lb1BRzbUWeN6U3ou1DCu1msApBrLW1QeBzsLaGvHFahbx0czVXYZtKbHPCe8rNB+9Lb8QIpMuVYQ7lAvMaMdA3xzyBy+kycB6TjWhC46sVOo/M6hB/IKMJCQxUeLVTTSADhxxqAuM5cmReG8QvsmVmNQGBWWZWD5o1gcFakSKQIlCfrbaNYTrjgDUqQ1lrwzW33rHYrB5yHbVBRUMTyLVKh7C/W54z6GGDbJR71jpkWmCCCErkO12burqmYIiNMfM87C3woWyQaYlMnWwxUQT0NbV2hXUjkG+dLFXGaibTD+iPjgZhvteRbaxSj2GrLvagX8MRGGG1lv7xvE8EKrTFX4iCle4Ai7TDR4YYrAt+bygCz/lMpgojrQL3uw/FIYHTSkMiXDLGVIsVSnc+0VGfLIFRPtXcRcOVWmgEhoJNIqL42m36gsMGKPatl3DUE/Y2BIEJlkl3wZMO2GKywtDvMnt1k40iraRhoz7uUqo3tuhteyLVyRCY5GPNnDXUEcXuxUFp8lAkCAO/yRHPeFmBcb7UFgs8riyx8sT7wDRzcNIwh+0NP7civbVBUZiKww5gjWtH7UXjLU8qtgkjUGA2ygy2Q6fQfGBt6HeRDIOwKTa/I5idrPnEBMaLOCXPHuwywjTTFNgpin2OyJUVRuIpW40xQxmmeSBZAolS0BLn5LgHXLDDQb/KkhuajeKKzSZaJOJRA71ovdut0F95chQCgVk1nvF49brLxCWd5QsEhqNEoFTEsfDX37T2rkAQ3i1uhFkCwbVnohQsttCVOEkLLURRqVhrvVGkm/b4Hp0tMkMJpuiajP+JCFzxmrv1Cds6lNkvihLnPCQNxeGm9IJ1GGmM0YgoSIZAMsfxKafC3kG0sVwPbMDf4A0P4qD9xtqlowXW4up1JwnUvgbi0d3FMNentAdbYmtjPMhTHo6Pa3sTLXVaA/HYI982JxUZ4g/wtKVOOGCSJeAb+bb50xeiTjRUCmqi2IC48UnjjIuTbLa5Lgr/96I0RSBFIP4ryInVdQ2Fy7arRLpH7FKpne7hP3Ix1NyIGqMtBIUCC2U5EZNftxH90qiRDmLOXkWsVK1OQa5e0hrc8CUlYIqlflKpq+4iquy8NiHiqA62m/mfQ7c2VPnRmRvI79SzDi40845+jrGgHnm9ca3/cz00zSfLynq8eH2x0a0eWlbIunqHzdYl6eC1sVyas3aqqiFN00srVUbFaofEidzneNIJi8P0m3o0ve7KIvWiEDU6vAFU46hlvqqfRymkkMKtjX8BU3kXUDClbEwAAAAldEVYdGRhdGU6Y3JlYXRlADIwMTktMTAtMDJUMDg6NDQ6MTgrMDA6MDAqoU1GAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE5LTEwLTAyVDA4OjQ0OjE4KzAwOjAwW/z1+gAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAAASUVORK5CYII=
@@ -16,10 +16,11 @@
 // @grant         GM_setValue
 // @grant         GM.openInTab
 // @grant         GM_openInTab
-// @require       https://raw.githubusercontent.com/Wiripse/HFRGMTools/master/MPStorage.user.js?v=2020.04.24.0
+// @require       https://raw.githubusercontent.com/Wiripse/HFRGMTools/master/MPStorage.user.js?v=2020.04.25.0
 // ==/UserScript==
 
 // Historique
+// 2020.04.25.0 : Upgrade de MPStorage + Ajout bouton blacklist dans les quotes (pour les pseudos gogoles) + Validation rapide partout.
 // 2020.04.24.0 : Upgrade de MPStorage.
 // 2020.04.21.0 : Correctif Flag DT maintenant que HFR+ est prêt.
 // 2020.01.13.2 : Fix Ezzzi Draps cat MP. Mutualisation du code.
@@ -59,7 +60,7 @@
 // 2019.9.30.1 : Fix pour que ça fonctionne aussi dans les drapals de catégories
 // 2019.9.30.0 : Premier jet
 
-const version = '2020.04.24.0';
+const version = '2020.04.25.0';
 
 //**********************************************************************//
 //************************* GM/VM/TM/FDP SHIT **************************//
@@ -1923,6 +1924,7 @@ var HFR4K = {
         if(LocalMPStorage.datas.blacklist.active && (HFRGMUtils.pageCheck.isOnMP() || HFRGMUtils.pageCheck.isOnTopic() || HFRGMUtils.pageCheck.isOnTopicTxt() ||
                                                      HFRGMUtils.pageCheck.isReplyingMP() || HFRGMUtils.pageCheck.isReplyingTopic())){
             // Add buttons to add/remove to BL
+            // On left menu
             document.querySelectorAll('td.messCase1').forEach(function(pAuthor){
                 let divIconBL = document.createElement('div');
                 divIconBL.setAttribute('class', 'right');
@@ -1930,8 +1932,8 @@ var HFR4K = {
                 iconBL.setAttribute('src', HFRGMUtils.icons.blacklist);
                 iconBL.style.verticalAlign = 'bottom';
                 iconBL.style.cursor = 'pointer';
-                iconBL.style.marginRight = '1px';
-                iconBL.style.marginLeft = '3px';
+                iconBL.style.marginRight = '0.2rem';
+                iconBL.style.marginLeft = '0.2rem';
                 iconBL.title = 'Ajouter/Supprimer de la ListeNoire';
                 iconBL.onclick = function(){
                     let pseudo = HFRGMUtils.getCleanPseudo(pAuthor.querySelector('b.s2').textContent);
@@ -1956,6 +1958,84 @@ var HFR4K = {
                 divIconBL.appendChild(iconBL);
                 pAuthor.insertBefore(divIconBL, pAuthor.querySelector('b.s2').parentNode);
 
+            });
+
+            // On quotes
+            document.querySelectorAll('a.Topic').forEach(function(quoteLink){
+                if(quoteLink.textContent.split(' a écrit').length === 2 && (quoteLink.closest('table.citation') || quoteLink.closest('table.oldcitation'))){
+                    let pseudo = HFRGMUtils.getSimplePseudo(quoteLink.textContent.split(' a écrit')[0]);
+                    let quote = quoteLink.closest('table.citation') || quoteLink.closest('table.oldcitation');
+
+                    // Add custom class to avoid adding the button twice
+                    quote.classList.add('hfr4kBLButtonQuote');
+
+                    let iconBL = document.createElement('img');
+                    iconBL.setAttribute('src', HFRGMUtils.icons.blacklist);
+                    iconBL.style.verticalAlign = 'bottom';
+                    iconBL.style.cursor = 'pointer';
+                    iconBL.style.marginRight = '0.5rem';
+                    iconBL.style.marginLeft = '0.5rem';
+                    iconBL.title = 'Ajouter/Supprimer de la ListeNoire';
+                    iconBL.onclick = function(){
+                        if(HFRGMUtils.isPseudoBlacklisted(HFRGMUtils.getSimplePseudo(pseudo))){
+                            HFR4K.renderModal(document.createTextNode('Retirer '+pseudo+' de la ListeNoire ?'), function(){
+                                // Remove from blacklist
+                                HFRGMUtils.removeFromBlacklist(pseudo);
+                                // Refresh the page
+                                HFR4K.simpleRenderListeNoire();
+                            });
+                        }
+                        else{
+                            HFR4K.renderModal(document.createTextNode('Ajouter '+pseudo+' à la ListeNoire ?'), function(){
+                                // Add to blacklist
+                                HFRGMUtils.addToBlacklist(pseudo);
+                                // Refresh the page
+                                HFR4K.simpleRenderListeNoire();
+                            });
+                        }
+
+                    };
+                    quote.getElementsByClassName('s1')[0].parentElement.insertBefore(iconBL, quote.getElementsByClassName('s1')[0]);
+                }
+            });
+
+            // On weird quotes
+            document.querySelectorAll('b.s1').forEach(function(quoteLink){
+                if(quoteLink.textContent.split(' a écrit').length === 2 && quoteLink.closest('table.oldcitation') && !quoteLink.closest('table.oldcitation').classList.contains('hfr4kBLButtonQuote')){
+                    let pseudo = HFRGMUtils.getSimplePseudo(quoteLink.textContent.split(' a écrit')[0]);
+                    let quote = quoteLink.closest('table.citation') || quoteLink.closest('table.oldcitation');
+
+                    // Add custom class to avoid adding the button twice
+                    quote.classList.add('hfr4kBLButtonQuote');
+
+                    let iconBL = document.createElement('img');
+                    iconBL.setAttribute('src', HFRGMUtils.icons.blacklist);
+                    iconBL.style.verticalAlign = 'bottom';
+                    iconBL.style.cursor = 'pointer';
+                    iconBL.style.marginRight = '0.5rem';
+                    iconBL.style.marginLeft = '0.5rem';
+                    iconBL.title = 'Ajouter/Supprimer de la ListeNoire';
+                    iconBL.onclick = function(){
+                        if(HFRGMUtils.isPseudoBlacklisted(HFRGMUtils.getSimplePseudo(pseudo))){
+                            HFR4K.renderModal(document.createTextNode('Retirer '+pseudo+' de la ListeNoire ?'), function(){
+                                // Remove from blacklist
+                                HFRGMUtils.removeFromBlacklist(pseudo);
+                                // Refresh the page
+                                HFR4K.simpleRenderListeNoire();
+                            });
+                        }
+                        else{
+                            HFR4K.renderModal(document.createTextNode('Ajouter '+pseudo+' à la ListeNoire ?'), function(){
+                                // Add to blacklist
+                                HFRGMUtils.addToBlacklist(pseudo);
+                                // Refresh the page
+                                HFR4K.simpleRenderListeNoire();
+                            });
+                        }
+
+                    };
+                    quote.getElementsByClassName('s1')[0].parentElement.insertBefore(iconBL, quote.getElementsByClassName('s1')[0]);
+                }
             });
 
             // Render the posts
@@ -2016,7 +2096,6 @@ var HFR4K = {
                 let pseudo = HFRGMUtils.getSimplePseudo(quoteLink.textContent.split(' a écrit')[0]);
                 if(quoteLink.textContent.split(' a écrit').length === 2 && HFRGMUtils.isPseudoBlacklisted(pseudo) &&
                    (quoteLink.closest('table.citation') || quoteLink.closest('table.oldcitation'))){
-
                     let quote = quoteLink.closest('table.citation') || quoteLink.closest('table.oldcitation');
                     // Hide quote
                     quote.classList.add('hfr4kHiddenPost');
@@ -2052,7 +2131,8 @@ var HFR4K = {
             // Hide weird quotes
             document.querySelectorAll('b.s1').forEach(function(quoteLink){
                 let pseudo = HFRGMUtils.getSimplePseudo(quoteLink.textContent.split(' a écrit')[0]);
-                if(quoteLink.textContent.split(' a écrit').length === 2 && HFRGMUtils.isPseudoBlacklisted(pseudo) && quoteLink.closest('table.oldcitation')){
+                if(quoteLink.textContent.split(' a écrit').length === 2 && HFRGMUtils.isPseudoBlacklisted(pseudo) && quoteLink.closest('table.oldcitation')
+                   && !quoteLink.closest('table.oldcitation').classList.contains('hfr4kHiddenPost')){
                     let quote = quoteLink.closest('table.oldcitation');
                     // Hide quote
                     quote.classList.add('hfr4kHiddenPost');
@@ -2148,7 +2228,8 @@ var HFR4K = {
         // **********
 
         if(LocalMPStorage.datas.fastValid.active && (HFRGMUtils.pageCheck.isOnMP() || HFRGMUtils.pageCheck.isOnTopic() || HFRGMUtils.pageCheck.isOnTopicTxt() ||
-                                                     HFRGMUtils.pageCheck.isReplyingMP() || HFRGMUtils.pageCheck.isReplyingTopic())){
+                                                     HFRGMUtils.pageCheck.isReplyingMP() || HFRGMUtils.pageCheck.isReplyingTopic() || HFRGMUtils.pageCheck.isWritingNewMP() ||
+                                                     HFRGMUtils.pageCheck.isWritingNewTopic() || HFRGMUtils.pageCheck.isWritingNewSurvey())){
 
             // Add a keydown listener on the whole page
             document.addEventListener('keydown', function(event){
@@ -2162,8 +2243,10 @@ var HFR4K = {
                         document.getElementById('submitreprap').click();
                     }
 
+
                     // Full response form
-                    var bigResp = document.getElementsByName('hop').length === 1 && document.getElementsByName('hop')[0].action.endsWith('hardware.fr/bddpost.php?config=hfr.inc');
+                    var bigResp = document.getElementsByName('hop').length === 1 &&
+                        ( document.getElementsByName('hop')[0].action.endsWith('hardware.fr/bddpost.php?config=hfr.inc') || document.getElementsByName('hop')[0].action.endsWith('hardware.fr/bdd.php?config=hfr.inc'));
                     if(bigResp){
                         // Submit the form
                         document.getElementsByName('submit')[0].click();

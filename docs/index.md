@@ -171,6 +171,12 @@ Ajoute une catégorie pour les MP non lus (de la première page) sur les pages d
 
 ## Changelog
 
+### 2020.04.25.0
+
+Upgrade de MPstorage. 
+Ajout d'un bouton de blacklist dans les quotes pour gérer les pseudos mal encodés qui ne sont pas affichés de la même manière dans le bloc info d'un post. 
+Correctif sur la validation rapide pour que ça fonctionne partout.
+
 ### 2020.04.24.0
 
 Upgrade de MPStorage. Pas de nouvelle fonctionnalité mais plus de stabilité.
