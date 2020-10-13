@@ -169,7 +169,20 @@ Ajoute une catégorie pour les MP non lus (de la première page) sur les pages d
 
 * Activer/désactiver l'option
 
+### Ouverture en masse des MP
+
+Ajoute une icône dans l'en-tête des MP non lus. Un clic permet l'ouverture de X MP dans les onglets suivants.
+
+#### Paramètres
+
+* Activer/désactiver l'option
+* Régler le nombre de MP à ouvrir
+
 ## Changelog
+
+### 2020.10.13.0
+
+Ouverture en masse des MP.
 
 ### 2020.04.25.0
 

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          [BETA] HFR4K
 // @author        Wiripse
-// @version       2020.04.25.0
+// @version       2020.10.13.0
 // @description   HFR en mieux
 // @namespace     https://wiripse.github.io/HFRGMTools/
 // @icon          data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAQAAAAAYLlVAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAAHdElNRQfjCgIILBJ4Jlj4AAAEPUlEQVRo3u3YfWjVVRgH8M91c9MWmWYyNaVGFOZL+VLqRJl2TcawLCJJLDN8KSWEElKwtH/UIhPJZiJCIIlmIKJk6rImaa6maVqCqFmoufLdfNna/PWHP+92U3fvxrb+8H7PH79znnt+z/N9nuf8znnOJYUUUrjVEUFPr8gB33lb1BRzbUWeN6U3ou1DCu1msApBrLW1QeBzsLaGvHFahbx0czVXYZtKbHPCe8rNB+9Lb8QIpMuVYQ7lAvMaMdA3xzyBy+kycB6TjWhC46sVOo/M6hB/IKMJCQxUeLVTTSADhxxqAuM5cmReG8QvsmVmNQGBWWZWD5o1gcFakSKQIlCfrbaNYTrjgDUqQ1lrwzW33rHYrB5yHbVBRUMTyLVKh7C/W54z6GGDbJR71jpkWmCCCErkO12burqmYIiNMfM87C3woWyQaYlMnWwxUQT0NbV2hXUjkG+dLFXGaibTD+iPjgZhvteRbaxSj2GrLvagX8MRGGG1lv7xvE8EKrTFX4iCle4Ai7TDR4YYrAt+bygCz/lMpgojrQL3uw/FIYHTSkMiXDLGVIsVSnc+0VGfLIFRPtXcRcOVWmgEhoJNIqL42m36gsMGKPatl3DUE/Y2BIEJlkl3wZMO2GKywtDvMnt1k40iraRhoz7uUqo3tuhteyLVyRCY5GPNnDXUEcXuxUFp8lAkCAO/yRHPeFmBcb7UFgs8riyx8sT7wDRzcNIwh+0NP7civbVBUZiKww5gjWtH7UXjLU8qtgkjUGA2ygy2Q6fQfGBt6HeRDIOwKTa/I5idrPnEBMaLOCXPHuwywjTTFNgpin2OyJUVRuIpW40xQxmmeSBZAolS0BLn5LgHXLDDQb/KkhuajeKKzSZaJOJRA71ovdut0F95chQCgVk1nvF49brLxCWd5QsEhqNEoFTEsfDX37T2rkAQ3i1uhFkCwbVnohQsttCVOEkLLURRqVhrvVGkm/b4Hp0tMkMJpuiajP+JCFzxmrv1Cds6lNkvihLnPCQNxeGm9IJ1GGmM0YgoSIZAMsfxKafC3kG0sVwPbMDf4A0P4qD9xtqlowXW4up1JwnUvgbi0d3FMNentAdbYmtjPMhTHo6Pa3sTLXVaA/HYI982JxUZ4g/wtKVOOGCSJeAb+bb50xeiTjRUCmqi2IC48UnjjIuTbLa5Lgr/96I0RSBFIP4ryInVdQ2Fy7arRLpH7FKpne7hP3Ix1NyIGqMtBIUCC2U5EZNftxH90qiRDmLOXkWsVK1OQa5e0hrc8CUlYIqlflKpq+4iquy8NiHiqA62m/mfQ7c2VPnRmRvI79SzDi40845+jrGgHnm9ca3/cz00zSfLynq8eH2x0a0eWlbIunqHzdYl6eC1sVyas3aqqiFN00srVUbFaofEidzneNIJi8P0m3o0ve7KIvWiEDU6vAFU46hlvqqfRymkkMKtjX8BU3kXUDClbEwAAAAldEVYdGRhdGU6Y3JlYXRlADIwMTktMTAtMDJUMDg6NDQ6MTgrMDA6MDAqoU1GAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE5LTEwLTAyVDA4OjQ0OjE4KzAwOjAwW/z1+gAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAAASUVORK5CYII=
@@ -20,6 +20,7 @@
 // ==/UserScript==
 
 // Historique
+// 2020.10.13.0 : Ouverture en masse des MP.
 // 2020.04.25.0 : Upgrade de MPStorage + Ajout bouton blacklist dans les quotes (pour les pseudos gogoles) + Validation rapide partout.
 // 2020.04.24.0 : Upgrade de MPStorage.
 // 2020.04.21.0 : Correctif Flag DT maintenant que HFR+ est prêt.
@@ -129,6 +130,7 @@ var HFRGMUtils = {
         blacklist: ' data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAAHdElNRQfjCgwGHAnHRP3eAAAA3klEQVQoz3XQvy5EYRQE8N+1EqETWwmFbqNCPIFeoiASKsptNh5B4QFsp6DxArSi2dBokFBJRLIqBRH/woYchS833LvmFOebzCQz56v4wbw1NWc+dUVDCOHAP7hMhjBWlHrAW2KRvwqY1RFCsyxladfMuHJYNlTyqFfXXroHDNv3JYRTU5i061xLQx9U3eQ3PBu1kPqEcKSfzZyGpqqnXzxsZG6N5GFzhmw79p74uE6v9fQXcGIVy9qJ71gqFl4UHj2k+XBRNAxo/+lQLx897S6Xt2RZ2WHQign39rT4Blf2WVLRC41JAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDE5LTEwLTEyVDA2OjI4OjA5KzAwOjAwz7WrUgAAACV0RVh0ZGF0ZTptb2RpZnkAMjAxOS0xMC0xMlQwNjoyODowOSswMDowML7oE+4AAAAZdEVYdFNvZnR3YXJlAHd3dy5pbmtzY2FwZS5vcmeb7jwaAAAAAElFTkSuQmCC',
         darktopic: ' data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAAHdElNRQfkAQUDOTP4rXhDAAAA9UlEQVQoz43RvyvEcRgH8Ne5u0GSO50yXfk1SG5Bl8H/gWQwsZiYjAb/gMGk7mRhpmSilIwy6OqURVJnkFsoH8N9v193pnue5Xk/vd/PT7qykoqK6TZcVVWK4ZB3QdBQAAWNP5xBWR4MmvGiXzrBZWcw5lsQnNsXBDd2BcGXkbjJspq6JSHydY9qFiEjZcOKNHLJkL2y2JR3wHaiO3UkCO7tJLmttONI2XTiTp83hz5NRYNOSLhrnpL4w2q0aogJV1H52Ov2WlGPS008KHfcdtQrflxD1qRxzx0VglnzBto1/wnFVjqVEIoWzBmW01Bz4ba7P/sF4pVuTiJ2duUAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjAtMDEtMDVUMDM6NTc6NTErMDA6MDBh8eWZAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIwLTAxLTA1VDAzOjU3OjUxKzAwOjAwEKxdJQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAAASUVORK5CYII=',
         simpleMP: ' data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAAHdElNRQfkAQsKMhRRXVhfAAAAuUlEQVQoz3WQMQrCQBBF3yakVTtNLaLXsLBT22DpqexyAAVbQyA2YptDiGCEgBbaxJC12JhNyPqnWXYef2Y+aI0IefMiYIhRZ2RZJ1PbrdqSgv7v26qAQQ0WuG3g2fB7tEcIrtWIC8K0xYqi3MDjj5YciVg0jZV6eMz44CNY4xCyrW81IakdqerGWAP7Vlsi2WngbgQSnUVuBHIsFVQX23iTTUc9HAKjwwFHHzvHJyYlIyMlZsNURfAFPVViyYcxkzUAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjAtMDEtMTFUMTA6NTA6MjArMDA6MDBczfYxAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIwLTAxLTExVDEwOjUwOjIwKzAwOjAwLZBOjQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAAASUVORK5CYII=',
+        envelope: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8%2F9hAAACR0lEQVR42s2TX0iTURjGj4P9c3MrcxtuJU2wFCEyEJGKpD83hRcmC8fQhUEMwrsuIgy7mBcGxaDd7mIwdjHYGjn3%2BWn7k25zc5qNjUIDWX5Xoy62dROyfU%2Fft4tp4qTLDvzg4X14n3MO5z2E%2FDfL7%2Fe%2FSKVSX5LJZPYwXC3LeZ4Tm2dnZ88yDINsNsvmcjkchquhUCjA4%2FE8ahiwvb09U6lU2Gq1isOABfYrv9mdcgK%2Brbcf74AIjw3gdp8pFosolUo1yuUySuUi5nIjeJAmMKYFGN8Uw7zVjNEYWTCmieyvgHg8Pre7u4t8Pg%2BG2cMe8x3GWCsmNtowsa7GaFxSg9cPP6vZ%2BzHh%2FnBYoKwH%2BHy%2BuXQ6jUwmg52v3zAVvQFDSgVDQoV7KxLgJ6nBa8OaCmMbGvYW3fSp1my320ecTudaIBAARVGYX%2FLj2gcBhuNq3IxK0L9M6gG85mu8dzskx1W6qYvYbLbXXADcbjfr9Xrx6v00Bmk5BkPN9cajDIakGAq34ZKPPCZWq%2FUNdwo4HA64XC68fPcUl4MKtm9V3jCA9wZoFS7MNz0hJpNpymw2RycnJ6MWiyU6%2Fmws0RWU40pYi951BXQrB40dmwS9SQX6Qlp0z5%2BCPia8fuyzapZEuZ5FHdu92I6OUMtBAKf5Wg%2BlZduXpD8aDpYyLD5%2FerkZnbSO1dNaaGJKaFaV0FNadFI6tnVZBkVI3H%2FieItoyUVpWFZojbRx1zhX40xEBVmk5RfnDfz7LwuKh8iC8DnHNAmK7h61%2FwBwLJjt1YAGnQAAAABJRU5ErkJggg%3D%3D'   
     },
     createOnglet: function(icon, title, onClickMethod, rightClickMethod){
         // **********
@@ -236,6 +238,9 @@ var HFRGMUtils = {
         }
         if(!LocalMPStorage.datas.catMP){
             LocalMPStorage.datas.catMP = { active : false};
+        }
+        if(!LocalMPStorage.datas.oemMP){
+            LocalMPStorage.datas.oemMP = { active : false, number : 1 };
         }
     },
     isNewVersion: function(){
@@ -621,6 +626,7 @@ var LocalMPStorage = {
         fastValid : 'FastValid',
         dtCloud: 'DTCloud',
         catMP: 'CatMP',
+        oemMP: 'OemMP',
         hfr4k : 'HFR4K'
     },
     /* Methods */
@@ -720,6 +726,10 @@ var LocalMPStorage = {
             case LocalMPStorage.domains.catMP:
                 LocalMPStorage.datas.catMP.sourceName = LocalMPStorage.toolName;
                 LocalMPStorage.datas.catMP.lastUpdate = Date.now();
+                break;
+            case LocalMPStorage.domains.oemMP:
+                LocalMPStorage.datas.oemMP.sourceName = LocalMPStorage.toolName;
+                LocalMPStorage.datas.oemMP.lastUpdate = Date.now();
                 break;
             case LocalMPStorage.domains.hfr4k:
                 LocalMPStorage.datas.hfr4k.sourceName = LocalMPStorage.toolName;
@@ -1149,6 +1159,23 @@ var HFR4K = {
             LocalMPStorage.updateMPStorage(LocalMPStorage.domains.catMP);
         }));
 
+        // *************************************************************************************** //
+        // *** Ouverture en masse des MP *** //
+        // *************************************************************************************** //
+        taBody.appendChild(HFR4K.getCatSetting('Ouverture en masse des MP'));
+
+        // Setting oemMP Activation
+        taBody.appendChild(HFR4K.getCheckboxSetting('Activer ?', LocalMPStorage.datas.oemMP.active, function(cb){
+            LocalMPStorage.datas.oemMP.active = !LocalMPStorage.datas.oemMP.active;
+            cb.checked = LocalMPStorage.datas.oemMP.active;
+            LocalMPStorage.updateMPStorage(LocalMPStorage.domains.oemMP);
+        }));
+        // Setting number of openings
+        taBody.appendChild(HFR4K.getNumberSetting('Nombre d\'ouvertures', LocalMPStorage.datas.oemMP.number, 1, function(newNumber){
+            LocalMPStorage.datas.oemMP.number = newNumber;
+            LocalMPStorage.updateMPStorage(LocalMPStorage.domains.oemMP);
+        }));
+
 
         // FIRE IN THE HOLE !!!
         elementAfter.parentNode.insertBefore(table, elementAfter);
@@ -1196,6 +1223,41 @@ var HFR4K = {
         colCB.appendChild(inputCBStatus);
         rowCB.appendChild(colCB);
         return rowCB;
+    },
+    getNumberSetting: function(label, init, defValue, onChange){
+        // **********
+        // HFR4K_GM
+        // Create a setting row with a number entry
+        // label : Label at the left
+        // init : Initial value
+        // defValue : Default number value
+        // onChange : Method called on change of value
+        // **********
+        var rowNumber = document.createElement('tr');
+        rowNumber.classList.add('sujet', 'ligne_booleen', 'cBackCouleurTab3', 'hfr4kSettingRow');
+        var numTitle = document.createElement('td');
+        numTitle.setAttribute('scope', 'row');
+        numTitle.classList.add('sujetCase3', 'hfr4kLabelSettingItem');
+        numTitle.innerHTML = '<span class="cCatTopic">'+label+'</span>';
+        rowNumber.appendChild(numTitle);
+        var numVal = document.createElement('td');
+        numVal.setAttribute('scope', 'row');
+        numVal.classList.add('sujetCase3', 'hfr4kLabelSettingItem');
+        var numInput = document.createElement('input');
+        numInput.setAttribute('type', 'text');
+        numInput.value = init || defValue;
+        numInput.onchange = function(){
+            if(numInput.value){
+                var newNumber = numInput.value.trim();
+                if(newNumber.length > 0 && newNumber.match(/^\d+$/)){
+                    onChange(parseInt(newNumber));
+                }
+            }
+        }
+        numVal.appendChild(numInput);
+        numVal.appendChild(document.createTextNode('Valeur par défaut '+defValue+' - '));
+        rowNumber.appendChild(numVal);
+        return rowNumber;
     },
     getColorSetting: function(label, init, defColor, onChange){
         // **********
@@ -1278,7 +1340,7 @@ var HFR4K = {
 
         // The row...
         var rowMP = document.createElement('tr');
-        rowMP.setAttribute('class', 'sujet ligne_booleen cBackCouleurTab1');
+        rowMP.setAttribute('class', 'sujet ligne_booleen cBackCouleurTab1 hfr4kMP');
 
         // Icon col Unread MSG
         var colMPIcon = document.createElement('td');
@@ -2368,6 +2430,20 @@ var HFR4K = {
                     curFirstCat.parentNode.insertBefore(HFR4K.createUnreadMPRow(mp), curFirstCat);
                 });
             });
+            
+            if (LocalMPStorage.datas.oemMP.active) {
+                var img = document.createElement ('img');
+                img.setAttribute ('src', HFRGMUtils.icons.envelope);
+                img.setAttribute ('style', 'cursor: pointer; width: 16px; height: 16px; float: left; margin-left: 7px; margin-right: -23px;');
+                img.onclick = function(){
+                    var topics = document.querySelectorAll ('tr.hfr4kMP');
+                    for (var i = 0; i < LocalMPStorage.datas.oemMP.number && i < topics.length; i++) {
+                        var link = topics.item (i).querySelector ('.sujetCase5 a').getAttribute ('href');
+                        GM.openInTab (link);
+                    }
+                };
+                mpCatHeader.insertBefore (img, mpCatHeader.firstElementChild);
+            }
         }
     }
 };
